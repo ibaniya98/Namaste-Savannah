@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <title>Menu | Namaste Savannah</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--icon font css-->
+    <link rel="stylesheet" href="vendors/themify-icon/themify-icons.css">
+    <link rel="stylesheet" href="vendors/flaticon/flaticon.css">
+    <link rel="stylesheet" href="vendors/animation/animate.css">
+    <link rel="stylesheet" href="vendors/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendors/magnify-pop/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <% include ../partials/preloader.ejs %>
+
+    <% include ../partials/navbar.ejs %>
+
+    <!-- Jumbotron -->
+    <section class="breadcrumb_area">
+        <img class="breadcrumb_shap" src="img/home/banner_bg.png" alt="">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Menu</h1>
+                <p class="f_300 w_color f_size_16 l_height26">Our menu is packed with classic dishes we create from
+                    scratch. <br> Daily specials incorporate seasonal, local ingredients. Bold flavors abound. From
+                    delicious
+                    appetizers to tasty salads, inspired entrees to decadent desserts, your meal will be one of a kind.
+                </p>
+                <% if (currentUser) { %>
+                <a href="/menu/new" class="btn_three mt-5 app_btn text-center"><i class="ti-plus mr-2 lead"></i> Add
+                    Menu
+                    Item </a>
+                <%} %>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="portfolio_area sec_pad bg_color">
+
+
+        <div class="container">
+            <% include ../partials/flashMessages.ejs %>
+
+            <div id="portfolio_filter" class="portfolio_filter mb_50">
+                <div data-filter="*" class="work_portfolio_item active">All</div>
+
+                <% categories.forEach(category => { %>
+                <div data-filter=".<%= category %>" class="work_portfolio_item"><%= category %></div>
+                <% }); %>
+            </div>
+
+            <div class="row portfolio_gallery mb-50" id="work-portfolio">
+                <% menuItems.forEach(item => { %>
+                <div class="col-lg-3 col-sm-6 portfolio_item <%= item['category'] %> mb_50">
+                    <div class="portfolio_img app_service_item p-2">
+                        <% if (item.imageUrl !== undefined && item.imageUrl.length > 0){ %>
+                        <a href="<%= item['imageUrl'] %>" class="img_popup">
+                            <img class="img_rounded" src="<%= item['imageUrl'] %>" alt="">
+                        </a>
+                        <% } %>
+
+                        <div class="portfolio-description">
+                            <a href="work-default.html" class="portfolio-title">
+                                <h3 class="f_500 f_size_20 f_p mt_30"><%= item['itemName'] %></h3>
+                            </a>
+
+                            <% if (item.description !== undefined && item.description.length > 0){ %>
+                            <div class="links">
+                                <p><%= item['description'] %></p>
+                            </div>
+                            <% } %>
+
+                            <div class="links">
+                                <% item['options'].forEach(option => { %>
+                                <a><%= option['title'] %> | <%= option['price'] %></a>
+                                <% }); %>
+                            </div>
+
+                            <% if (currentUser) { %>
+                            <div class="links mt-4">
+                                <a href="menu/<%= item.id %>/edit" class="text-success"><i class="ti-pencil lead"></i>
+                                    Edit Item</a>
+                            </div>
+                            <% }%>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <% include ../partials/footer.ejs %>
+
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/propper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="vendors/wow/wow.min.js"></script>
+    <script src="vendors/sckroller/jquery.parallax-scroll.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/magnify-pop/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

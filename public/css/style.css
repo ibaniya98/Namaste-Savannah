@@ -23,12 +23,18 @@ Table of Content:
 21/ footer
 
 =====================================================================*/
+
 /*====================================================*/
+
 /*=== fonts ====*/
+
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900");
 /*===== color =====*/
+
 /*====================================================*/
+
 /*====================================================*/
+
 a {
   text-decoration: none;
 }
@@ -175,6 +181,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=========== font-weight ==============*/
+
 .f_300 {
   font-weight: 300;
 }
@@ -360,7 +367,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 .btn_hover {
   overflow: hidden;
   display: inline-block;
@@ -688,8 +697,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /* Preloader */
+
 .ctn-preloader {
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -871,15 +883,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 @-webkit-keyframes letters-loading {
-  0%,
-  75%,
-  100% {
+  0%, 75%, 100% {
     opacity: 0;
     -webkit-transform: rotateY(-90deg);
     transform: rotateY(-90deg);
   }
-  25%,
-  50% {
+  25%, 50% {
     opacity: 1;
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
@@ -887,15 +896,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 @keyframes letters-loading {
-  0%,
-  75%,
-  100% {
+  0%, 75%, 100% {
     opacity: 0;
     -webkit-transform: rotateY(-90deg);
     transform: rotateY(-90deg);
   }
-  25%,
-  50% {
+  25%, 50% {
     opacity: 1;
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
@@ -923,8 +929,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*============== header_area css ==============*/
+
 .header_area {
   position: fixed;
   width: 100%;
@@ -945,7 +954,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-left: 40px;
 }
 
-.sticky_logo img + img {
+.sticky_logo img+img {
   display: none;
 }
 
@@ -963,13 +972,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   }
 }
 
-.menu > .nav-item {
+.menu>.nav-item {
   position: relative;
   padding-bottom: 35px;
   padding-top: 35px;
 }
 
-.menu > .nav-item > .nav-link {
+.menu>.nav-item>.nav-link {
   font: 500 15px "Poppins", sans-serif;
   color: #051441;
   padding: 0px;
@@ -979,7 +988,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   position: relative;
 }
 
-.menu > .nav-item > .nav-link:before {
+.menu>.nav-item>.nav-link:before {
   content: "";
   width: 0;
   height: 1px;
@@ -993,11 +1002,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   transition: all 0.2s linear;
 }
 
-.menu > .nav-item > .nav-link:after {
+.menu>.nav-item>.nav-link:after {
   display: none;
 }
 
-.menu > .nav-item.submenu .dropdown-menu {
+.menu>.nav-item.submenu .dropdown-menu {
   margin: 0px;
   border: 0px;
   margin: 0px;
@@ -1010,7 +1019,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 @media (min-width: 992px) {
-  .menu > .nav-item.submenu .dropdown-menu {
+  .menu>.nav-item.submenu .dropdown-menu {
     -webkit-transform: translateY(20px);
     -ms-transform: translateY(20px);
     transform: translateY(20px);
@@ -1023,7 +1032,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   }
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item {
+.menu>.nav-item.submenu .dropdown-menu .nav-item {
   display: block;
   width: 100%;
   margin-right: 0px;
@@ -1031,7 +1040,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   background: #fff;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item .nav-link {
+.menu>.nav-item.submenu .dropdown-menu .nav-item .nav-link {
   padding: 0px;
   white-space: nowrap;
   font: 400 14px/34px "Poppins", sans-serif;
@@ -1041,35 +1050,35 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   transition: color 0.2s linear;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item .nav-link:after {
+.menu>.nav-item.submenu .dropdown-menu .nav-item .nav-link:after {
   display: none;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu > .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu > .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu>.nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu>.nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu>.nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: #5e2ced;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item:first-child {
+.menu>.nav-item.submenu .dropdown-menu .nav-item:first-child {
   padding-top: 25px;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item:last-child {
+.menu>.nav-item.submenu .dropdown-menu .nav-item:last-child {
   padding-bottom: 40px;
   margin-bottom: -8px;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item > .dropdown-menu {
+.menu>.nav-item.submenu .dropdown-menu .nav-item>.dropdown-menu {
   -webkit-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.menu > .nav-item.submenu .dropdown-menu .nav-item > .dropdown-menu:before {
+.menu>.nav-item.submenu .dropdown-menu .nav-item>.dropdown-menu:before {
   display: none;
 }
 
 @media (min-width: 992px) {
-  .menu > .nav-item.submenu .dropdown-menu .nav-item > .dropdown-menu {
+  .menu>.nav-item.submenu .dropdown-menu .nav-item>.dropdown-menu {
     position: absolute;
     left: 100%;
     top: 0;
@@ -1085,11 +1094,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   }
 }
 
-.menu > .nav-item.submenu.mega_menu {
+.menu>.nav-item.submenu.mega_menu {
   position: static;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu {
   min-width: 200px;
   list-style: none;
   -webkit-box-shadow: 0px 15px 27px 0px rgba(14, 0, 40, 0.05);
@@ -1103,26 +1112,26 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 @media (min-width: 992px) {
-  .menu > .nav-item.submenu.mega_menu > .dropdown-menu {
+  .menu>.nav-item.submenu.mega_menu>.dropdown-menu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item {
   padding-top: 40px;
   padding-bottom: 40px;
   margin-bottom: -10px;
   width: 25%;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   font: 500 18px "Poppins", sans-serif;
   color: #13112d;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item .dropdown-menu {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item .dropdown-menu {
   left: 0;
   position: relative;
   -webkit-transform: translateY(0);
@@ -1133,64 +1142,64 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 0px;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item .dropdown-menu > .nav-item {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item .dropdown-menu>.nav-item {
   padding-left: 0px;
   padding-right: 0px;
   white-space: normal;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item .dropdown-menu > .nav-item:first-child {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item .dropdown-menu>.nav-item:first-child {
   padding-top: 20px;
 }
 
-.menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item .dropdown-menu > .nav-item:last-child {
+.menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item .dropdown-menu>.nav-item:last-child {
   padding-bottom: 0px;
   margin-bottom: 0px;
 }
 
 @media (min-width: 992px) {
-  .menu > .nav-item.submenu.mega_menu:hover .dropdown-menu > .nav-item > .dropdown-menu {
+  .menu>.nav-item.submenu.mega_menu:hover .dropdown-menu>.nav-item>.dropdown-menu {
     opacity: 1;
     visibility: visible;
   }
 }
 
-.menu > .nav-item:nth-last-child(-n+2).submenu .dropdown-menu {
+.menu>.nav-item:nth-last-child(-n+2).submenu .dropdown-menu {
   left: auto;
   right: 0;
 }
 
-.menu > .nav-item:nth-last-child(-n+2).submenu .dropdown-menu .nav-item > .dropdown-menu {
+.menu>.nav-item:nth-last-child(-n+2).submenu .dropdown-menu .nav-item>.dropdown-menu {
   left: auto;
   right: 100%;
 }
 
-.menu > .nav-item + .nav-item {
+.menu>.nav-item+.nav-item {
   margin-left: 45px;
 }
 
-.menu > .nav-item.active .nav-link {
+.menu>.nav-item.active .nav-link {
   color: #6754e2;
 }
 
-.menu > .nav-item.active .nav-link:before {
+.menu>.nav-item.active .nav-link:before {
   width: 100%;
   left: 0;
   right: auto;
 }
 
-.menu > .nav-item:hover .nav-link {
+.menu>.nav-item:hover .nav-link {
   color: #6754e2;
 }
 
-.menu > .nav-item:hover .nav-link:before {
+.menu>.nav-item:hover .nav-link:before {
   width: 100%;
   left: 0;
   right: auto;
 }
 
 @media (min-width: 992px) {
-  .menu > .nav-item:hover .dropdown-menu {
+  .menu>.nav-item:hover .dropdown-menu {
     opacity: 1;
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -1200,7 +1209,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 @media (min-width: 992px) and (min-width: 992px) {
-  .menu > .nav-item:hover .dropdown-menu > .nav-item:hover .dropdown-menu {
+  .menu>.nav-item:hover .dropdown-menu>.nav-item:hover .dropdown-menu {
     -webkit-transform: scaleY(1);
     -ms-transform: scaleY(1);
     transform: scaleY(1);
@@ -1213,15 +1222,15 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 0px;
 }
 
-.menu_two .w_menu > .nav-item .nav-link:before {
+.menu_two .w_menu>.nav-item .nav-link:before {
   background: #a5d5f5;
 }
 
-.menu_two .w_menu > .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu_two .w_menu > .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu_two .w_menu > .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu_two .w_menu>.nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu_two .w_menu>.nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu_two .w_menu>.nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: #00aff0;
 }
 
-.menu_two .w_menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu_two .w_menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   color: #13112d;
 }
 
@@ -1291,15 +1300,15 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   border-radius: 0px;
 }
 
-.menu_five .menu > .nav-item .nav-link {
+.menu_five .menu>.nav-item .nav-link {
   color: #fff;
 }
 
-.menu_five .menu > .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu_five .menu > .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu_five .menu > .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu_five .menu>.nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu_five .menu>.nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu_five .menu>.nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: #3d64f4;
 }
 
-.menu_five .menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu_five .menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   color: #051441;
 }
 
@@ -1327,23 +1336,23 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 0px;
 }
 
-.menu_six .menu > .nav-item .nav-link {
+.menu_six .menu>.nav-item .nav-link {
   color: #fff;
 }
 
-.menu_six .menu > .nav-item:hover .nav-link, .menu_six .menu > .nav-item.active .nav-link {
+.menu_six .menu>.nav-item:hover .nav-link, .menu_six .menu>.nav-item.active .nav-link {
   color: #3d57f4;
 }
 
-.menu_six .menu > .nav-item:hover .nav-link:before, .menu_six .menu > .nav-item.active .nav-link:before {
+.menu_six .menu>.nav-item:hover .nav-link:before, .menu_six .menu>.nav-item.active .nav-link:before {
   background: #3d57f4;
 }
 
-.menu_six .menu > .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu_six .menu > .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu_six .menu > .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu_six .menu>.nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu_six .menu>.nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu_six .menu>.nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: #3d57f4;
 }
 
-.menu_six .menu > .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu_six .menu>.nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   color: #051441;
 }
 
@@ -1374,11 +1383,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   background: #fff;
 }
 
-.menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu_seven .menu .nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: maroon;
 }
 
-.menu_seven .menu .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu_seven .menu .nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   color: #051441;
 }
 
@@ -1399,11 +1408,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   background: #fff;
 }
 
-.menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item:hover > .nav-link, .menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item:focus > .nav-link, .menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item.active > .nav-link {
+.menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item:hover>.nav-link, .menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item:focus>.nav-link, .menu_eight .menu .nav-item.submenu .dropdown-menu .nav-item.active>.nav-link {
   color: #23b1fe;
 }
 
-.menu_eight .menu .nav-item.submenu.mega_menu > .dropdown-menu > .nav-item > .nav-link {
+.menu_eight .menu .nav-item.submenu.mega_menu>.dropdown-menu>.nav-item>.nav-link {
   color: #051441;
 }
 
@@ -1438,7 +1447,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== header_area css ==============*/
+
 /*========= hamburger menu css ========*/
+
 .navbar-toggler {
   padding: 0px;
   margin-left: 20px;
@@ -1573,7 +1584,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   transition-delay: .2s;
 }
 
-.header_area_two + section, .header_area_three + section {
+.header_area_two+section, .header_area_three+section {
   margin-top: 93px;
 }
 
@@ -1620,7 +1631,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   color: #5e2ced;
 }
 
-.header_area_four + section {
+.header_area_four+section {
   margin-top: 144px;
 }
 
@@ -1701,7 +1712,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   color: #282835;
 }
 
-.header_area_six + section {
+.header_area_six+section {
   margin-top: 144px;
 }
 
@@ -1803,11 +1814,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   display: none;
 }
 
-.header_area_seven + section {
+.header_area_seven+section {
   margin-top: 143px;
 }
 
 /*============ sticky menu css ==============*/
+
 .header_area {
   -webkit-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
@@ -1840,7 +1852,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   display: none;
 }
 
-.header_area.navbar_fixed .sticky_logo img + img {
+.header_area.navbar_fixed .sticky_logo img+img {
   display: block;
 }
 
@@ -1900,15 +1912,15 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   background: #3d64f4;
 }
 
-.header_area.navbar_fixed .menu_six .menu > .nav-item > .nav-link {
+.header_area.navbar_fixed .menu_six .menu>.nav-item>.nav-link {
   color: #051441;
 }
 
-.header_area.navbar_fixed .menu_six .menu > .nav-item:hover > .nav-link, .header_area.navbar_fixed .menu_six .menu > .nav-item.active > .nav-link {
+.header_area.navbar_fixed .menu_six .menu>.nav-item:hover>.nav-link, .header_area.navbar_fixed .menu_six .menu>.nav-item.active>.nav-link {
   color: #3d57f4;
 }
 
-.header_area.navbar_fixed .menu_six .menu > .nav-item:hover > .nav-link:before, .header_area.navbar_fixed .menu_six .menu > .nav-item.active > .nav-link:before {
+.header_area.navbar_fixed .menu_six .menu>.nav-item:hover>.nav-link:before, .header_area.navbar_fixed .menu_six .menu>.nav-item.active>.nav-link:before {
   background: #3d57f4;
 }
 
@@ -1927,16 +1939,16 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   color: #fff;
 }
 
-.header_area.navbar_fixed .menu_seven .menu > .nav-item > .nav-link {
+.header_area.navbar_fixed .menu_seven .menu>.nav-item>.nav-link {
   color: #051441;
 }
 
-.header_area.navbar_fixed .menu_seven .menu > .nav-item:hover > .nav-link, .header_area.navbar_fixed .menu_seven .menu > .nav-item.active > .nav-link {
+.header_area.navbar_fixed .menu_seven .menu>.nav-item:hover>.nav-link, .header_area.navbar_fixed .menu_seven .menu>.nav-item.active>.nav-link {
   color: maroon;
 }
 
-.header_area.navbar_fixed .menu_seven .menu > .nav-item:hover > .nav-link:before, .header_area.navbar_fixed .menu_seven .menu > .nav-item.active > .nav-link:before {
-  background:maroon;
+.header_area.navbar_fixed .menu_seven .menu>.nav-item:hover>.nav-link:before, .header_area.navbar_fixed .menu_seven .menu>.nav-item.active>.nav-link:before {
+  background: maroon;
 }
 
 .header_area.navbar_fixed .menu_seven .btn_get {
@@ -1973,8 +1985,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= saas_home_area css ===============*/
+
 .saas_home_area {
   position: relative;
   background: #fafafe;
@@ -2056,6 +2071,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== slider_area css ==============*/
+
 .slider_area {
   background-image: -moz-linear-gradient(40deg, #1786d8 0%, #00aff0 100%);
   background-image: -webkit-linear-gradient(40deg, #1786d8 0%, #00aff0 100%);
@@ -2159,6 +2175,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== prototype_banner_area css ==============*/
+
 .prototype_banner_area {
   background: #fbfbfd;
   padding-top: 220px;
@@ -2239,6 +2256,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== agency_banner_area css =============*/
+
 .agency_banner_area {
   padding-top: 150px;
   position: relative;
@@ -2258,6 +2276,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================ software_banner_area css ================*/
+
 .software_banner_area {
   min-height: 100vh;
   background-image: -moz-linear-gradient(140deg, #23026d 0%, #3d64f4 100%);
@@ -2279,6 +2298,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas banner area ================*/
+
 .saas_banner_area {
   background-image: -moz-linear-gradient(140deg, #030207 0%, #111339 100%);
   background-image: -webkit-linear-gradient(140deg, #030207 0%, #111339 100%);
@@ -2302,8 +2322,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= app_banner_area css ===========*/
+
 .app_banner_area {
-  background: url(../img/home7/banner.png) no-repeat scroll center 100%;
+  background: url(../img/home/banner.png) no-repeat scroll center 100%;
   padding-top: 230px;
   padding-bottom: 210px;
   overflow: hidden;
@@ -2362,6 +2383,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================ agency_banner_area_two css ===============*/
+
 .agency_banner_area_two {
   background-image: -moz-linear-gradient(40deg, #5e2ced 0%, #a485fd 100%);
   background-image: -webkit-linear-gradient(40deg, #5e2ced 0%, #a485fd 100%);
@@ -2415,6 +2437,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas_banner_area_two css ===============*/
+
 .saas_banner_area_two {
   position: relative;
   z-index: 1;
@@ -2530,6 +2553,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas_banner_area_two css ===============*/
+
 .payment_banner_area {
   position: relative;
   min-height: 100vh;
@@ -2639,11 +2663,14 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= Start breadcrumb_area css =================*/
+
 .breadcrumb_area {
   background-image: -moz-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);
-  background-image: -webkit-linear-gradient(180deg,#cc0000 0%, #cc6600 100%);
+  background-image: -webkit-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);
   background-image: -ms-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);
   position: relative;
   z-index: 1;
@@ -2659,9 +2686,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================= End breadcrumb_area css =================*/
+
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= service_promo_area css =================*/
+
 .service_promo_area {
   position: relative;
   overflow: hidden;
@@ -2833,6 +2864,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== s_features_section css ================*/
+
 .s_features_section {
   margin-top: 190px;
   padding-bottom: 70px;
@@ -2930,6 +2962,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= software_promo_area css ============*/
+
 .software_promo_area {
   background: #f6f7fa;
   overflow: hidden;
@@ -3150,6 +3183,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== features_area css ==============*/
+
 .features_area {
   background: #fbfbfd;
   overflow: hidden;
@@ -3221,13 +3255,14 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= prototype_featured_area css ===============*/
+
 .prototype_featured_area {
   background: #f4f4f9;
   position: relative;
   z-index: 1;
 }
 
-.p_feature_item + .p_feature_item {
+.p_feature_item+.p_feature_item {
   margin-top: 170px;
 }
 
@@ -3268,6 +3303,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== agency_featured_area css =============*/
+
 .agency_featured_area {
   padding-top: 160px;
 }
@@ -3380,6 +3416,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== software_featured_area css ===============*/
+
 .software_featured_area {
   padding-top: 120px;
 }
@@ -3436,6 +3473,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== software_featured_area_two css ==================*/
+
 .software_featured_area_two {
   background-image: -moz-linear-gradient(40deg, #23026d 0%, #3d64f4 100%);
   background-image: -webkit-linear-gradient(40deg, #23026d 0%, #3d64f4 100%);
@@ -3458,6 +3496,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas_featured_area css ==============*/
+
 .saas_featured_area {
   position: relative;
   overflow: hidden;
@@ -3604,11 +3643,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 12px 30px;
 }
 
-.saas_featured_info + .saas_featured_info {
+.saas_featured_info+.saas_featured_info {
   margin-top: 250px;
 }
 
 /*=============== app_featured_area css ===============*/
+
 .app_featured_area {
   padding: 140px 0px;
   position: relative;
@@ -3629,7 +3669,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   transform: rotate(53deg);
 }
 
-.app_feature_info + .app_feature_info {
+.app_feature_info+.app_feature_info {
   margin-top: 230px;
 }
 
@@ -3768,6 +3808,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas_features_area_two css ==============*/
+
 .saas_features_area_two {
   padding-top: 90px;
 }
@@ -3782,14 +3823,16 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== saas_features_area_two css ==============*/
+
 /*=============== payment_features_area css =============*/
+
 .payment_features_area {
   position: relative;
   padding-top: 100px;
   padding-bottom: 50px;
 }
 
-.payment_features_area .featured_item + .featured_item {
+.payment_features_area .featured_item+.featured_item {
   margin-top: 100px;
 }
 
@@ -3930,8 +3973,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*=========== service_area css ============*/
+
 .service_area {
   background: #f4f6fa;
 }
@@ -4015,6 +4061,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================ prototype_service_info css ==============*/
+
 .prototype_service_area_two, .prototype_service_area_three {
   overflow: hidden;
 }
@@ -4137,7 +4184,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   z-index: -1;
 }
 
-.symbols-pulse > div {
+.symbols-pulse>div {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4211,6 +4258,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================ prototype_service_area css =============*/
+
 .prototype_service_area {
   background: #fbfbfd;
   padding-bottom: 130px;
@@ -4297,6 +4345,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= agency_service_area css =============*/
+
 .agency_service_area {
   padding: 135px 0px 140px;
 }
@@ -4372,6 +4421,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================== design_developers_area css =================*/
+
 .design_img img {
   border: 2px solid #e4ebf2;
   border-radius: 6px;
@@ -4385,6 +4435,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== software_service_area css =============*/
+
 .software_service_area {
   background: #f9f9fc;
 }
@@ -4463,6 +4514,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== developer_product_area css ================*/
+
 .developer_product_area {
   background: #f9f9fc;
   padding: 160px 0px;
@@ -4567,6 +4619,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= app_service_area css ============*/
+
 .app_service_area {
   padding-top: 120px;
 }
@@ -4659,6 +4712,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== service_details_area css ==============*/
+
 .service_details_img {
   margin-left: -80px;
 }
@@ -4686,11 +4740,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-bottom: 0px;
 }
 
-.service_details_item + .service_details_item {
+.service_details_item+.service_details_item {
   margin-top: 200px;
 }
 
 /*============= saas_service_area css =============*/
+
 .saas_service_item .saas_service_content .icon {
   width: 60px;
   height: 60px;
@@ -4742,11 +4797,12 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-bottom: 45px;
 }
 
-.saas_service_item + .saas_service_item {
+.saas_service_item+.saas_service_item {
   margin-top: 180px;
 }
 
 /*============ payment_service_area css ==============*/
+
 .payment_service_area {
   padding-top: 225px;
   padding-bottom: 150px;
@@ -4807,8 +4863,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= s_pricing_area css ===============*/
+
 .s_pricing-item {
   text-align: center;
   background: #f6f7fa;
@@ -4928,6 +4987,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=========== s_subscribe_area css ============*/
+
 .s_subscribe_area {
   position: relative;
   z-index: 1;
@@ -5019,6 +5079,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================= pricing_area css ==============*/
+
 .pricing_area {
   background: #fbfbfd;
 }
@@ -5196,6 +5257,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=================== pricing_area_two css ===============*/
+
 .pricing_area_two {
   background: #f6f7fa;
 }
@@ -5224,6 +5286,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================== call_action_area css ================*/
+
 .call_action_area {
   min-height: 900px;
   position: relative;
@@ -5292,6 +5355,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= design_tab_area css ============*/
+
 .design_tab_area {
   background: #fbfbfd;
 }
@@ -5368,6 +5432,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= action_area_two css =============*/
+
 .action_area_two {
   background: #f6f6fa;
   padding-bottom: 40px;
@@ -5398,6 +5463,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================= action area three css =================*/
+
 .action_area_three {
   background-image: -moz-linear-gradient(0deg, #5e2ced 0%, #6c3cf4 100%);
   background-image: -webkit-linear-gradient(0deg, #5e2ced 0%, #6c3cf4 100%);
@@ -5460,8 +5526,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*============= agency_about_area css ============*/
+
 .agency_about_area .owl-dots {
   position: absolute;
   left: -48%;
@@ -5631,8 +5700,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*=============== agency_testimonial_area css ==============*/
+
 .agency_testimonial_info {
   position: relative;
 }
@@ -5755,6 +5827,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= partner_logo_area_two css ==============*/
+
 .partner_logo_area_two {
   padding-top: 120px;
 }
@@ -5863,6 +5936,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== partner_logo_area_three css ================*/
+
 .partner_logo_area_three {
   padding: 100px 0px;
 }
@@ -5902,6 +5976,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============== saas_signup_area css ==============*/
+
 .saas_signup_form .input-group .form-control {
   background: transparent;
   font: 300 14px "Poppins", sans-serif;
@@ -5933,7 +6008,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   color: #535473;
 }
 
-.saas_signup_form .input-group .form-control:focus + label {
+.saas_signup_form .input-group .form-control:focus+label {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -5961,6 +6036,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= fun_fact_area  css ==============*/
+
 .fun_fact_area {
   padding-top: 150px;
   padding-bottom: 110px;
@@ -6024,6 +6100,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============ feedback_area css ==============*/
+
 .feedback_slider .item {
   padding: 0px 15px;
 }
@@ -6181,6 +6258,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== app_testimonial_area css =============*/
+
 .app_testimonial_area {
   background: #fbfbfd;
   padding-top: 200px;
@@ -6337,6 +6415,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*===========experts_team_area css ==========*/
+
 .experts_team_area .learn_btn:hover {
   color: maroon;
 }
@@ -6493,6 +6572,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=============== payment_clients_area  css =============*/
+
 .payment_clients_area {
   background: #fafbff;
   padding: 130px 0px;
@@ -6602,6 +6682,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============ payment_testimonial_area css =============*/
+
 .payment_testimonial_area {
   background: #fafbff;
   padding-top: 150px;
@@ -6644,6 +6725,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================ payment_action_area css ===================*/
+
 .payment_action_area {
   padding: 225px 0px 145px;
   position: relative;
@@ -6678,11 +6760,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*=========== sass_partner_logo_area css ==========*/
+
 .sass_partner_logo_area, .saas_map_area, .saas_subscribe_area {
   background: #fbfcfe;
 }
 
 /*=========== saas_subscribe_area css ==========*/
+
 .saas_subscribe_area .saas_action_content {
   max-width: 970px;
   margin: 0 auto;
@@ -6724,8 +6808,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= app_screenshot_area css =============*/
+
 .app_screenshot_area {
   overflow: hidden;
 }
@@ -6789,11 +6876,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================= app_screenshot_area css =============*/
+
 /*=============== get started area css ===============*/
+
 .get_started_area {
-  background-image: -moz-linear-gradient(140deg,  #dc0606 0%, #6d0000 100%);
+  background-image: -moz-linear-gradient(140deg, #dc0606 0%, #6d0000 100%);
   background-image: -webkit-linear-gradient(140deg, #dc0606 0%, #6d0000 100%);
-  background-image: -ms-linear-gradient(140deg,  #dc0606 0%, #6d0000 100%);
+  background-image: -ms-linear-gradient(140deg, #dc0606 0%, #6d0000 100%);
   padding: 120px 0px 80px;
   position: relative;
   overflow: hidden;
@@ -6887,8 +6976,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*===================== job_listing_area css ======================*/
+
 .job_listing_area .sec_title {
   max-width: 970px;
 }
@@ -6938,7 +7030,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   left: 0;
 }
 
-.job_listing .job_list_tab .nav-item + .nav-item {
+.job_listing .job_list_tab .nav-item+.nav-item {
   margin-left: 55px;
 }
 
@@ -7104,7 +7196,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*===================== job_listing_area css ======================*/
+
 /*============== job_details_area css =============*/
+
 .details_content .f_size_22 {
   font-size: 22px;
 }
@@ -7198,6 +7292,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*========== job_apply_area css =========*/
+
 .apply_form .form-group {
   margin-bottom: 30px;
 }
@@ -7294,8 +7389,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*============== faq area css =============*/
+
 .faq_tab {
   border: 1px solid #f4f4f9;
   background-color: white;
@@ -7381,7 +7479,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   font-size: 20px;
 }
 
-.faq_content .tab-pane .card .card-header .btn i + i {
+.faq_content .tab-pane .card .card-header .btn i+i {
   display: block;
 }
 
@@ -7393,7 +7491,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   display: block;
 }
 
-.faq_content .tab-pane .card .card-header .btn.collapsed i + i {
+.faq_content .tab-pane .card .card-header .btn.collapsed i+i {
   display: none;
 }
 
@@ -7404,8 +7502,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*============= portfolio area css ============*/
+
 .portfolio_area {
   overflow: hidden;
 }
@@ -7456,7 +7557,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   left: 0;
 }
 
-.portfolio_filter .work_portfolio_item + .work_portfolio_item {
+.portfolio_filter .work_portfolio_item+.work_portfolio_item {
   margin-left: 50px;
 }
 
@@ -7642,6 +7743,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*==============Start portfolio_details_area css ==============*/
+
 .p_category_item .social_icon, .icon .social_icon {
   padding-top: 8px;
 }
@@ -7762,8 +7864,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*==============End portfolio_details_area css ==============*/
+
 /*====================================================*/
+
 /*====================================================*/
+
 .map_area {
   height: 552px;
   position: relative;
@@ -7838,6 +7943,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================== contact_info_area css ================*/
+
 .contact_info_item {
   border-bottom: 1px solid #eeebf6;
   padding-bottom: 25px;
@@ -7858,7 +7964,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   color: #5e2ced;
 }
 
-.contact_info_item + .contact_info_item {
+.contact_info_item+.contact_info_item {
   border: 0px;
   margin-top: 33px;
 }
@@ -7878,7 +7984,8 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-bottom: 30px;
 }
 
-.text_box input[type="text"], .text_box textarea, .text_box input[type="password"] {
+.text_box input[type="text"], .text_box textarea, .text_box input[type="password"], .text_box input[type="number"],
+.text_box select {
   font: 300 15px/60px "Poppins", sans-serif;
   color: #222d39;
   height: 60px;
@@ -7918,6 +8025,23 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   height: 220px;
 }
 
+#options li {
+  list-style: none;
+  width: 100%;
+  display: flex;
+}
+
+.btn_delete {
+  height: 60px;
+  border-radius: 4px;
+  background-color: red;
+  -webkit-box-shadow: 0px 2px 4px 0px rgba(12, 0, 46, 0.04);
+  box-shadow: 0px 2px 4px 0px rgba(12, 0, 46, 0.04);
+  border: none;
+  padding: 10px;
+  color: white;
+}
+
 .contact_form_box .btn_three {
   min-width: 180px;
   text-align: center;
@@ -7937,6 +8061,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= login_area css =============*/
+
 .login_area {
   position: relative;
   overflow: hidden;
@@ -7947,16 +8072,16 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 160px 100px 160px 0px;
 }
 
-.login_area .login_info:before {
+/* .login_area .login_info:before {
   content: "";
   position: absolute;
-  width: 2500px;
+  width: 100%;
   right: 0;
   height: 100%;
   background: #fbfbfb;
   top: 0;
   z-index: -1;
-}
+} */
 
 .login_area .login_info p a {
   color: #677294;
@@ -8065,6 +8190,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*==================== sign_in_area css ==================*/
+
 .sign_info {
   border: 20px solid #fff;
   background: #fbfbfd;
@@ -8157,6 +8283,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= get_quote_form css============*/
+
 .get_quote_form .form-group {
   margin-bottom: 30px;
 }
@@ -8205,8 +8332,11 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*================= error_area css ==================*/
+
 .error_area {
   background: -moz-linear-gradient(180deg, rgba(94, 44, 237, 0.93) 0%, rgba(164, 133, 253, 0.9) 100%), url("../img/error_bg.png") no-repeat scroll center 100%;
   background: -webkit-linear-gradient(180deg, rgba(94, 44, 237, 0.93) 0%, rgba(164, 133, 253, 0.9) 100%), url("../img/error_bg.png") no-repeat scroll center 100%;
@@ -8248,9 +8378,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*================= error_area css ==================*/
+
 /*====================================================*/
+
 /*====================================================*/
+
 /*============= shop_grid_area css ==============*/
+
 .shop_menu_left p {
   margin-bottom: 0px;
   font: 300 16px "Poppins", sans-serif;
@@ -8429,6 +8563,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 /*============= shop_grid_area css ==============*/
+
 .shop_list_area .shop_page_number {
   margin-top: 70px;
 }
@@ -8880,6 +9015,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*============ shopping_cart_area css =============*/
+
 .shopping_cart_area .cart_title {
   border-bottom: 1px solid #e7e7f6;
 }
@@ -8962,7 +9098,7 @@ input[type=number]::-webkit-inner-spin-button {
   font-size: 22px;
 }
 
-.shopping_cart_area .cart_table .del-item a + a {
+.shopping_cart_area .cart_table .del-item a+a {
   position: relative;
   top: 3px;
 }
@@ -9190,6 +9326,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*================== check list css ======================*/
+
 .return_customer {
   font: 400 15px/25px "Poppins", sans-serif;
   color: #3d3f45;
@@ -9460,7 +9597,7 @@ input[type=number]::-webkit-inner-spin-button {
   font-size: 20px;
 }
 
-.woocommerce-checkout-review-order .shop_table tbody tr td + td {
+.woocommerce-checkout-review-order .shop_table tbody tr td+td {
   text-align: right;
 }
 
@@ -9517,11 +9654,11 @@ input[type=number]::-webkit-inner-spin-button {
   display: none;
 }
 
-.woocommerce-checkout-review-order ul li input[type="checkbox"]:checked + label:after {
+.woocommerce-checkout-review-order ul li input[type="checkbox"]:checked+label:after {
   opacity: 1;
 }
 
-.woocommerce-checkout-review-order ul li input[type="checkbox"]:checked + label:before {
+.woocommerce-checkout-review-order ul li input[type="checkbox"]:checked+label:before {
   border-color: #5e2ced;
 }
 
@@ -9580,11 +9717,11 @@ input[type=number]::-webkit-inner-spin-button {
   display: none;
 }
 
-.woocommerce-checkout-review-order .condition input[type="checkbox"]:checked + label:after {
+.woocommerce-checkout-review-order .condition input[type="checkbox"]:checked+label:after {
   opacity: 1;
 }
 
-.woocommerce-checkout-review-order .condition input[type="checkbox"]:checked + label:before {
+.woocommerce-checkout-review-order .condition input[type="checkbox"]:checked+label:before {
   border-color: #5e2ced;
 }
 
@@ -9649,8 +9786,11 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*=========== blog area css ===========*/
+
 .blog_grid_item {
   cursor: pointer;
 }
@@ -9759,7 +9899,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: #677294;
 }
 
-.entry_post_info a + a:before {
+.entry_post_info a+a:before {
   content: "/";
   display: inline-block;
   margin: 0px 7px 0px 2px;
@@ -9800,7 +9940,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: #5e2ced;
 }
 
-.post_share a + a {
+.post_share a+a {
   margin-left: 15px;
 }
 
@@ -9893,6 +10033,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*=========== blog sidebar css ===========*/
+
 .widget_title {
   margin-bottom: 35px;
 }
@@ -9988,7 +10129,7 @@ input[type=number]::-webkit-inner-spin-button {
   padding-bottom: 0px;
 }
 
-.blog-sidebar .widget.widget_recent_post .post_item + .post_item {
+.blog-sidebar .widget.widget_recent_post .post_item+.post_item {
   margin-top: 30px;
 }
 
@@ -10051,8 +10192,11 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*====================================================*/
+
 /*====================================================*/
+
 /*============== footer_area css ==============*/
+
 .f_bg {
   background: #eff2f9;
   -webkit-box-shadow: 0px -1px 0px 0px rgba(231, 236, 246, 0.004);
@@ -10219,11 +10363,11 @@ input[type=number]::-webkit-inner-spin-button {
   color: #6754e2;
 }
 
-.footer_bottom .f_menu li + li {
+.footer_bottom .f_menu li+li {
   margin-left: 16px;
 }
 
-.footer_bottom .f_menu li + li:before {
+.footer_bottom .f_menu li+li:before {
   content: "";
   width: 1px;
   height: 12px;
@@ -10244,6 +10388,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*================ footer area two css ==============*/
+
 .footer_area_two {
   background: #fbfbfd;
 }
@@ -10277,7 +10422,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: #00aff0;
 }
 
-.footer_area_two .footer_bottom .f_menu li + li:before {
+.footer_area_two .footer_bottom .f_menu li+li:before {
   background: #7f88a6;
 }
 
@@ -10301,7 +10446,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: #fff;
 }
 
-.f_social_icon a + a {
+.f_social_icon a+a {
   margin-left: 10px;
 }
 
@@ -10390,6 +10535,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*=============== footer_area_four css =============*/
+
 .footer_area_four .footer_top {
   border-bottom: 1px solid #e9ecf3;
   padding: 120px 0px 70px;
@@ -10416,6 +10562,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*======= footer_area_five css ========*/
+
 .footer_area_five .footer_top .f_widget.about-widget .f_list li a:hover {
   color: #3d64f4;
 }
@@ -10473,7 +10620,7 @@ input[type=number]::-webkit-inner-spin-button {
   transition: all 0.3s linear;
 }
 
-.footer_top_six .social-widget .f_social_icon a + a {
+.footer_top_six .social-widget .f_social_icon a+a {
   margin-left: 2px;
 }
 
@@ -10482,6 +10629,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*============ footer_seven css==============*/
+
 .footer_seven {
   border-top: 1px solid #d9e1fb;
 }
@@ -10502,7 +10650,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: maroon;
 }
 
-.footer_seven .f_social_icon a + a {
+.footer_seven .f_social_icon a+a {
   margin-left: 16px;
 }
 
@@ -10539,6 +10687,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*============= error_footer css ===========*/
+
 .error_footer {
   background: #eff2f9;
   padding: 40px 0px;
@@ -10573,11 +10722,12 @@ input[type=number]::-webkit-inner-spin-button {
   width: 100%;
 }
 
-.error_footer .f_menu li + li:before {
+.error_footer .f_menu li+li:before {
   display: none;
 }
 
 /*============== footer_dark_one css =============*/
+
 .footer_dark_one {
   background: #15133a;
 }
@@ -10616,7 +10766,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: maroon;
 }
 
-.dark_f_bottom .f_menu li + li:before {
+.dark_f_bottom .f_menu li+li:before {
   background: #5e6482;
 }
 
@@ -10662,6 +10812,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*============ footer_dark_two css ===========*/
+
 .footer_dark_two {
   background: #13112d;
 }
@@ -10784,6 +10935,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*=========== footer_nine_area css ============*/
+
 .footer_nine_area {
   position: relative;
 }
@@ -10940,6 +11092,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /*===========footer_dark_ten css ===========*/
+
 .footer_dark_ten .f_widget .widget-wrap p a:hover {
   color: #23b1fe;
 }

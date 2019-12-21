@@ -2,44 +2,58 @@ require('dotenv').config();
 
 let express = require('express'),
     mongoose = require('mongoose'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    flash = require('connect-flash'),
+    methodOverride = require('method-override'),
+    User = require('./models/user'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local');
 
-// <<<<< Express Setup >>>>>>>>>>>
+// <<<<<<<<<<<<<< Database Setup >>>>>>>>>>>>>>>>>
+mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(console.log('Connected to the database')).catch((err) => console.log(err));
+
+
+// <<<<<<<<<<< Express Setup >>>>>>>>>>>
 let app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({
-    extended: true
+app.use(bodyParser.urlencoded({ extended: true })).use(bodyParser.json());
+app.use(flash());
+app.use(methodOverride('_method'));
+
+// <<<<<<<< Passport Configuration >>>>>>>>>
+app.use(require('express-session')({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-// <<<<<<<<<<< Routes >>>>>>>>>>>>
-let menuRoutes = require('./routes/menu');
 
-app.use(menuRoutes);
-
-
-// <<<<<<<<<<<<<< Database Setup >>>>>>>>>>>>>>>>>
-// mongoose.connect(process.env.MONGODB_URL)
-
-app.get('/', (req, res) => {
-    res.render('index', {
-        page: 'home'
-    });
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.errorMsg = req.flash('error');
+    res.locals.successMsg = req.flash('success');
+    next();
 });
 
 
+// <<<<<<<<<<< Routes >>>>>>>>>>>>
+let menuRoutes = require('./routes/menu'),
+    adminRoutes = require('./routes/admin'),
+    basicRoutes = require('./routes/index');
 
-app.get('/gallery', (req, res) => {
-    res.render('gallery', {page: 'gallery'});
-})
-
-app.get('/contact', (req, res) => {
-    res.render('contact', {page: 'contact'});
-})
-
-app.get('/order', (req, res) => {
-    res.render('order');
-}); 
+app.use(basicRoutes);    
+app.use(menuRoutes);
+app.use(adminRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('Starting the server');
