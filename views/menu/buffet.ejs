@@ -35,7 +35,8 @@
                 </p>
 
                 <% if (currentUser) { %>
-                <a href="/buffet/edit" class="btn_three mt-5 app_btn text-center"><i class="ti-pencil mr-2 lead"></i> Update
+                <a href="/buffet/edit" class="btn_three mt-5 app_btn text-center"><i class="ti-pencil mr-2 lead"></i>
+                    Update
                     Buffet </a>
                 <%} %>
             </div>
@@ -77,11 +78,11 @@
                     <p>$ <%= buffet.price %></p>
                 </div>
             </div>
-            
+
             <hr>
 
             <div class="row portfolio_gallery mb-50" id="work-portfolio">
-                <% buffet.items.forEach(item => { %>
+                <% buffet.menuItems.forEach(item => { %>
                 <div class="col-lg-3 col-sm-6 portfolio_item mb_50">
                     <div class="portfolio_img app_service_item p-2">
                         <% if (item.imageUrl !== undefined && item.imageUrl.length > 0){ %>
@@ -104,8 +105,19 @@
                     </div>
                 </div>
                 <% }); %>
+
+                <% buffet.extraItems.forEach(item => { %>
+                <div class="col-lg-3 col-sm-6 portfolio_item mb_50">
+                    <div class="portfolio_img app_service_item p-2">
+                        <div class="portfolio-description">
+                            <a class="portfolio-title">
+                                <h3 class="f_500 f_size_20 f_p mt_30"><%= item %></h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
             </div>
-        </div>
     </section>
 
 

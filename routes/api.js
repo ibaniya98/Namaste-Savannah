@@ -81,7 +81,7 @@ router.get('/buffet/all', (req, res) => {
 });
 
 router.get('/buffet/latest', (req, res) => {
-    Buffet.findOne({}).sort('-updatedAt').populate('items').exec((err, item) => {
+    Buffet.findOne({}).sort('-updatedAt').populate('menuItems').exec((err, item) => {
         if (err) {
             res.status(500).send(err.message);
         } else {

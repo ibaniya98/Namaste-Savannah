@@ -97,7 +97,7 @@ router.delete('/menu/:id', middleWare.isAuthorized, (req, res) => {
 });
 
 router.get('/buffet', (req, res) => {
-    Buffet.findOne({}).sort('-updatedAt').populate('items').exec((err, item) => {
+    Buffet.findOne({}).sort('-updatedAt').populate('menuItems').exec((err, item) => {
         if (err) {
             //TODO - Redirect to error page
             res.redirect('/')
@@ -108,6 +108,16 @@ router.get('/buffet', (req, res) => {
             } else {
                 buffet = item;
             }
+
+            if (buffet.menuItems === undefined || !(buffet.menuItems instanceof Array)) {
+                buffet.menuItems = [];
+            }
+
+            if (buffet.extraItems === undefined || !(buffet.extraItems instanceof Array)) {
+                buffet.extraItems = [];
+            }
+            console.log(buffet);
+
             res.render('menu/buffet', {
                 page: 'menu',
                 unsetBuffet: unsetBuffet,
@@ -121,7 +131,8 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
     // There is an existing buffet. Update that buffet
     if (req.body.id && req.body.id.length > 0) {
         req.body.buffet.updatedAt = Date.now();
-        req.body.buffet.items = req.body.items;
+        req.body.buffet.menuItems = req.body.items;
+        req.body.buffet.extraItems = req.body.extras;
 
         Buffet.findByIdAndUpdate(req.body.id, req.body.buffet, (err, buffet) => {
             if (err) {
@@ -137,6 +148,8 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
     } else {
         console.log('Creating a new buffet');
         req.body.buffet.items = req.body.items;
+        req.body.buffet.items = req.body.extras;
+
         Buffet.create(req.body.buffet, (err, buffet) => {
             if (err) {
                 req.flash('error', 'Failed to create buffet');
@@ -150,7 +163,7 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
 });
 
 router.get('/buffet/edit', middleWare.isAuthorized, (req, res) => {
-    Buffet.findOne({}).sort('-updatedAt').populate('items').exec((err, item) => {
+    Buffet.findOne({}).sort('-updatedAt').populate('menuItems').exec((err, item) => {
         if (err || !item) {
             req.flash('error', 'Failed to find the recent buffet menu');
             item = {
@@ -158,9 +171,19 @@ router.get('/buffet/edit', middleWare.isAuthorized, (req, res) => {
                 price: "",
                 startTime: "",
                 endTime: "",
-                items: []
+                menuItems: [],
+                extraItems: []
             }
         }
+
+        if (item.menuItems === undefined || !(item.menuItems instanceof Array)) {
+            item.menuItems = [];
+        }
+
+        if (item.extraItems === undefined || !(item.extraItems instanceof Array)) {
+            item.extraItems = [];
+        }
+
         res.render('menu/editBuffet', {
             page: 'menu',
             buffet: item

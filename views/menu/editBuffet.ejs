@@ -78,7 +78,7 @@
 
                                 <div class="row col-lg-12">
                                     <div class="col-12">
-                                        <p>Items *</p>
+                                        <p>Menu Items *</p>
                                     </div>
 
                                     <div class="col-12">
@@ -89,7 +89,7 @@
                                     </div>
 
                                     <ul id="items" class="pl-0 col-12">
-                                        <% buffet['items'].forEach(item => { %>
+                                        <% buffet['menuItems'].forEach(item => { %>
                                         <li class="row col-lg-6 my-1 align-items-center">
                                             <div class="col-2 align-self-start">
                                                 <button type="button" class="btn btn_delete"><i
@@ -101,6 +101,40 @@
                                             </div>
                                         </li>
                                         <% }); %>
+                                    </ul>
+
+                                </div>
+
+                                <!-- Extra Items -->
+
+                                <div class="row col-lg-12">
+                                    <div class="col-12">
+                                        <p>Special Items *</p>
+                                    </div>
+
+                                    <div class="col-12 row">
+                                        <div class="form-group text_box col-10">
+                                            <input type="text" id="customItem" value="" placeholder="Add Special Items">
+                                        </div>
+
+                                        <div class="col-2">
+                                            <button type="button" class="btn_four" id="add_custom">Add</button>
+                                        </div>
+                                    </div>
+
+                                    <ul id="extras" class="pl-0 col-12">
+                                        <% buffet['extraItems'].forEach(item => { %>
+                                        <li class="row col-lg-6 my-1 align-items-center">
+                                            <div class="col-2 align-self-start">
+                                                <button type="button" class="btn btn_delete"><i
+                                                        class="ti-trash lead"></i></button>
+                                            </div>
+                                            <div class="col-10 align-items-center form-group m-0">
+                                                <input type="text" name="extras[]" value="<%= item %>" class="d-none">
+                                                <p class="m-0 align-middle"><%= item %></p>
+                                            </div>
+                                        </li>
+                                        <% });%>
                                     </ul>
 
                                 </div>
@@ -132,12 +166,13 @@
     <script src="/js/main.js"></script>
 
     <script>
+
+        
         initialize();
 
         function initialize() {
             populateTime();
             populateAutoComplete();
-            populateLatestBuffetData();
         }
 
         // Populate item names for suggestions
@@ -164,20 +199,12 @@
                         return '<div class="autocomplete-suggestion" data-val="' + item[0] + '" data-id="' + item[1] + '"">' + item[0].replace(re, "<b>$1</b>") + '</div>';
                     },
                     onSelect: function (e, term, item) {
-                        addItemToList(item.getAttribute('data-val'), item.getAttribute('data-id'));
+                        addItemToList("items", item.getAttribute('data-val'), item.getAttribute('data-id'));
                         $('#searchbar').val("");
                     }
                 });
             });
         }
-
-        // Retrieve the latest buffet data and fill out the form
-        function populateLatestBuffetData() {
-            $.get('/api/buffet/latest', function (data) {
-
-            });
-        }
-
 
         function populateTime() {
             var availableTimes = [];
@@ -199,18 +226,36 @@
                 startTimeNode = optionNode.cloneNode(true);
                 endTimeNode = optionNode.cloneNode(true);
 
-                if (time === "<%= buffet.startTime %>"){
+                if (time === "<%= buffet.startTime %>") {
                     startTimeNode.setAttribute('selected', true);
                 }
-                if (time === "<%= buffet.endTime %>"){
+                if (time === "<%= buffet.endTime %>") {
                     endTimeNode.setAttribute('selected', true);
                 }
-                
+
                 startTime.appendChild(startTimeNode);
                 endTime.appendChild(endTimeNode);
             });
         }
 
+        $('#add_custom').on('click', function () {
+            addCustomItem();
+        });
+
+        $('#customItem').keypress(function (e) {
+            if (e.which == 13 || e.keyCode == 13) {
+                e.preventDefault();
+                addCustomItem();
+            }
+        });
+
+
+        function addCustomItem(){
+            var newItem = $('#customItem').val();
+            $('#customItem').val("");
+
+            addItemToList('extras', newItem, newItem);
+        }
 
 
         // Deletes the item from the list
@@ -220,15 +265,21 @@
             });
         });
 
+        $("#extras").on('click', '.btn_delete', function () {
+            $(this).parent().parent().fadeOut(200, function () {
+                $(this).remove();
+            });
+        });
+
         // Adds item to the list
-        function addItemToList(itemName, itemId) {
+        function addItemToList(containerId, itemName, itemId) {
             var container = getListContainer();
-            var itemName = getItemNameHolder(itemName, itemId);
+            var itemName = getItemNameHolder(containerId, itemName, itemId);
             var deleteBtn = getDeleteButton();
 
             container.appendChild(deleteBtn);
             container.appendChild(itemName);
-            document.getElementById("items").appendChild(container);
+            document.getElementById(containerId).appendChild(container);
         }
 
         function getListContainer() {
@@ -237,19 +288,19 @@
             return container;
         }
 
-        function getItemNameHolder(itemName, itemId) {
+        function getItemNameHolder(containerId, itemName, itemId) {
             var wrapper = document.createElement('div');
             wrapper.classList.add("col-10", "align-items-center", "form-group", "m-0");
 
             var inputForm = document.createElement('input');
             inputForm.type = 'text';
-            inputForm.name = 'items[]';
+            inputForm.name = containerId + '[]';
             inputForm.value = itemId;
             inputForm.classList.add("d-none");
             // inputForm.setAttribute('disabled', 'true');
 
             var text = document.createElement('p');
-            text.classList.add('align-middle','m-0');
+            text.classList.add('align-middle', 'm-0');
             text.textContent = itemName;
 
             wrapper.appendChild(inputForm);
