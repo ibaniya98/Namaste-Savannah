@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <title>Update Buffet | Namaste Savannah</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!--icon font css-->
+    <link rel="stylesheet" href="/vendors/themify-icon/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/vendors/animation/animate.css">
+    <link rel="stylesheet" href="/vendors/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/vendors/magnify-pop/magnific-popup.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/vendors/autocomplete/auto-complete.css">
+</head>
+
+<body>
+    <% include ../partials/preloader.ejs %>
+
+    <% include ../partials/navbar.ejs %>
+
+    <!-- Jumbotron -->
+    <section class="breadcrumb_area">
+        <img class="breadcrumb_shap" src="/img/home/banner_bg.png" alt="">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Update Buffet Menu</h1>
+                <p class="f_300 w_color f_size_16 l_height26">
+                    <!-- TODO - Add something -->
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact_info_area sec_pad bg_color">
+        <div class="container">
+            <% include ../partials/flashMessages.ejs %>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact_form">
+                        <form action="/buffet" class="contact_form_box" method="POST">
+                            <input type="text" name="id" class="d-none" id="buffetId" value="<%= buffet._id %>">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>Buffet Price *</p>
+                                    <div class="form-group text_box">
+                                        <input type="number" id="price" name="buffet[price]" placeholder="Buffet Price"
+                                            required step="0.01" value="<%= buffet['price'] %>">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <p>Start Time *</p>
+                                    <div class="form-group text_box">
+                                        <select name="buffet[startTime]" id="startTime" required>
+                                            <option value="">Select Start Time</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <p>End Time *</p>
+                                    <div class="form-group text_box">
+                                        <select name="buffet[endTime]" id="endTime" required>
+                                            <option value="">Select End Time</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <!-- Menu Item Selection  -->
+
+                                <div class="row col-lg-12">
+                                    <div class="col-12">
+                                        <p>Items *</p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group text_box">
+                                            <input type="text" id="searchbar" value=""
+                                                placeholder="Search Items to Add">
+                                        </div>
+                                    </div>
+
+                                    <ul id="items" class="pl-0 col-12">
+                                        <% buffet['items'].forEach(item => { %>
+                                        <li class="row col-lg-6 my-1 align-items-center">
+                                            <div class="col-2 align-self-start">
+                                                <button type="button" class="btn btn_delete"><i
+                                                        class="ti-trash lead"></i></button>
+                                            </div>
+                                            <div class="col-10 align-items-center form-group m-0">
+                                                <input type="text" name="items[]" value="<%= item.id %>" class="d-none">
+                                                <p class="m-0 align-middle"><%= item.itemName %></p>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="btn_three mt-5">Update Buffet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <% include ../partials/footer.ejs %>
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/propper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/vendors/wow/wow.min.js"></script>
+    <script src="/vendors/sckroller/jquery.parallax-scroll.js"></script>
+    <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="/vendors/isotope/isotope-min.js"></script>
+    <script src="/vendors/magnify-pop/jquery.magnific-popup.min.js"></script>
+    <script src="/vendors/autocomplete/auto-complete.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+        initialize();
+
+        function initialize() {
+            populateTime();
+            populateAutoComplete();
+            populateLatestBuffetData();
+        }
+
+        // Populate item names for suggestions
+        function populateAutoComplete() {
+            $.get('/api/menu/items', function (data) {
+                itemData = [];
+                data.forEach(item => {
+                    itemData.push([item.itemName, item.id]);
+                });
+                new autoComplete({
+                    selector: '#searchbar',
+                    minChars: 1,
+                    source: function (term, suggest) {
+                        term = term.toLowerCase();
+                        var choices = itemData;
+                        var matches = [];
+                        for (i = 0; i < choices.length; i++)
+                            if (~choices[i][0].toLowerCase().indexOf(term)) matches.push(choices[i]);
+                        suggest(matches);
+                    },
+                    renderItem: function (item, search) {
+                        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                        return '<div class="autocomplete-suggestion" data-val="' + item[0] + '" data-id="' + item[1] + '"">' + item[0].replace(re, "<b>$1</b>") + '</div>';
+                    },
+                    onSelect: function (e, term, item) {
+                        addItemToList(item.getAttribute('data-val'), item.getAttribute('data-id'));
+                        $('#searchbar').val("");
+                    }
+                });
+            });
+        }
+
+        // Retrieve the latest buffet data and fill out the form
+        function populateLatestBuffetData() {
+            $.get('/api/buffet/latest', function (data) {
+
+            });
+        }
+
+
+        function populateTime() {
+            var availableTimes = [];
+            for (var i = 9; i < 24; i++) {
+                var timeOfDay = (i < 12) ? "AM" : "PM";
+                var hour = (i % 12 == 0) ? 12 : i % 12;
+                availableTimes.push(hour + ":00 " + timeOfDay);
+                availableTimes.push(hour + ":30 " + timeOfDay);
+            }
+
+            var startTime = document.getElementById('startTime');
+            var endTime = document.getElementById('endTime');
+
+            availableTimes.forEach(time => {
+                var optionNode = document.createElement('option');
+                optionNode.value = time;
+                optionNode.textContent = time;
+
+                startTimeNode = optionNode.cloneNode(true);
+                endTimeNode = optionNode.cloneNode(true);
+
+                if (time === "<%= buffet.startTime %>"){
+                    startTimeNode.setAttribute('selected', true);
+                }
+                if (time === "<%= buffet.endTime %>"){
+                    endTimeNode.setAttribute('selected', true);
+                }
+                
+                startTime.appendChild(startTimeNode);
+                endTime.appendChild(endTimeNode);
+            });
+        }
+
+
+
+        // Deletes the item from the list
+        $("#items").on('click', '.btn_delete', function () {
+            $(this).parent().parent().fadeOut(200, function () {
+                $(this).remove();
+            });
+        });
+
+        // Adds item to the list
+        function addItemToList(itemName, itemId) {
+            var container = getListContainer();
+            var itemName = getItemNameHolder(itemName, itemId);
+            var deleteBtn = getDeleteButton();
+
+            container.appendChild(deleteBtn);
+            container.appendChild(itemName);
+            document.getElementById("items").appendChild(container);
+        }
+
+        function getListContainer() {
+            var container = document.createElement('li');
+            container.classList.add("row", "col-lg-6", "align-items-center", "my-1");
+            return container;
+        }
+
+        function getItemNameHolder(itemName, itemId) {
+            var wrapper = document.createElement('div');
+            wrapper.classList.add("col-10", "align-items-center", "form-group", "m-0");
+
+            var inputForm = document.createElement('input');
+            inputForm.type = 'text';
+            inputForm.name = 'items[]';
+            inputForm.value = itemId;
+            inputForm.classList.add("d-none");
+            // inputForm.setAttribute('disabled', 'true');
+
+            var text = document.createElement('p');
+            text.classList.add('align-middle','m-0');
+            text.textContent = itemName;
+
+            wrapper.appendChild(inputForm);
+            wrapper.appendChild(text);
+
+            return wrapper;
+        }
+
+        function getDeleteButton() {
+            var wrapper = document.createElement('div');
+            wrapper.classList.add("col-2", "align-self-start");
+
+            var button = document.createElement('button');
+            button.type = "button";
+            button.classList.add("btn", "btn_delete");
+            button.innerHTML = '<i class="ti-trash lead"></i>';
+
+            wrapper.appendChild(button);
+            return wrapper;
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
