@@ -37,7 +37,8 @@
                             Savannah</h2>
                         <p class="f_300 f_size_18 l_height30 w_color wow fadeInLeft" data-wow-delay="0.3s">Nepalese
                             cuisine from the foothills of <br> Himalayas to historic Savannah</p>
-                        <a href="/order" class="btn_hover mt_30 app_btn wow fadeInLeft" data-wow-delay="0.5s">Order Now</a>
+                        <a href="/order" class="btn_hover mt_30 app_btn wow fadeInLeft" data-wow-delay="0.5s">Order
+                            Now</a>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -216,27 +217,20 @@
                 </p>
             </div>
             <div class="row app_service_info">
+                <% if (partners) { partners.forEach(partner => { %>
+                <%if (partner.showInHomepage) { %>
                 <div class="col-lg-4">
                     <div class="app_service_item wow fadeInUp" data-wow-delay="0.2s">
-                        <img src="img/partners/uber.svg" alt="Uber Eats" class="img-fluid d-block mx-auto">
-                        <a href="https://www.ubereats.com/en-US/savannah/food-delivery/namaste-savannah/20sFR2IMTlaCH3sdYxTbVw/"
-                            class="learn_btn_two" target="_blank">Order Now <i class="ti-arrow-right"></i></a>
+                        <img src="<%= partner.imageUrl %>" alt="<%= partner.name %>" class="img-fluid d-block mx-auto">
+                        <a href="<%= partner.orderLink %>" class="learn_btn_two" target="_blank">Order Now <i
+                                class="ti-arrow-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="app_service_item wow fadeInUp" data-wow-delay="0.4s">
-                        <img src="img/partners/grubhub.png" alt="Grubhub" class="img-fluid d-block mx-auto">
-                        <a href="https://www.grubhub.com/delivery/ga-savannah" class="learn_btn_two"
-                            target="_blank">Order Now <i class="ti-arrow-right"></i></a>
-                    </div>
+                <%  } }); } else { %>
+                <div class="app_service_item wow fadeInUp mx-auto" data-wow-delay="0.2s">
+                    <a href="/order" class="learn_btn_two" target="_blank">Order Now <i class="ti-arrow-right"></i></a>
                 </div>
-                <div class="col-lg-4">
-                    <div class="app_service_item wow fadeInUp" data-wow-delay="0.6s">
-                        <img src="img/partners/waitr.png" alt="" class="img-fluid d-block mx-auto">
-                        <a href="https://waitrapp.com/restaurants/ga/pooler/namaste-savannah/14312"
-                            class="learn_btn_two" target="_blank">Order Now <i class="ti-arrow-right"></i></a>
-                    </div>
-                </div>
+                <% } %>
             </div>
         </div>
     </section>
@@ -300,41 +294,8 @@
         </div>
     </section>
 
-
-    <!-- Order Screen -->
-    <!-- <section class="get_started_area">
-        <div class="shap one"></div>
-        <div class="shap two"></div>
-        <div class="shap one three"></div>
-        <div class="shap two four"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 d-flex align-items-center">
-                    <div class="get_content">
-                        <h3 class="f_400 f_p wow fadeInLeft" data-wow-delay="0.2s">Namaste Savannah</h3>
-                        <h2 class="f_700 f_p f_size_40 l_height50 mb_20 wow fadeInLeft" data-wow-delay="0.3s">Order Now
-                        </h2>
-                        <p class="f_300 f_p mb_40 wow fadeInLeft" data-wow-delay="0.4s">
-                            No worries if you cannot come to the restaurant. Our delivery partners delivers them
-                            directly to your footstep.
-                        </p>
-                        <a href="#" class="app_btn app_btn_one wow fadeInLeft" data-wow-delay="0.5s">
-                            <img src="img/uber.png" style="width: 100%; object-fit: cover;" alt="">
-                            Dine In</a>
-                        <a href="#" class="app_btn app_btn_two wow fadeInLeft" data-wow-delay="0.6s">
-                            <img src="https://waitr-web.imgix.net/img/logo.svg" alt="">
-                            Delivery</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-right wow fadeInRight" data-wow-delay="0.7s">
-                    <img src="" alt="">
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <!-- Gallery -->
-    <section class="app_screenshot_area sec_pad">
+    <!-- <section class="app_screenshot_area sec_pad">
         <div class="app_screen_info">
             <div class="app_screenshot_slider owl-carousel">
                 <div class="item">
@@ -380,7 +341,7 @@
 
             </div>
         </div>
-    </section>
+    </section> -->
 
 
     <!-- Map -->
