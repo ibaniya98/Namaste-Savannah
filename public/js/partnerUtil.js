@@ -15,27 +15,28 @@ $("#add_option").on('click', function () {
     $("#modal-title").text("Add New Partner");
     $("#btn_partner").text("Add Partner");
     $("#partner-modal").attr('action', '/partner/new');
-    populateDetailsModal("", "", "", "", false);
+    populateDetailsModal("", "", "", "", false, false);
 });
 
 // Populates the modal form with the given value
-function populateDetailsModal(name, imageUrl, orderUrl, items, isPopular) {
+function populateDetailsModal(name, imageUrl, orderUrl, items, isPopular, inHomepage) {
     $("#name").val(name);
     $("#imageUrl").val(imageUrl);
     $("#orderLink").val(orderUrl);
     $("#items").val(items);
     $("#popular").prop('checked', isPopular);
+    $("#homepage").prop('checked', inHomepage);
 }
 
 // Retrieve data from the dom and populate the modal for updating the partner
-$('.ti-pencil').on('click', function (event) {
-    var name = "", imageUrl = "", orderUrl = "", items = "", isPopular = false;
-
+$('.ti-pencil').on('click', function () {
     var container = $(this).parent().parent().parent();
     var parsedData = parseDataForForm(container);
 
+    console.log(parsedData);
+
     populateDetailsModal(parsedData.name, parsedData.imageUrl,
-        parsedData.orderUrl, parsedData.items, parsedData.isPopular);
+        parsedData.orderUrl, parsedData.items, parsedData.isPopular, parsedData.showInHomepage);
     $("#modal-title").text("Update Partner");
     $("#btn_partner").text("Update");
 
@@ -50,6 +51,7 @@ function parseDataForForm(container) {
     var returnData = {};
 
     returnData.isPopular = false;
+    returnData.showInHomepage = false;
 
     container.children().each(function () {
         var currentTag = this.tagName;
@@ -66,6 +68,8 @@ function parseDataForForm(container) {
             returnData.items = popularItems.join(", ")
         } else if (currentTag == "A") {
             returnData.orderUrl = this.href;
+        } else if (this.classList.contains("homepage-visibility")) {
+            returnData.showInHomepage = true;
         }
     });
 

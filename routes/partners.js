@@ -10,20 +10,23 @@ seed = [
         name: 'Grubhub',
         imageUrl: 'img/partners/grubhub.png',
         popularItems: ['Garlic Naan', 'Kothe Mo:Mo', 'Tikka Masala'],
-        orderLink: 'https://www.grubhub.com/delivery/ga-savannah'
+        orderLink: 'https://www.grubhub.com/delivery/ga-savannah',
+        showInHomepage: true
     },
     {
         name: 'Uber Eats',
         imageUrl: 'img/partners/uber.svg',
         popularItems: ['Tikka Masala', 'Garlic Naan', 'Mango Lassi'],
         orderLink: 'https://www.ubereats.com/en-US/savannah/food-delivery/namaste-savannah/20sFR2IMTlaCH3sdYxTbVw/',
-        isPopular: true
+        isPopular: true,
+        showInHomepage: true
     },
     {
         name: 'Waitr',
         imageUrl: 'img/partners/waitr.png',
         popularItems: ['Tikka Masala', 'Kothe Mo:Mo', 'Korma'],
-        orderLink: 'https://waitrapp.com/restaurants/ga/pooler/namaste-savannah/14312'
+        orderLink: 'https://waitrapp.com/restaurants/ga/pooler/namaste-savannah/14312',
+        showInHomepage: true
     }];
 
 router.get('/order', (req, res) => {
@@ -40,7 +43,7 @@ router.post('/partner/new', middleware.isAuthorized, (req, res) => {
     var partner = parsePartner(req);
     Partner.create(partner, (err, item) => {
         if (err){
-            req.flash('error','Failed to add new parnter');
+            req.flash('error','Failed to add new partner');
             res.redirect('back');
         } else {
             req.flash('success', 'Successfully added a new partner');
@@ -51,7 +54,6 @@ router.post('/partner/new', middleware.isAuthorized, (req, res) => {
 
 router.put('/partner/:id', middleware.isAuthorized, (req, res) => {
     var partner = parsePartner(req);
-    console.log(partner);
 
     Partner.findByIdAndUpdate(req.params.id, partner, (err, item) => {
         if (err || !item){
@@ -85,6 +87,7 @@ function parsePartner(req){
     });
     partner.popularItems = items;
     partner.isPopular = partner.isPopular && partner.isPopular == "on";
+    partner.showInHomepage = partner.showInHomepage && partner.showInHomepage == "on";
 
     return partner;
 }
