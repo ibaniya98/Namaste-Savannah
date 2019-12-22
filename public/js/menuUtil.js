@@ -1,23 +1,26 @@
+// Shows/hides input field when new Category is selected
 $('#categories').on('change', function () {
-    var selectedItem = $('#categories option:selected').text();
-    if (selectedItem.toUpperCase().includes("NEW")) {
+    var selectedItem = $('#categories option:selected').val();
+    if (selectedItem.toUpperCase() == "NEW") {
         $("#newCategory").addClass("d-block").prop('required', true);
-
     } else {
         $("#newCategory").removeClass("d-block").prop('required', false);
     }
 });
 
+// Adds new option field when user selects add option button
 $("#add_option").on('click', function () {
     addNewOptionField();
 });
 
+// Deletes the option
 $("#options").on('click', '.btn_delete', function () {
     $(this).parent().parent().fadeOut(200, function () {
         $(this).remove();
     });
 });
 
+// Creates option field with specified params
 function addNewOptionField(optionTitle="", optionPrice=null) {
     var container = document.createElement('li');
     ['row', 'col-12'].forEach(item => {
@@ -31,6 +34,7 @@ function addNewOptionField(optionTitle="", optionPrice=null) {
     document.getElementById('options').appendChild(container);
 }
 
+// Creates Option Input field
 function getOptionValue(content) {
     var container = document.createElement('div');
     container.classList.add('col-6');
@@ -51,7 +55,7 @@ function getOptionValue(content) {
     return container;
 }
 
-
+// Creates Price Input field
 function getOptionPrice(content) {
     var container = document.createElement('div');
     container.classList.add('col-4');
@@ -73,6 +77,7 @@ function getOptionPrice(content) {
     return container;
 }
 
+// Creates Delete button
 function getDeleteButton() {
     var container = document.createElement('div');
     container.classList.add('col-1');

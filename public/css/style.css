@@ -599,6 +599,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   border: 1px solid #3d64f4;
   background: #3d64f4;
   cursor: pointer;
+  -webkit-transition: background 0.2s linear;
+  -o-transition: background 0.2s linear;
+  transition: background 0.2s linear;
 }
 
 .btn_four:hover {
@@ -7984,8 +7987,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-bottom: 30px;
 }
 
-.text_box input[type="text"], .text_box textarea, .text_box input[type="password"], .text_box input[type="number"],
-.text_box select {
+.text_box input[type="text"], .text_box textarea, .text_box input[type="password"], .text_box input[type="number"], .text_box select {
   font: 300 15px/60px "Poppins", sans-serif;
   color: #222d39;
   height: 60px;
@@ -7996,6 +7998,17 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   width: 100%;
   border: 1px solid #fff;
   padding-left: 30px;
+}
+
+.text_box input[type="checkbox"] {
+  color: #222d39;
+  height: 30px;
+  width: 30px;
+  border-radius: 4px;
+  border: none;
+  background-color: white;
+  -webkit-box-shadow: 0px 2px 4px 0px rgba(12, 0, 46, 0.04);
+  box-shadow: 0px 2px 4px 0px rgba(12, 0, 46, 0.04);
 }
 
 .text_box input[type="text"].placeholder, .text_box textarea.placeholder, .text_box input[type="password"].placeholder {
