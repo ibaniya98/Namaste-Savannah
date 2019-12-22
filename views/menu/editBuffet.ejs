@@ -199,6 +199,7 @@
                         return '<div class="autocomplete-suggestion" data-val="' + item[0] + '" data-id="' + item[1] + '"">' + item[0].replace(re, "<b>$1</b>") + '</div>';
                     },
                     onSelect: function (e, term, item) {
+                        e.preventDefault();
                         addItemToList("items", item.getAttribute('data-val'), item.getAttribute('data-id'));
                         $('#searchbar').val("");
                     }
