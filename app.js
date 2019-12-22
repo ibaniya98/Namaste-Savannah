@@ -50,9 +50,11 @@ app.use((req, res, next) => {
 let menuRoutes = require('./routes/menu'),
     adminRoutes = require('./routes/admin'),
     basicRoutes = require('./routes/index'),
-    partnerRoutes = require('./routes/partners');
+    partnerRoutes = require('./routes/partners'),
+    apiRoutes = require('./routes/api');
 
 app.use([basicRoutes, menuRoutes, adminRoutes, partnerRoutes]);
+app.use('/api', apiRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('Starting the server');

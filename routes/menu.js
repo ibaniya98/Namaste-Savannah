@@ -1,6 +1,8 @@
 let express = require('express'),
     Menu = require('../models/menuItem'),
-    middleWare = require('../middleware');
+    Buffet = require('../models/buffet'),
+    middleWare = require('../middleware'),
+    async = require('async');
 
 let router = express.Router();
 
@@ -22,14 +24,14 @@ router.get('/menu', (req, res) => {
 });
 
 // Add new Menu Item
-router.post('/menu', middleWare.isLoggedIn, (req, res) => {    
+router.post('/menu', middleWare.isLoggedIn, (req, res) => {
     var menuItem = parseMenuForm(req);
     Menu.create(menuItem, (err, item) => {
         if (err) {
-            req.flash('error','Failed to create menu item');
+            req.flash('error', 'Failed to create menu item');
             res.redirect('back');
         } else {
-            req.flash('success','Successfully created a menu item');
+            req.flash('success', 'Successfully created a menu item');
             res.redirect('/menu');
         }
     });
@@ -56,11 +58,11 @@ router.get('/menu/:id/edit', middleWare.isLoggedIn, (req, res) => {
             res.redirect('back');
         } else {
             Menu.find().distinct('category', (err, categories) => {
-                if (err || !categories){
+                if (err || !categories) {
                     req.flash('error', 'Failed to find categories. Please try again later or contact the admin');
                     res.redirect('back');
-                } else{
-                    res.render('menu/editMenu', {item: item, categories: categories});
+                } else {
+                    res.render('menu/editMenu', { item: item, categories: categories });
                 }
             });
         }
@@ -72,7 +74,7 @@ router.put('/menu/:id', middleWare.isLoggedIn, (req, res) => {
     var newMenu = parseMenuForm(req);
 
     Menu.findByIdAndUpdate(req.params.id, newMenu, (err, item) => {
-        if (err){
+        if (err) {
             req.flash('error', 'Failed to update the menu item. Please try again later.');
             res.redirect('back');
         } else {
@@ -84,20 +86,92 @@ router.put('/menu/:id', middleWare.isLoggedIn, (req, res) => {
 
 router.delete('/menu/:id', middleWare.isAuthorized, (req, res) => {
     Menu.findByIdAndDelete(req.params.id, (err) => {
-        if (err){
+        if (err) {
             req.flash('error', err.message);
             res.redirect('back');
         } else {
-            req.flash('success','Successfully deleted the menu item');
+            req.flash('success', 'Successfully deleted the menu item');
             res.redirect('/menu');
         }
     })
 });
 
+router.get('/buffet', (req, res) => {
+    Buffet.findOne({}).sort('-updatedAt').populate('items').exec((err, item) => {
+        if (err) {
+            //TODO - Redirect to error page
+            res.redirect('/')
+        } else {
+            var buffet = undefined, unsetBuffet = undefined;
+            if (!item) {
+                unsetBuffet = true;
+            } else {
+                buffet = item;
+            }
+            res.render('menu/buffet', {
+                page: 'menu',
+                unsetBuffet: unsetBuffet,
+                buffet: buffet
+            });
+        }
+    });
+});
 
-// --------- Helper Function -------------
+router.post('/buffet', middleWare.isAuthorized, (req, res) => {
+    // There is an existing buffet. Update that buffet
+    if (req.body.id && req.body.id.length > 0) {
+        req.body.buffet.updatedAt = Date.now();
+        req.body.buffet.items = req.body.items;
 
-function parseMenuForm(req){
+        Buffet.findByIdAndUpdate(req.body.id, req.body.buffet, (err, buffet) => {
+            if (err) {
+                console.log(err);
+                req.flash('error', 'Failed to create buffet');
+                res.redirect('back');
+            } else {
+                console.log('Redirecting the page');
+                req.flash('success', 'Successfully updated the buffet');
+                res.redirect('/buffet');
+            }
+        });
+    } else {
+        console.log('Creating a new buffet');
+        req.body.buffet.items = req.body.items;
+        Buffet.create(req.body.buffet, (err, buffet) => {
+            if (err) {
+                req.flash('error', 'Failed to create buffet');
+                res.redirect('back');
+            } else {
+                req.flash('success', 'Successfully created the buffet');
+                res.redirect('/buffet');
+            }
+        })
+    }
+});
+
+router.get('/buffet/edit', middleWare.isAuthorized, (req, res) => {
+    Buffet.findOne({}).sort('-updatedAt').populate('items').exec((err, item) => {
+        if (err || !item) {
+            req.flash('error', 'Failed to find the recent buffet menu');
+            item = {
+                _id: "",
+                price: "",
+                startTime: "",
+                endTime: "",
+                items: []
+            }
+        }
+        res.render('menu/editBuffet', {
+            page: 'menu',
+            buffet: item
+        });
+    });
+});
+
+
+// --------- Helper Functions -------------
+
+function parseMenuForm(req) {
     var menuItem = req.body.menu;
 
     if (menuItem['category'].toLowerCase() == "new") {
@@ -124,54 +198,5 @@ function parseMenuForm(req){
 
     return menuItem;
 }
-
-
-// ------------ API Endpoints -------------
-
-router.get('/menu/category', (req, res) => {
-    Menu.find().distinct('category', (err, categories) => {
-        if (err) {
-            res.status(500).send(err.message);
-        } else {
-            res.send(categories);
-        }
-    });
-});
-
-router.get('/menu/category/:categoryName', (req, res) => {
-    Menu.find({ category: req.params.category }, (err, items) => {
-        if (err) {
-            res.status(500).send(err.message);
-        }
-        else if (!items) {
-            res.status(404).send('No items found for the given category');
-        }
-        else {
-            res.send(items);
-        }
-    });
-});
-
-router.get('/menu/items', (req, res) => {
-    Menu.find({}, (err, items) => {
-        if (err) {
-            res.status(500).send(err.message);
-        } else {
-            res.send(items);
-        }
-    });
-});
-
-router.get('/menu/items/:id', (req, res) => {
-    Menu.findById(req.params.id, (err, item) => {
-        if (err) {
-            res.status(500).send(err.message);
-        } else if (!item) {
-            res.status(404).send('No item found for the given id');
-        } else {
-            res.send(item);
-        }
-    });
-});
 
 module.exports = router;

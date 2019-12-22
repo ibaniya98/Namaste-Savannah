@@ -2,6 +2,7 @@ let User = require('../models/user');
 let middlewareObj = {};
 
 middlewareObj.isLoggedIn = function(req, res, next){
+	// return next();
 	if (req.isAuthenticated()){
 		return next();
 	}
@@ -10,6 +11,7 @@ middlewareObj.isLoggedIn = function(req, res, next){
 };
 
 middlewareObj.isAuthorized = function(req, res, next){
+	// return next();
     if (req.isAuthenticated()) {
 		if (req.user.isAdmin){
 			next();
