@@ -461,10 +461,10 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 .btn_three {
   font: 500 14px "Poppins", sans-serif;
   color: #fff;
-  background: #7444fd;
+  background: maroon;
   border-radius: 3px;
   padding: 15px 30px;
-  border: 1px solid #7444fd;
+  border: 1px solid maroon;
   margin-top: 50px;
   -webkit-transition: all 0.3s linear;
   -o-transition: all 0.3s linear;
@@ -474,7 +474,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 .btn_three:hover {
-  color: #7444fd;
+  color: maroon;
   background: transparent;
 }
 
@@ -8171,7 +8171,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 
 .login-form .btn_three {
   width: 100%;
-  background: #5e2ced;
+  background: maroon;
   color: #fff;
   margin-top: 40px;
 }

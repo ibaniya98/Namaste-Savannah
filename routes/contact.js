@@ -15,6 +15,7 @@ router.post('/contact', (req, res) => {
         }
     });
 
+    
     var emailContent = ""
     try{
         validateRequest(req);

@@ -57,6 +57,10 @@ let menuRoutes = require('./routes/menu'),
 app.use([basicRoutes, menuRoutes, adminRoutes, partnerRoutes, contactRoutes]);
 app.use('/api', apiRoutes);
 
+app.get('/error', (req, res) => {
+    res.render('error');
+});
+
 app.get('/*', (req, res) => {
     res.render('404');
 });
