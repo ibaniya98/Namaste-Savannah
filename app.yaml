@@ -1,16 +1,6 @@
-runtime: nodejs
-api_version: '1.0'
-env: flexible
-threadsafe: true
-default_expiration: 3600s
-manual_scaling:
-  instances: 1
-resources:
-  cpu: 1
-  memory_gb: 4
-  disk_size_gb: 10
-handlers:
+runtime: nodejs10
 
+handlers:
 - url: /.*
   secure: always
   redirect_http_response_code: 301
