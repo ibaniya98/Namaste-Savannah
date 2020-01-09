@@ -116,7 +116,6 @@ router.get('/buffet', (req, res) => {
             if (buffet.extraItems === undefined || !(buffet.extraItems instanceof Array)) {
                 buffet.extraItems = [];
             }
-            console.log(buffet);
 
             res.render('menu/buffet', {
                 page: 'menu',
@@ -140,13 +139,11 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
                 req.flash('error', 'Failed to create buffet');
                 res.redirect('back');
             } else {
-                console.log('Redirecting the page');
                 req.flash('success', 'Successfully updated the buffet');
                 res.redirect('/buffet');
             }
         });
     } else {
-        console.log('Creating a new buffet');
         req.body.buffet.items = req.body.items;
         req.body.buffet.items = req.body.extras;
 
