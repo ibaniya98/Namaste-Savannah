@@ -57,6 +57,10 @@ let menuRoutes = require('./routes/menu'),
 app.use([basicRoutes, menuRoutes, adminRoutes, partnerRoutes, contactRoutes]);
 app.use('/api', apiRoutes);
 
+app.get('/*', (req, res) => {
+    res.render('404');
+});
+
 app.listen(process.env.PORT || 8080, () => {
     console.log('Starting the server');
 });
