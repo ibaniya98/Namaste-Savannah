@@ -32,7 +32,8 @@ seed = [
 router.get('/order', (req, res) => {
     Partner.find({}, (err, partners) => {
         if (err || !partners){
-            res.redirect('back');
+            console.log(err);
+            res.redirect('/error');
         } else {
             res.render('order', {partners: partners});
         }

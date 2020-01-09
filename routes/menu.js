@@ -9,12 +9,13 @@ let router = express.Router();
 router.get('/menu', (req, res) => {
     Menu.find().distinct('category', (err, categories) => {
         if (err) {
-            //TODO: Create a common error page and display error message
-            res.render('menu/menu', { page: 'menu', error: 'Unable to retrieve menu categories' });
+            console.log(err);
+            res.redirect('/error');
         } else {
             Menu.find({}, (err, items) => {
                 if (err) {
-                    res.render('menu/menu', { page: 'menu', error: 'Unable to retrieve menu items' });
+                    console.log(err);
+                    res.redirect('/error');
                 } else {
                     res.render('menu/menu', { page: 'menu', menuItems: items, categories: categories });
                 }
@@ -100,7 +101,8 @@ router.get('/buffet', (req, res) => {
     Buffet.findOne({}).sort('-updatedAt').populate('menuItems').exec((err, item) => {
         if (err) {
             //TODO - Redirect to error page
-            res.redirect('/')
+            console.log(err);
+            res.redirect('/error')
         } else {
             var buffet = undefined, unsetBuffet = undefined;
             if (!item) {
