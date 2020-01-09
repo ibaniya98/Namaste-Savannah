@@ -12,11 +12,6 @@ router.get('/', (req, res) => {
 
 router.get('/gallery', (req, res) => {
     res.render('gallery', { page: 'gallery' });
-})
-
-router.get('/contact', (req, res) => {
-    res.render('contact', { page: 'contact' });
 });
-
 
 module.exports = router;

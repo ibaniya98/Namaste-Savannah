@@ -1,79 +1,57 @@
 
-    
-;(function($) {
-    "use strict";
 
-    
-    jQuery.validator.addMethod('answercheck', function (value, element) {
-        return this.optional(element) || /^\bcat\b$/.test(value)
-    }, "type the correct answer -_-");
-
-    // validate contactForm form
-    $(function() {
-        $('#contactForm').validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 2
-                },
-                name2: {
-                    required: true,
-                    minlength: 2
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                subject: {
-                    required: true,
-                    minlength: 12
-                },
-                message: {
-                    required: true,
-                    minlength: 20
-                }
-            },
-            messages: {
-                name: {
-                    required: "come on, your name, don't you?",
-                    minlength: "your name must consist of at least 2 characters"
-                },
-                name2: {
-                    required: "come on, you have a name, don't you?",
-                    minlength: "your name must consist of at least 2 characters"
-                },
-                email: {
-                    required: "no email, no message"
-                },
-                subject: {
-                    required: "please input your subject"
-                },
-                message: {
-                    required: "um...yea, you have to write something to send this form.",
-                    minlength: "thats all? really?"
-                }
-            },
-            submitHandler: function(form) {
-                $(form).ajaxSubmit({
-                    type:"POST",
-                    data: $(form).serialize(),
-                    url:"contact_process.php",
-                    success: function() {
-                        $('#contactForm :input').attr('disabled', 'disabled');
-                        $('#contactForm').fadeTo( "slow", 0.15, function() {
-                            $(this).find(':input').attr('disabled', 'disabled');
-                            $(this).find('label').css('cursor','default');
-                            $('#success').fadeIn()
-                        })
-                    },
-                    error: function() {
-                        $('#contactForm').fadeTo( "slow", 0.15, function() {
-                            $('#error').fadeIn()
-                        })
-                    }
-                })
-            }
-        })
+$(function () {
+    $('.contact_form_box').submit((e) => {
+        e.preventDefault();
     })
-        
-})(jQuery)
+
+    $('.contact_form_box').validate({
+        rules: {
+            name: "required",
+            email: {
+                required: true,
+                email: true
+            },
+            subject: "required",
+            message: "required"
+        },
+        messages: {
+            name: {
+                required: "We would love to know who you are"
+            },
+            email: {
+                required: "We would love to get in touch with you. Email will not be shared with anyone else.",
+                email: "Please enter a valid email"
+            },
+            subject: {
+                required: "We would be grateful if you could summarize your message"
+            },
+            message: {
+                required: "We would love to know what you have to say"
+            }
+        },
+        submitHandler: function (form) {
+            $(form).ajaxSubmit({
+                type: "POST",
+                data: $(form).serialize(),
+                url: "/contact",
+                beforeSend: function () {
+                    var button = $("button[type='submit']");
+                    button.text("Sending Message");
+                    button.removeClass("error");
+                },
+                success: function () {
+                    $('.contact_form_box input, .contact_form_box textarea').fadeTo("slow", 0.15, function () {
+                        $('.contact_form_box').find(':input').attr('disabled', 'disabled');
+                    });
+                    var button = $("button[type='submit']");
+                    button.text("Message Sent Successfully");
+                },
+                error: function () {
+                    var button = $("button[type='submit']");
+                    button.text("Failed to send message");
+                }
+            })
+        }
+    });
+});

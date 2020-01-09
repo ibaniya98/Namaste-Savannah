@@ -5583,7 +5583,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   -webkit-box-shadow: 0px 20px 30px 0px rgba(12, 0, 46, 0.1);
   box-shadow: 0px 20px 30px 0px rgba(12, 0, 46, 0.1);
   border-radius: 3px;
-  color: #5e2ced;
+  color: maroon;
   display: inline-block;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -5592,7 +5592,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 
 .about_btn:hover {
   color: #fff;
-  background: #5e2ced;
+  background: maroon;
 }
 
 .about_img {
@@ -8350,9 +8350,9 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 /*================= error_area css ==================*/
 
 .error_area {
-  background: -moz-linear-gradient(180deg, rgba(94, 44, 237, 0.93) 0%, rgba(164, 133, 253, 0.9) 100%), url("../img/error_bg.png") no-repeat scroll center 100%;
-  background: -webkit-linear-gradient(180deg, rgba(94, 44, 237, 0.93) 0%, rgba(164, 133, 253, 0.9) 100%), url("../img/error_bg.png") no-repeat scroll center 100%;
-  background: -ms-linear-gradient(180deg, rgba(94, 44, 237, 0.93) 0%, rgba(164, 133, 253, 0.9) 100%), url("../img/error_bg.png") no-repeat scroll center 100%;
+  background: -moz-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);
+  background: -webkit-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);
+  background: -ms-linear-gradient(180deg, #cc0000 0%, #cc6600 100%);  
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
