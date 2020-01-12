@@ -17,12 +17,22 @@ router.get('/menu', (req, res) => {
                     console.log(err);
                     res.redirect('/error');
                 } else {
+                    shuffleMenu(items);
                     res.render('menu/menu', { page: 'menu', menuItems: items, categories: categories });
                 }
             });
         }
     });
 });
+
+function shuffleMenu(items){
+    for (var i = items.length - 1; i > 0; i--){
+        var index = Math.floor(Math.random() * (i + 1));
+        var temp = items[i];
+        items[i] = items[index];
+        items[index] = temp;
+    }
+}
 
 // Add new Menu Item
 router.post('/menu', middleWare.isLoggedIn, (req, res) => {
