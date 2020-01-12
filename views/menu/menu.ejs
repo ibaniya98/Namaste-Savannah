@@ -83,7 +83,7 @@
 
                             <div class="links">
                                 <% item['options'].forEach(option => { %>
-                                <a><%= option['title'] %> $ <%= option['price'] %></a>
+                                <a><%= option['title'] %> $ <%= (Math.round(option['price'] * 100) / 100).toFixed(2) %></a>
                                 <% }); %>
                             </div>
 
