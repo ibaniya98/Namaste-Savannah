@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "flash": "^1.1.0",
+    "googleapis": "^39.2.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.7.12",
     "nodemailer": "^6.4.2",
