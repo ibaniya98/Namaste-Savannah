@@ -172,6 +172,16 @@
     .animation_img_two{
         bottom: 120px;
     }
+
+    /* Menu Category */
+    .portfolio_filter{
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .portfolio_filter .work_portfolio_item{
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width:1199px){

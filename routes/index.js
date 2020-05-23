@@ -6,6 +6,9 @@ let Partner = require('../models/partner');
 
 router.get('/', (req, res) => {
     Partner.find({showInHomepage: true}, (err, partners) => {
+        if (err) {
+            partners = [];
+        }
         res.render('index', { page: 'home', partners: partners});
     });
 });
