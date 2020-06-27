@@ -87,6 +87,19 @@
                                 <% }); %>
                             </div>
 
+                            <% if (item['modifiers'] && item['modifiers']['values'].length > 0) { %> 
+                                <hr />
+                                <a>Extras</a>
+
+                                <div class="links">
+                                    <% item['modifiers']['values'].forEach(modifier => { %>
+                                    <a><%= modifier['title'] %> $ <%= modifier['price'].toFixed(2) %></a>
+                                    <% }); %>
+                                </div>
+                            
+                            <% } %>
+                            
+
                             <% if (currentUser) { %>
                             <div class="links mt-4">
                                 <a href="menu/<%= item.id %>/edit" class="text-success"><i class="ti-pencil lead"></i>

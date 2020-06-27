@@ -97,13 +97,13 @@
                                         <p>Options *</p>
                                     </div>
 
-                                    <ul id="options" class="pl-0">
+                                    <ul id="options" class="pl-0 mb-0">
 
                                         <li class="row col-12">
                                             <div class="col-7">
                                                 <div class="form-group text_box">
                                                     <input type="text" id="option1" name="pricing[title]"
-                                                        placeholder="Option [Eg: Bison]">
+                                                        placeholder="Option [Eg: Bison]" required>
                                                 </div>
                                             </div>
                                             <div class="col-5">
@@ -116,11 +116,53 @@
 
                                     </ul>
 
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn_four" id="add_option">Add Option</button>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <button type="button" class="btn_four" id="add_option">Add Option</button>
+                                
+                                <!-- Menu Item Modifiers -->
+
+                                <div class="row col-lg-12 mt-3">
+                                    <div class="col-12">
+                                        <p>Modifiers</p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <p> 
+                                            <input type="checkbox" name="modifiers[multiSelect]" class="mr-1">
+                                            User can select multiple modifiers
+                                        </p>
+                                    </div>
+
+                                    <ul id="modifiers" class="pl-0">
+
+                                        <li class="row col-12">
+                                            <div class="col-7">
+                                                <div class="form-group text_box">
+                                                    <input type="text" id="option1" name="modifiers[values][title]"
+                                                        placeholder="Modifier [Eg: Add Chicken]">
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="form-group text_box">
+                                                    <input type="number" id="price1" name="modifiers[values][price]"
+                                                        placeholder="Price" step="0.01">
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="col-12">
+                                        <button type="button" class="btn_four" id="add_modifier">Add Modifier</button>
+                                    </div>
+
                                 </div>
+
+                               
 
 
                             </div>

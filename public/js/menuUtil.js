@@ -13,8 +13,20 @@ $("#add_option").on('click', function () {
     addNewOptionField();
 });
 
+// Adds new modifier field when user selects add modifier button
+$("#add_modifier").on('click', function () {
+    addNewModifierField();
+});
+
 // Deletes the option
 $("#options").on('click', '.btn_delete', function () {
+    $(this).parent().parent().fadeOut(200, function () {
+        $(this).remove();
+    });
+});
+
+// Deletes the modifier
+$("#modifiers").on('click', '.btn_delete', function () {
     $(this).parent().parent().fadeOut(200, function () {
         $(this).remove();
     });
@@ -27,15 +39,35 @@ function addNewOptionField(optionTitle="", optionPrice=null) {
         container.classList.add(item);
     });
 
-    container.appendChild(getOptionValue(optionTitle));
-    container.appendChild(getOptionPrice(optionPrice));
+    const optionTitleField = getTitleField(optionTitle, "Option", "pricing[title]");
+    const optionPriceField = getPriceInput("Price", "pricing[price]", optionPrice);
+    
+    container.appendChild(optionTitleField);
+    container.appendChild(optionPriceField);
     container.appendChild(getDeleteButton());
 
     document.getElementById('options').appendChild(container);
 }
 
-// Creates Option Input field
-function getOptionValue(content) {
+// Creates modifier field with specified params
+function addNewModifierField(modifierTitle="", optionPrice=null) {
+    var container = document.createElement('li');
+    ['row', 'col-12'].forEach(item => {
+        container.classList.add(item);
+    });
+
+    const modifierTitleField = getTitleField(modifierTitle, "Modifier", "modifiers[values][title]");
+    const modifierPriceField = getPriceInput("Price", "modifiers[values][price]", optionPrice);
+
+    container.appendChild(modifierTitleField);
+    container.appendChild(modifierPriceField);
+    container.appendChild(getDeleteButton());
+
+    document.getElementById('modifiers').appendChild(container);
+}
+
+// Get input field for title
+function getTitleField(content, placeHolder, inputName, required=true) {
     var container = document.createElement('div');
     container.classList.add('col-6');
 
@@ -46,9 +78,10 @@ function getOptionValue(content) {
 
     var input = document.createElement('input');
     input.type = "text";
-    input.placeholder = "Option";
-    input.name = 'pricing[title]';
+    input.placeholder = placeHolder;
+    input.name = inputName;
     input.value = content;
+    input.required = required;
 
     wrapper.appendChild(input);
     container.appendChild(wrapper);
@@ -56,7 +89,7 @@ function getOptionValue(content) {
 }
 
 // Creates Price Input field
-function getOptionPrice(content) {
+function getPriceInput(placeholder, inputName, inputValue, required=true) {
     var container = document.createElement('div');
     container.classList.add('col-4');
 
@@ -67,10 +100,11 @@ function getOptionPrice(content) {
 
     var input = document.createElement('input');
     input.type = "number";
-    input.placeholder = "Price";
-    input.name = 'pricing[price]'
+    input.placeholder = placeholder;
+    input.name = inputName
     input.step = "0.01";
-    input.value = content;
+    input.value = inputValue;
+    input.required = required;
 
     wrapper.appendChild(input);
     container.appendChild(wrapper);

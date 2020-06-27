@@ -129,14 +129,40 @@
                                         <p>Options *</p>
                                     </div>
 
-                                    <ul id="options" class="pl-0">
+                                    <ul id="options" class="pl-0 mb-0">
 
                                     </ul>
 
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn_four" id="add_option">Add Option</button>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <button type="button" class="btn_four" id="add_option">Add Option</button>
+                                <!-- Menu Item Modifiers -->
+
+                                <div class="row col-lg-12 mt-3">
+                                    <div class="col-12">
+                                        <p>Modifiers</p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <p> 
+                                            <input type="checkbox" name="modifiers[multiSelect]" class="mr-1" 
+                                                <%= item['modifiers'] && item['modifiers']['multiSelect'] ? 'checked': '' %>
+                                            >
+                                            User can select multiple modifiers
+                                        </p>
+                                    </div>
+
+                                    <ul id="modifiers" class="pl-0 mb-0">
+
+                                    </ul>
+
+                                    <div class="col-12">
+                                        <button type="button" class="btn_four" id="add_modifier">Add Modifier</button>
+                                    </div>
+
                                 </div>
 
 
@@ -192,6 +218,12 @@
                         <% } %>
             var price = <%= option.price %>;
                 addNewOptionField(title, price);
+       <% }); %>
+
+       <% item['modifiers'] && item['modifiers']['values'].forEach(modifier => { %>
+            var title = "<%= modifier.title.trim() %>";
+            var price = <%= modifier.price %>;
+            addNewModifierField(title, price);
        <% }); %>
     </script>
 
