@@ -32,25 +32,77 @@ function parseMenuForm(req) {
     }
 
     // Add pricing options    
-    var pricing = req.body.pricing;
-    menuItem.options = [];
+    menuItem.options = parseRawOptions(req.body.pricing);
 
+    // add modifiers
+    menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+
+    return menuItem;
+}
+
+function parseRawOptions(rawPricing) {
+    let options = [];
     // Multiple options has been added
-    if (pricing['price'] instanceof Array) {
-        for (var i = 0; i < pricing['title'].length; i++) {
-            menuItem.options.push({
-                price: Number.parseFloat(pricing['price'][i]),
-                title: pricing['title'][i]
+    if (rawPricing['price'] instanceof Array) {
+        for (var i = 0; i < rawPricing['title'].length; i++) {
+            options.push({
+                price: Number.parseFloat(rawPricing['price'][i]),
+                title: rawPricing['title'][i]
             });
         }
     } else {
-        menuItem.options = [{
-            price: Number.parseFloat(pricing['price']),
-            title: pricing['title']
+        options = [{
+            price: Number.parseFloat(rawPricing['price']),
+            title: rawPricing['title']
         }];
     }
 
-    return menuItem;
+    return options;
+}
+
+function parseRawModifiers(rawModifiers) {
+    const multiSelectModifier = rawModifiers['multiSelect'] && rawModifiers['multiSelect'] === 'on';
+    const parsedModifiers = {
+        multiSelect: multiSelectModifier,
+        values: []
+    }
+
+    let modifierValues = rawModifiers.values;
+    if (!modifierValues) {
+        return parsedModifiers;
+    }
+
+    if (!(modifierValues.title instanceof Array)) {
+        let currentTitle = modifierValues.title.trim();
+        let currentPrice = modifierValues.price.trim();
+
+        // Convert string into array
+        modifierValues.title = [currentTitle];
+        modifierValues.price = [currentPrice];
+    }
+
+    for (var i = 0; i < modifierValues.price.length; i++) {
+        let title = modifierValues.title[i].trim();
+        let price = modifierValues.price[i].trim();
+
+        if (title.length === 0 && price.length === 0) {
+            continue;
+        } else if (title.length === 0) {
+            throw "Title of the modifier must be provided";
+        } else if (price.length === 0) {
+            throw "Price for the modifier must be provided";
+        }
+
+        price = Number.parseFloat(price);
+        // Check for NaN
+        if (!price) {
+            throw "Valid price must be provided for the modifier";
+        }
+
+        parsedModifiers.values.push({ title, price });
+    }
+
+    return parsedModifiers;
 }
 
 //------------ Database Operations -------------------

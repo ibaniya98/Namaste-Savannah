@@ -9,7 +9,14 @@ let menuItemSchema = new mongoose.Schema({
         title: {type: String, trim: true}
     }],
     category: {type: String, required: true, trim: true},
-    imageUrl: {type: String, trim: true}    
+    imageUrl: {type: String, trim: true},
+    modifiers: {
+        multiSelect: {type: Boolean, default: false},
+        values: [{
+            title: {type: String, trim: true},
+            price: {type: Number, min: 0.01}
+        }]
+    }
 });
 
 module.exports = mongoose.model('Menu', menuItemSchema);
