@@ -29,15 +29,16 @@ router.get('/menu/new', middleWare.isLoggedIn, async (req, res) => {
 });
 
 // Add new Menu Item
-router.post('/menu', middleWare.isLoggedIn, (req, res) => {
-    const menuItem = MenuHelpers.parseMenuForm(req);
-    MenuHelpers.addNewMenuItem(menuItem).then(newItem => {
+router.post('/menu', middleWare.isLoggedIn, async (req, res) => {
+    try {
+        const menuItem = MenuHelpers.parseMenuForm(req);
+        const newItem = await MenuHelpers.addNewMenuItem(menuItem);
         req.flash('success', 'Successfully created a menu item ' + newItem.itemName);
         res.redirect('/menu');
-    }).catch(err => {
+    } catch (err) {
         req.flash('error', 'Failed to create menu item');
         res.redirect('back');
-    });
+    }
 });
 
 // Render page to edit a menu item
@@ -56,14 +57,16 @@ router.get('/menu/:id/edit', middleWare.isLoggedIn, async (req, res) => {
 
 // Update Existing Menu Item
 router.put('/menu/:id', middleWare.isLoggedIn, async (req, res) => {
-    var newMenu = MenuHelpers.parseMenuForm(req);
-    MenuHelpers.updateMenuItem(req.params.id, newMenu).then(resultItem => {
-        req.flash('success', 'Successfully updated the menu item: ' + resultItem.itemName);
+    try {
+        var newMenu = MenuHelpers.parseMenuForm(req);
+        let updatedItem = await MenuHelpers.updateMenuItem(req.params.id, newMenu);
+        req.flash('success', 'Successfully updated the menu item: ' + updatedItem.itemName);
         res.redirect('/menu');
-    }).catch(err => {
-        req.flash('error', err);
+    } catch (err) {
+        console.log(err);
+        req.flash('error', "Failed to update the item");
         res.redirect('back');
-    });
+    }
 });
 
 // Delete menu item based on the id
@@ -98,7 +101,7 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
 
     // If there is an existing buffet, update that buffet    
     if (req.body.id && req.body.id.length > 0) {
-        newBuffet.updatedAt = Date.now();        
+        newBuffet.updatedAt = Date.now();
         BuffetHelpers.updateBuffet(req.body.id, newBuffet).then(buffet => {
             req.flash('success', 'Successfully updated the buffet');
             res.redirect('/buffet');
@@ -106,7 +109,7 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
             req.flash('error', err);
             res.redirect('back');
         });
-    } else {        
+    } else {
         BuffetHelpers.createBuffet(newBuffet).then(buffet => {
             req.flash('success', 'Successfully created the buffet');
             res.redirect('/buffet');
@@ -121,7 +124,7 @@ router.post('/buffet', middleWare.isAuthorized, (req, res) => {
 router.get('/buffet/edit', middleWare.isAuthorized, async (req, res) => {
     let buffet;
     try {
-        const {currentBuffet} = await BuffetHelpers.getLatestBuffet();
+        const { currentBuffet } = await BuffetHelpers.getLatestBuffet();
         buffet = currentBuffet;
     } catch (err) {
         req.flash('error', 'Failed to find the most recent buffet menu');
