@@ -36,7 +36,9 @@ function parseMenuForm(req) {
     menuItem.options = parseRawOptions(req.body.pricing);
 
     // add modifiers
-    menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+    if (req.body.modifiers) {
+        menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+    }    
 
     return menuItem;
 }
@@ -64,7 +66,7 @@ function parseRawOptions(rawPricing) {
 function parseRawModifiers(rawModifiers) {
     const multiSelectModifier = rawModifiers['multiSelect'] && rawModifiers['multiSelect'] === 'on';
     const parsedModifiers = {
-        multiSelect: multiSelectModifier,
+        multiSelect: multiSelectModifier || false,
         values: []
     }
 
