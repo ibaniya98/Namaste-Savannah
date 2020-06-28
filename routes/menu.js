@@ -1,4 +1,6 @@
-let express = require('express'),
+const express = require('express'),
+    upload = require('../util/multer'),
+    S3 = require('../aws/imageHelpers'),
     middleWare = require('../middleware'),
     MenuHelpers = require('../util/menuHelpers'),
     BuffetHelpers = require('../util/buffetHelpers');
@@ -29,9 +31,22 @@ router.get('/menu/new', middleWare.isLoggedIn, async (req, res) => {
 });
 
 // Add new Menu Item
-router.post('/menu', middleWare.isLoggedIn, async (req, res) => {
+router.post('/menu', middleWare.isLoggedIn, upload.single('image_upload'), async (req, res) => {
     try {
-        const menuItem = MenuHelpers.parseMenuForm(req);
+        let menuItem = MenuHelpers.parseMenuForm(req);
+
+        if (req.file.path) {
+            try {
+                const data = await S3.uploadImage(req.file.path, "menu");
+                menuItem.image = {
+                    location: data.Location,
+                    key: data.Key
+                };
+            } catch (err) {
+                res.flash('error', 'Failed to upload the image');
+            }
+        }
+
         const newItem = await MenuHelpers.addNewMenuItem(menuItem);
         req.flash('success', 'Successfully created a menu item ' + newItem.itemName);
         res.redirect('/menu');

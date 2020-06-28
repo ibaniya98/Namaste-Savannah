@@ -64,9 +64,9 @@
                 <% menuItems.forEach(item => { %>
                 <div class="col-lg-3 col-sm-6 portfolio_item <%= item['category'].toLowerCase().replace(/[ "'()]/g, '_') %>">
                     <div class="portfolio_img app_service_item p-2">
-                        <% if (item.imageUrl !== undefined && item.imageUrl.length > 0){ %>
-                        <a href="<%= item['imageUrl'] %>" class="img_popup">
-                            <img class="img_rounded" src="<%= item['imageUrl'] %>" alt="">
+                        <% if (item.image && item.image.location && item.image.location.length > 0){ %>
+                        <a href="<%= item['image']['location'] %>" class="img_popup">
+                            <img class="img_rounded" src="<%= item['image']['location'] %>" alt="">
                         </a>
                         <% } %>
 
