@@ -1,8 +1,10 @@
 let express = require('express'),
+    cors = require('cors'),
     Menu = require('../models/menuItem'),
     Buffet = require('../models/buffet');
 
 let router = express.Router();
+router.use(cors());
 
 
 router.get('/menu/category', (req, res) => {
