@@ -7,7 +7,8 @@ middlewareObj.isLoggedIn = function(req, res, next){
 		return next();
 	}
 	req.flash("error", "You need to be logged in to perform the action");
-	res.redirect('/login');
+	let requestedUrl = encodeURIComponent(req.url);
+	res.redirect('/login?redirectUrl=' + requestedUrl);
 };
 
 middlewareObj.isAuthorized = function(req, res, next){

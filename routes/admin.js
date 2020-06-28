@@ -10,15 +10,32 @@ router.get('/login', (req, res) => {
         res.redirect('/menu');
     }
     else {
-        res.render('admin/login');
+        res.render('admin/login', { redirectUrl: req.query.redirectUrl });
     }
 });
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/menu',
-    failureRedirect: '/login',
-    failureFlash: true
-}), (req, res) => {});
+router.post('/login', (req, res) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            req.flash('error', 'Login in temporarily not available, please try again later');
+            res.redirect('back');
+        } else if (!user) {
+            req.flash('error', 'Invalid username or password');
+            let requestedUrl = encodeURIComponent(req.body.redirectUrl || '/menu');
+            res.redirect('/login?redirectUrl=' + requestedUrl);
+        } else {
+            req.login(user, (err) => {
+                if (err) {
+                    req.flash('error', 'Login in temporarily not available, please try again later');
+                    res.redirect('back');
+                } else {
+                    res.redirect(req.body.redirectUrl || '/menu');
+                }
+            });
+        }
+    })(req, res);
+});
+
 
 // router.get('/register', (req, res) => {
 //     res.render('admin/register');
@@ -48,9 +65,9 @@ router.post('/login', passport.authenticate('local', {
 // });
 
 router.get('/logout', (req, res) => {
-	req.logout();
-	req.flash('success', 'Logged you out');
-	res.redirect('/login');
+    req.logout();
+    req.flash('success', 'Logged you out');
+    res.redirect('/login');
 });
 
 module.exports = router;
