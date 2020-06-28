@@ -7352,7 +7352,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   padding: 20px 50px;
 }
 
-.apply_form .upload_box input[type="file"] {
+input[type="file"] {
   font: 300 15px/26px "Poppins", sans-serif;
   color: #9ca3b9;
   display: block;

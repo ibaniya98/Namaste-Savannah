@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="/vendors/magnify-pop/magnific-popup.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <style>
+        #image_preview {
+            width: 200px;
+        }
+
+        #image_preview>img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,7 +53,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="contact_form">
-                        <form action="/menu" class="contact_form_box" method="POST">
+                        <form action="/menu" class="contact_form_box" method="POST" enctype="multipart/form-data">
                             <div class="row">
 
                                 <div class="col-lg-12">
@@ -83,9 +93,12 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <p>Image URL</p>
+                                    <p>Image</p>
+                                    <div id="image_preview">
+                                        <img src="" alt="Image Preview for File Upload"/>
+                                    </div>
                                     <div class="form-group text_box">
-                                        <input type="text" id="imageUrl" name="menu[imageUrl]" placeholder="Image URL">
+                                        <input type="file" id="image_upload" name="image_upload" accept="image/*">
                                     </div>
                                 </div>
 

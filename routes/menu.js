@@ -1,4 +1,6 @@
-let express = require('express'),
+const express = require('express'),
+    upload = require('../util/multer'),
+    S3 = require('../aws/imageHelpers'),
     middleWare = require('../middleware'),
     MenuHelpers = require('../util/menuHelpers'),
     BuffetHelpers = require('../util/buffetHelpers');
@@ -29,9 +31,22 @@ router.get('/menu/new', middleWare.isLoggedIn, async (req, res) => {
 });
 
 // Add new Menu Item
-router.post('/menu', middleWare.isLoggedIn, async (req, res) => {
+router.post('/menu', middleWare.isLoggedIn, upload.single('image_upload'), async (req, res) => {
     try {
-        const menuItem = MenuHelpers.parseMenuForm(req);
+        let menuItem = MenuHelpers.parseMenuForm(req);
+
+        if (req.file && req.file.path) {
+            try {
+                const data = await S3.uploadImage(req.file.path, "menu");
+                menuItem.image = {
+                    location: data.Location,
+                    key: data.Key
+                };
+            } catch (err) {
+                res.flash('error', 'Failed to upload the image');
+            }
+        }
+
         const newItem = await MenuHelpers.addNewMenuItem(menuItem);
         req.flash('success', 'Successfully created a menu item ' + newItem.itemName);
         res.redirect('/menu');
@@ -56,9 +71,32 @@ router.get('/menu/:id/edit', middleWare.isLoggedIn, async (req, res) => {
 });
 
 // Update Existing Menu Item
-router.put('/menu/:id', middleWare.isLoggedIn, async (req, res) => {
+router.put('/menu/:id', middleWare.isLoggedIn, upload.single('image_upload'), async (req, res) => {
     try {
-        var newMenu = MenuHelpers.parseMenuForm(req);
+        let newMenu = MenuHelpers.parseMenuForm(req);
+
+        let removeExistingImage = req.body.removeImage ? req.body.removeImage === 'on' : false;
+        if (removeExistingImage && newMenu.image && newMenu.image.key) {
+            try {
+                await S3.deleteImage(newMenu.image.key);
+                newMenu.image = {}
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        if (req.file && req.file.path) {
+            try {
+                const data = await S3.uploadImage(req.file.path, "menu");
+                newMenu.image = {
+                    location: data.Location,
+                    key: data.Key
+                };
+            } catch (err) {
+                res.flash('error', 'Failed to upload the image');
+            }
+        }
+
         let updatedItem = await MenuHelpers.updateMenuItem(req.params.id, newMenu);
         req.flash('success', 'Successfully updated the menu item: ' + updatedItem.itemName);
         res.redirect('/menu');

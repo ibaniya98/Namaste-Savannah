@@ -52,9 +52,10 @@ let menuRoutes = require('./routes/menu'),
     basicRoutes = require('./routes/index'),
     partnerRoutes = require('./routes/partners'),
     contactRoutes = require('./routes/contact')
-    apiRoutes = require('./routes/api');
+    apiRoutes = require('./routes/api'),
+    photoRoutes = require('./routes/photos');
 
-app.use([basicRoutes, menuRoutes, adminRoutes, partnerRoutes, contactRoutes]);
+app.use([basicRoutes, menuRoutes, adminRoutes, partnerRoutes, contactRoutes, photoRoutes]);
 app.use('/api', apiRoutes);
 
 app.get('/error', (req, res) => {

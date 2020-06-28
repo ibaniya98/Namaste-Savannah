@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="/vendors/magnify-pop/magnific-popup.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <style>
+        #image_preview, #existing_preview {
+            width: 200px;
+        }
+
+        #image_preview>img, #existing_preview>img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="contact_form">
-                        <form action="/menu/<%= item.id %>?_method=PUT" class="contact_form_box" method="POST">
+                        <form action="/menu/<%= item.id %>?_method=PUT" class="contact_form_box" method="POST"  enctype="multipart/form-data">
                             <div class="row">
 
                                 <div class="col-lg-12">
@@ -114,10 +124,29 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <p>Image URL</p>
-                                    <div class="form-group text_box">
-                                        <input type="text" id="imageUrl" name="menu[imageUrl]" placeholder="Image URL">
+                                <div class="col-lg-12 mb-5">
+                                    <p>Image</p>
+                                    <div id="image_container">
+                                        <% if (item.image && item.image.location && item.image.location.length > 0) { %>
+                                            <input type="checkbox" name="removeImage"> Remove Existing Image 
+                                            <div id="existing_preview" class="mr-3">
+                                                <img src=<%= item.image.location %> alt="Previously uploaded image"/>
+                                                <div class="d-none">
+                                                    <input type="text" name="menu[image][location]" value="<%= item.image.location %>" />
+                                                    <input type="text" name="menu[image][key]" value="<%= item.image.key %>" />
+                                                </div>
+                                            </div>
+                                        <% } else { %>
+                                            <div id="image_upload_container">
+                                                <div id="image_preview">
+                                                    <img src="" alt="Image Preview for File Upload"/>
+                                                </div>
+                                                <div class="form-group text_box">
+                                                    <input type="file" id="image_upload" name="image_upload" accept="image/*">
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                    
                                     </div>
                                 </div>
 
@@ -203,28 +232,51 @@
             }
         }
 
+        $('input[name="removeImage"]').change(function() {
+            const $previousImage = $('#existing_preview');
+            const $imageContainer = $('#image_container');
+            if (this.checked) {
+                $previousImage.addClass('d-none');
+                $imageContainer.append(getFileUploadComponent());
+                addImagePreviewListener();
+            } else {
+                $previousImage.removeClass('d-none');
+                $('#image_upload_container').remove();
+            }
+        });
+
+        function getFileUploadComponent() {
+            return $.parseHTML(`
+                <div id="image_upload_container">
+                    <div id="image_preview">
+                        <img src="${IMAGE_PLACEHOLDER}" alt="Image Preview for File Upload"/>
+                    </div>
+                    <div class="form-group text_box">
+                        <input type="file" id="image_upload" name="image_upload" accept="image/*">
+                    </div>
+                </div>
+            `);
+        }
+
         <% if (item['description'] !== undefined && item['description'].trim().length > 0) { %>
             document.getElementById('description').textContent = "<%= item['description'] %>";
         <% } %>
 
-        <% if (item['imageUrl'] !== undefined && item['imageUrl'].trim().length > 0) { %>
-            document.getElementById('imageUrl').value = "<%= item['imageUrl'] %>";
-        <% } %>
-
-       <% item['options'].forEach(option => { %>
+        <% item['options'].forEach(option => { %>
             var title = "";
             <% if (option.title.trim().length > 0) { %>
                     title = "<%= option.title.trim() %>"
                         <% } %>
             var price = <%= option.price %>;
-                addNewOptionField(title, price);
-       <% }); %>
+            addNewOptionField(title, price);
+        <% }); %>
 
-       <% item['modifiers'] && item['modifiers']['values'].forEach(modifier => { %>
+        <% item['modifiers'] && item['modifiers']['values'].forEach(modifier => { %>
             var title = "<%= modifier.title.trim() %>";
             var price = <%= modifier.price %>;
             addNewModifierField(title, price);
-       <% }); %>
+        <% }); %>
+       
     </script>
 
 </body>

@@ -1,3 +1,25 @@
+const IMAGE_PLACEHOLDER = 'https://namaste-savannah-photos.s3.amazonaws.com/menu/placeholder.png';
+
+$('#image_preview>img').attr('src', IMAGE_PLACEHOLDER);
+
+function addImagePreviewListener() {
+    // Preview New Image when a file is selected
+    $("#image_upload").change(({ target }) => {
+        if (target.files && target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                const imageSrc = e.target.result;
+                $('#image_preview>img').attr('src', imageSrc);
+            };
+            reader.readAsDataURL(target.files[0]);
+        } else {
+            $('#image_preview>img').attr('src', IMAGE_PLACEHOLDER);
+        }
+    });
+}
+addImagePreviewListener();
+
+
 // Shows/hides input field when new Category is selected
 $('#categories').on('change', function () {
     var selectedItem = $('#categories option:selected').val();
@@ -33,7 +55,7 @@ $("#modifiers").on('click', '.btn_delete', function () {
 });
 
 // Creates option field with specified params
-function addNewOptionField(optionTitle="", optionPrice=null) {
+function addNewOptionField(optionTitle = "", optionPrice = null) {
     var container = document.createElement('li');
     ['row', 'col-12'].forEach(item => {
         container.classList.add(item);
@@ -41,7 +63,7 @@ function addNewOptionField(optionTitle="", optionPrice=null) {
 
     const optionTitleField = getTitleField(optionTitle, "Option", "pricing[title]");
     const optionPriceField = getPriceInput("Price", "pricing[price]", optionPrice);
-    
+
     container.appendChild(optionTitleField);
     container.appendChild(optionPriceField);
     container.appendChild(getDeleteButton());
@@ -50,7 +72,7 @@ function addNewOptionField(optionTitle="", optionPrice=null) {
 }
 
 // Creates modifier field with specified params
-function addNewModifierField(modifierTitle="", optionPrice=null) {
+function addNewModifierField(modifierTitle = "", optionPrice = null) {
     var container = document.createElement('li');
     ['row', 'col-12'].forEach(item => {
         container.classList.add(item);
@@ -67,7 +89,7 @@ function addNewModifierField(modifierTitle="", optionPrice=null) {
 }
 
 // Get input field for title
-function getTitleField(content, placeHolder, inputName, required=true) {
+function getTitleField(content, placeHolder, inputName, required = true) {
     var container = document.createElement('div');
     container.classList.add('col-6');
 
@@ -89,7 +111,7 @@ function getTitleField(content, placeHolder, inputName, required=true) {
 }
 
 // Creates Price Input field
-function getPriceInput(placeholder, inputName, inputValue, required=true) {
+function getPriceInput(placeholder, inputName, inputValue, required = true) {
     var container = document.createElement('div');
     container.classList.add('col-4');
 
@@ -124,4 +146,3 @@ function getDeleteButton() {
     container.appendChild(deleteBtn);
     return container;
 }
-

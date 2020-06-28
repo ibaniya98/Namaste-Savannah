@@ -1,4 +1,5 @@
-const Menu = require('../models/menuItem');
+const Menu = require('../models/menuItem'),
+    S3 = require('../aws/imageHelpers');
 
 /**
  * This method shuffles the array that is passed.
@@ -35,7 +36,9 @@ function parseMenuForm(req) {
     menuItem.options = parseRawOptions(req.body.pricing);
 
     // add modifiers
-    menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+    if (req.body.modifiers) {
+        menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+    }    
 
     return menuItem;
 }
@@ -63,7 +66,7 @@ function parseRawOptions(rawPricing) {
 function parseRawModifiers(rawModifiers) {
     const multiSelectModifier = rawModifiers['multiSelect'] && rawModifiers['multiSelect'] === 'on';
     const parsedModifiers = {
-        multiSelect: multiSelectModifier,
+        multiSelect: multiSelectModifier || false,
         values: []
     }
 
@@ -222,7 +225,9 @@ async function deleteMenuItem(menuId) {
             console.log(err);
             throw `Failed to delete menu item`;
         }
-        console.log('Successfully deleted the item');
+        if (item && item.image && item.image.key) {
+            S3.deleteImage(item.image.key).catch(err => console.log(err));
+        }
     });
 }
 
