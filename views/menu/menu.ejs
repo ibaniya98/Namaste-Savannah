@@ -99,6 +99,14 @@
                             
                             <% } %>
                             
+                            <% if (item.tags && item.tags.length > 0) { %> 
+                                <hr />
+                                <p>
+                                    <% item.tags.forEach(tag => { %>
+                                        <span class="badge badge-pill badge-light"><%= tag %></span>
+                                    <% }); %>                                    
+                                </p>
+                            <% } %>
 
                             <% if (currentUser) { %>
                             <div class="links mt-4">

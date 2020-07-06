@@ -124,6 +124,14 @@
                                     </div>
                                 </div>
 
+                                
+                                <div class="col-lg-12">
+                                    <p>Tags <span class="text-muted">(Please separate each tag with comma)</span></p>
+                                    <div class="form-group text_box">
+                                        <input type="text" id="tags" name="tags" placeholder="Spicy, Vegan, ...">
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12 mb-5">
                                     <p>Image</p>
                                     <div id="image_container">
@@ -276,6 +284,10 @@
             var price = <%= modifier.price %>;
             addNewModifierField(title, price);
         <% }); %>
+
+        <% if (item['tags'] && item['tags'].length > 0) { %> 
+            document.getElementById('tags').value = "<%= item['tags'].join(", ") %>";
+        <% } %>
        
     </script>
 

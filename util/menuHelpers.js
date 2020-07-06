@@ -38,8 +38,12 @@ function parseMenuForm(req) {
     // add modifiers
     if (req.body.modifiers) {
         menuItem.modifiers = parseRawModifiers(req.body.modifiers);
-    }    
+    }
 
+    // add tags
+    menuItem.tags = (req.body.tags || "").split(",")
+        .map(x => x.trim())
+        .filter(x => x.length > 0);
     return menuItem;
 }
 
