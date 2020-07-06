@@ -56,13 +56,13 @@
                 <div data-filter="*" class="work_portfolio_item active">All</div>
 
                 <% categories.forEach(category => { %>
-                <div data-filter=".<%= category.toLowerCase().replace(/[ "'()]/g, '_') %>" class="work_portfolio_item"><%= category %></div>
+                <div data-filter=".<%= category.toLowerCase().replace(/\W/g, '_') %>" class="work_portfolio_item"><%= category %></div>
                 <% }); %>
             </div>
 
             <div class="row portfolio_gallery mb-50 wow fadeInUp " id="work-portfolio" data-wow-delay="0.4s">
                 <% menuItems.forEach(item => { %>
-                <div class="col-lg-3 col-sm-6 portfolio_item <%= item['category'].toLowerCase().replace(/[ "'()]/g, '_') %>">
+                <div class="col-lg-3 col-sm-6 portfolio_item <%= item['category'].toLowerCase().replace(/\W/g, '_') %>">
                     <div class="portfolio_img app_service_item p-2">
                         <% if (item.image && item.image.location && item.image.location.length > 0){ %>
                         <a href="<%= item['image']['location'] %>" class="img_popup">
@@ -99,6 +99,16 @@
                             
                             <% } %>
                             
+                            <% if (item.tags && item.tags.length > 0) { %> 
+                                <hr />
+                                <p>
+                                    <% item.tags.forEach(tag => { %>
+                                        <span class="badge badge-pill <%= tag.color %> font-weight-light">
+                                            <%= tag.title %>
+                                        </span>
+                                    <% }); %>                                    
+                                </p>
+                            <% } %>
 
                             <% if (currentUser) { %>
                             <div class="links mt-4">

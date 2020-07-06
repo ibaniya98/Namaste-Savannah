@@ -1,5 +1,15 @@
 const IMAGE_PLACEHOLDER = 'https://namaste-savannah-photos.s3.amazonaws.com/menu/placeholder.png';
 
+const tagOptions = {
+    'Blue': 'badge-primary',
+    'Silver': 'badge-secondary',
+    'Green': 'badge-success',
+    'Red': 'badge-danger',
+    'Yellow': 'badge-warning',
+    'Gray': 'badge-light',
+    'Black': 'badge-dark'
+};
+
 $('#image_preview>img').attr('src', IMAGE_PLACEHOLDER);
 
 function addImagePreviewListener() {
@@ -40,6 +50,11 @@ $("#add_modifier").on('click', function () {
     addNewModifierField();
 });
 
+// Add new tag
+$('#add_tag').on('click', function () {
+    addNewTagField();
+});
+
 // Deletes the option
 $("#options").on('click', '.btn_delete', function () {
     $(this).parent().parent().fadeOut(200, function () {
@@ -53,6 +68,28 @@ $("#modifiers").on('click', '.btn_delete', function () {
         $(this).remove();
     });
 });
+
+$("#tags").on('click', '.btn_delete', function () {
+    $(this).parent().parent().fadeOut(200, function () {
+        $(this).remove();
+    });
+});
+
+function addNewTagField(tagTitle = "", tagColorClass = "") {
+    var container = document.createElement('li');
+    ['row', 'col-12'].forEach(item => {
+        container.classList.add(item);
+    });
+
+    const tagTitleField = getTitleField(tagTitle, "Tag", "tags[title]", true);
+    const tagSelection = getTagsSelection("tags[color]", tagColorClass, true);
+
+    container.appendChild(tagTitleField);
+    container.appendChild(tagSelection);
+    container.appendChild(getDeleteButton());
+
+    document.getElementById('tags').appendChild(container);
+}
 
 // Creates option field with specified params
 function addNewOptionField(optionTitle = "", optionPrice = null) {
@@ -129,6 +166,34 @@ function getPriceInput(placeholder, inputName, inputValue, required = true) {
     input.required = required;
 
     wrapper.appendChild(input);
+    container.appendChild(wrapper);
+    return container;
+}
+
+function getTagsSelection(optionName, colorClass, required = true) {
+    let container = document.createElement('div');
+    container.classList.add('col-4');
+
+    let wrapper = document.createElement('div');
+    ['form-group', 'text_box'].forEach(item => {
+        wrapper.classList.add(item);
+    });
+
+    let selectTag = document.createElement('select');
+    selectTag.name = optionName;
+    selectTag.required = required;
+
+    for (let tag in tagOptions) {
+        let optionTag = document.createElement('option');
+        optionTag.value = tagOptions[tag];
+        optionTag.innerText = tag;
+        if (colorClass === tagOptions[tag]) {
+            optionTag.selected = true;
+        }
+        selectTag.appendChild(optionTag);
+    }
+
+    wrapper.appendChild(selectTag);
     container.appendChild(wrapper);
     return container;
 }

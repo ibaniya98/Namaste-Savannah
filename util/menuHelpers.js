@@ -36,9 +36,10 @@ function parseMenuForm(req) {
     menuItem.options = parseRawOptions(req.body.pricing);
 
     // add modifiers
-    if (req.body.modifiers) {
-        menuItem.modifiers = parseRawModifiers(req.body.modifiers);
-    }    
+    menuItem.modifiers = parseRawModifiers(req.body.modifiers);
+
+    // add tags
+    menuItem.tags = (req.body.tags && parseRawTags(req.body.tags)) || [];
 
     return menuItem;
 }
@@ -63,7 +64,43 @@ function parseRawOptions(rawPricing) {
     return options;
 }
 
+function parseRawTags(rawTags) {
+    let parsedTags = [];
+
+    if (!(rawTags.title instanceof Array)) {
+        let currentTagTitle = rawTags.title.trim();
+        let currentTagColor = rawTags.color.trim();
+
+        rawTags.title = [currentTagTitle];
+        rawTags.color = [currentTagColor];
+    }
+
+    for (let i = 0; i < rawTags.title.length; i++) {
+        let title = rawTags.title[i].trim();
+        let color = rawTags.color[i].trim();
+
+        if (title.length === 0 && color.length === 0) {
+            continue;
+        } else if (title.length === 0) {
+            throw "Title of the tag must be provided";
+        } else if (color.length === 0) {
+            throw "Color for the tag must be selected";
+        }
+
+        parsedTags.push({ title, color });
+    }
+
+    return parsedTags;
+}
+
 function parseRawModifiers(rawModifiers) {
+    if (!rawModifiers) {
+        return {
+            multiSelect: false,
+            values: []
+        };
+    }
+
     const multiSelectModifier = rawModifiers['multiSelect'] && rawModifiers['multiSelect'] === 'on';
     const parsedModifiers = {
         multiSelect: multiSelectModifier || false,

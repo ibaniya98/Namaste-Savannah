@@ -194,6 +194,22 @@
 
                                 </div>
 
+                                <!-- Tags -->
+
+                                <div class="row col-lg-12 mt-4">
+                                    <div class="col-12">
+                                        <p>Tags</p>
+                                    </div>
+
+                                    <ul id="tags" class="pl-0 mb-0">
+                                    </ul>
+
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn_four" id="add_tag">Add Tag</button>
+                                    </div>
+
+                                </div>
+
 
                             </div>
 
@@ -276,6 +292,15 @@
             var price = <%= modifier.price %>;
             addNewModifierField(title, price);
         <% }); %>
+
+        <% if (item['tags'] && item['tags'].length > 0) { %> 
+            <% item['tags'].forEach(tag => { %>
+                var title = "<%= tag.title %>";
+                var color = "<%= tag.color %>";
+                console.log(title, color);
+                addNewTagField(title, color);
+            <% }); %>
+        <% } %>
        
     </script>
 
