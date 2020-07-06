@@ -93,13 +93,6 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <p>Tags <span class="text-muted">(Please separate each tag with comma)</span></p>
-                                    <div class="form-group text_box">
-                                        <input type="text" id="tags" name="tags" placeholder="Spicy, Vegan, ...">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
                                     <p>Image</p>
                                     <div id="image_preview">
                                         <img src="" alt="Image Preview for File Upload"/>
@@ -181,6 +174,44 @@
                                     </div>
 
                                 </div>
+
+                                <!-- Tags -->
+
+                                <div class="row col-lg-12 mt-4">
+                                    <div class="col-12">
+                                        <p>Tags</p>
+                                    </div>
+
+                                    <ul id="tags" class="pl-0 mb-0">
+                                        <!-- <li class="row col-12">
+                                            <div class="col-7">
+                                                <div class="form-group text_box">
+                                                    <input type="text" name="tags[text]"
+                                                        placeholder="Tag [Eg: Spicy]" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="form-group text_box">
+                                                    <select name="tags[color]" id="categories" required>
+                                                        <option value="badge-primary">Blue</option>
+                                                        <option value="badge-secondary">Silver</option>
+                                                        <option value="badge-success">Green</option>
+                                                        <option value="badge-danger">Red</option>
+                                                        <option value="badge-warning">Yellow</option>
+                                                        <option value="badge-light">Gray</option>
+                                                        <option value="badge-dark">Black</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li> -->
+                                    </ul>
+
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn_four" id="add_tag">Add Tag</button>
+                                    </div>
+
+                                </div>
+
                             </div>
 
                             <button type="submit" class="btn_three mt-5">Add Item</button>

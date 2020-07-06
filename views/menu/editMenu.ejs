@@ -124,14 +124,6 @@
                                     </div>
                                 </div>
 
-                                
-                                <div class="col-lg-12">
-                                    <p>Tags <span class="text-muted">(Please separate each tag with comma)</span></p>
-                                    <div class="form-group text_box">
-                                        <input type="text" id="tags" name="tags" placeholder="Spicy, Vegan, ...">
-                                    </div>
-                                </div>
-
                                 <div class="col-lg-12 mb-5">
                                     <p>Image</p>
                                     <div id="image_container">
@@ -198,6 +190,22 @@
 
                                     <div class="col-12">
                                         <button type="button" class="btn_four" id="add_modifier">Add Modifier</button>
+                                    </div>
+
+                                </div>
+
+                                <!-- Tags -->
+
+                                <div class="row col-lg-12 mt-4">
+                                    <div class="col-12">
+                                        <p>Tags</p>
+                                    </div>
+
+                                    <ul id="tags" class="pl-0 mb-0">
+                                    </ul>
+
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn_four" id="add_tag">Add Tag</button>
                                     </div>
 
                                 </div>
@@ -286,7 +294,12 @@
         <% }); %>
 
         <% if (item['tags'] && item['tags'].length > 0) { %> 
-            document.getElementById('tags').value = "<%= item['tags'].join(", ") %>";
+            <% item['tags'].forEach(tag => { %>
+                var title = "<%= tag.title %>";
+                var color = "<%= tag.color %>";
+                console.log(title, color);
+                addNewTagField(title, color);
+            <% }); %>
         <% } %>
        
     </script>

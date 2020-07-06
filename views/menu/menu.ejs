@@ -103,7 +103,9 @@
                                 <hr />
                                 <p>
                                     <% item.tags.forEach(tag => { %>
-                                        <span class="badge badge-pill badge-light"><%= tag %></span>
+                                        <span class="badge badge-pill <%= tag.color %> font-weight-light">
+                                            <%= tag.title %>
+                                        </span>
                                     <% }); %>                                    
                                 </p>
                             <% } %>

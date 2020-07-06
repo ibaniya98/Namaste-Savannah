@@ -20,7 +20,10 @@ let menuItemSchema = new mongoose.Schema({
             price: { type: Number, min: 0.01 }
         }]
     },
-    tags: [{ type: String, trim: true }]
+    tags: [{
+        title: { type: String, trim: true },
+        color: { type: String, trim: true }
+    }]
 });
 
 module.exports = mongoose.model('Menu', menuItemSchema);
