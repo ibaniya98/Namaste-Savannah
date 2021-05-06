@@ -1,69 +1,124 @@
 <header class="header_area">
-    <nav class="navbar navbar-expand-lg menu_seven">
-        <div class="container">
-            <a class="navbar-brand sticky_logo" href="#">
-                <img src="/img/logo2.png" srcset="/img/logo2x-2.png 2x" alt="logo">
-                <img src="/img/logo.png" srcset="/img/logo2x.png 2x" alt="">
+  <nav class="navbar navbar-expand-lg menu_seven">
+    <div class="container">
+      <a class="navbar-brand sticky_logo" href="#">
+        <img src="/img/logo2.png" srcset="/img/logo2x-2.png 2x" alt="logo" />
+        <img src="/img/logo.png" srcset="/img/logo2x.png 2x" alt="" />
+      </a>
+      <button
+        class="navbar-toggler collapsed"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="menu_toggle">
+          <span class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span class="hamburger-cross">
+            <span></span>
+            <span></span>
+          </span>
+        </span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav menu pl_120">
+          <li
+            class="nav-item <%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>"
+          >
+            <a
+              class="nav-link"
+              href="/"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Home
             </a>
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="menu_toggle">
-                    <span class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                    <span class="hamburger-cross">
-                        <span></span>
-                        <span></span>
-                    </span>
-                </span>
-            </button>
+          </li>
+          <li class="nav-item dropdown submenu">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Menu
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item">
+                <a href="/menu" class="nav-link">View Menu</a>
+              </li>
+              <li class="nav-item">
+                <a href="/buffet" class="nav-link">View Buffet Menu</a>
+              </li>
+              <% if (currentUser) { %>
+              <li class="nav-item">
+                <a href="/menu/new" class="nav-link">Add New Item</a>
+              </li>
+              <li class="nav-item">
+                <a href="/buffet/edit" class="nav-link">Update Buffet</a>
+              </li>
+              <% } %>
+            </ul>
+          </li>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav menu pl_120">
-                    <li class="nav-item <%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>">
-                        <a class="nav-link" href="/" role="button" aria-haspopup="true" aria-expanded="false">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown submenu">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Menu
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a href="/menu" class="nav-link">View Menu</a></li>
-                            <li class="nav-item"><a href="/buffet" class="nav-link">View Buffet Menu</a></li>
-                            <% if (currentUser) { %>
-                                <li class="nav-item"><a href="/menu/new" class="nav-link">Add New Item</a></li>
-                                <li class="nav-item"><a href="/buffet/edit" class="nav-link">Update Buffet</a></li>
-                            <% } %>
-                        </ul>
-                    </li>
+          <li
+            class="nav-item <%= typeof page !== 'undefined' && page === 'gallery' ? 'active' : '' %>"
+          >
+            <a
+              class="nav-link"
+              href="/gallery"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Gallery
+            </a>
+          </li>
+          <li
+            class="nav-item <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>"
+          >
+            <a
+              class="nav-link"
+              href="/contact"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Contact
+            </a>
+          </li>
 
-                    <li class="nav-item <%= typeof page !== 'undefined' && page === 'gallery' ? 'active' : '' %>">
-                        <a class="nav-link" href="/gallery" role="button" aria-haspopup="true" aria-expanded="false">
-                            Gallery
-                        </a>
-                    </li>
-                    <li class="nav-item <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
-                        <a class="nav-link" href="/contact" role="button" aria-haspopup="true" aria-expanded="false">
-                            Contact
-                        </a>
-                    </li>
-
-                    <% if (currentUser) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout" role="button" aria-haspopup="true" aria-expanded="false">
-                            Logout
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-            </div>
-            <a class="btn_get btn_get_radious hidden-sm hidden-xs" href="/order">Order Now</a>
-        </div>
-    </nav>
+          <% if (currentUser) { %>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="/logout"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Logout
+            </a>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+      <a
+        class="btn_get btn_get_radious hidden-sm hidden-xs chownow-order-online"
+        href="https://ordering.chownow.com/order/25983/locations/38469?add_cn_ordering_class=true"
+        target="_blank"
+        >Order Now</a
+      >
+    </div>
+  </nav>
 </header>
