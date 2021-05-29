@@ -23,13 +23,13 @@ jobs:
             - url: .*
               script: auto
           env_variables:
-            GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
-            GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-            MONGODB_URL: ${{ secrets.MONGODB_URL }}
-            SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+            GMAIL_EMAIL: "${{ secrets.GMAIL_EMAIL }}"
+            GMAIL_PASSWORD: "${{ secrets.GMAIL_PASSWORD }}"
+            MONGODB_URL: "${{ secrets.MONGODB_URL }}"
+            SESSION_SECRET: "${{ secrets.SESSION_SECRET }}"
+            AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+            AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+            AWS_BUCKET_NAME: "${{ secrets.AWS_BUCKET_NAME }}"
           EOF
 
       - name: Verify app.yaml
@@ -43,3 +43,4 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           working_directory: deploy
           deliverables: app.yaml
+          promote: false
