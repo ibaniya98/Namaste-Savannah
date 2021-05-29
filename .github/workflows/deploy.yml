@@ -11,7 +11,7 @@ jobs:
       - name: Create app.yaml
         run: |
           mkdir deploy
-          cat << EOF > ${{ github.workspace }}/deploy/app.yaml
+          cat << EOF > ${{ github.workspace }}/app.yaml
           runtime: nodejs10
           env: standard
           instance_class: F1
@@ -41,6 +41,5 @@ jobs:
         with:
           credentials: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT }}
-          working_directory: deploy
           deliverables: app.yaml
           promote: false
