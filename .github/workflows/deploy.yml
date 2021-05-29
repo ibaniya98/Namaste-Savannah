@@ -1,6 +1,9 @@
 name: Deploy Website
 
-on: push
+on:
+  push:
+    branches:
+      - production
 
 jobs:
   deploy-website:
@@ -39,7 +42,6 @@ jobs:
           credentials: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT }}
           deliverables: app.yaml
-          promote: false
 
       - name: Verify deployment
-        run: curl "${{ steps.deploy.outputs.url }}"
+        run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
