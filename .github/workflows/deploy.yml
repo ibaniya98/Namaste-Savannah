@@ -1,0 +1,47 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy-website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create app.yaml
+        run: |
+          mkdir deploy
+          cat << EOF > ${{ github.workspace }}/app.yaml
+          runtime: nodejs10
+          env: standard
+          instance_class: F1
+          handlers:
+            - url: /.*
+              script: auto
+              secure: always
+              redirect_http_response_code: '301'
+            - url: .*
+              script: auto
+          env_variables:
+            GMAIL_EMAIL: "${{ secrets.GMAIL_EMAIL }}"
+            GMAIL_PASSWORD: "${{ secrets.GMAIL_PASSWORD }}"
+            MONGODB_URL: "${{ secrets.MONGODB_URL }}"
+            SESSION_SECRET: "${{ secrets.SESSION_SECRET }}"
+            AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+            AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+            AWS_BUCKET_NAME: "${{ secrets.AWS_BUCKET_NAME }}"
+          EOF
+
+      - name: Deploy to App Engine
+        id: deploy
+        uses: google-github-actions/deploy-appengine@main
+        with:
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          deliverables: app.yaml
+
+      - name: Verify deployment
+        run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
