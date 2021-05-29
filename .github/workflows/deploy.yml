@@ -32,6 +32,9 @@ jobs:
             AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           EOF
 
+      - name: Verify app.yaml
+        run: cat deploy/app.yaml
+
       - name: Deploy to App Engine
         id: deploy
         uses: google-github-actions/deploy-appengine@main
