@@ -40,3 +40,6 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           deliverables: app.yaml
           promote: false
+
+      - name: Verify deployment
+        run: curl "${{ steps.deploy.outputs.url }}"
