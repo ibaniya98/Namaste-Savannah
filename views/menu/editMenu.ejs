@@ -184,8 +184,10 @@
                       <input type="checkbox" name="removeImage" /> Remove
                       Existing Image
                       <div id="existing_preview" class="mr-3">
-                        <img src="<%" ="item.image.location" % />
-                        alt="Previously uploaded image"/>
+                        <img
+                          src="<%= item.image.location %>"
+                          alt="Previously uploaded image"
+                        />
                         <div class="d-none">
                           <input
                             type="text"
@@ -335,33 +337,33 @@
           `);
       }
 
-      //   <% if (item['description'] !== undefined && item['description'].trim().length > 0) { %>
-      //       document.getElementById('description').textContent = "<%= item['description'] %>";
-      //   <% } %>
+        <% if (item['description'] !== undefined && item['description'].trim().length > 0) { %>
+            document.getElementById('description').textContent = "<%= item['description'] %>";
+        <% } %>
 
-      //   <% items['options'] && item['options'].forEach(option => { %>
-      //       var title = "";
-      //       <% if (option.title.trim().length > 0) { %>
-      //               title = "<%= option.title.trim() %>"
-      //                   <% } %>
-      //       var price = <%= option.price %>;
-      //       addNewOptionField(title, price);
-      //   <% }); %>
+        <% item['options'] && item['options'].forEach(option => { %>
+            var title = "";
+            <% if (option.title.trim().length > 0) { %>
+                    title = "<%= option.title.trim() %>"
+                        <% } %>
+            var price = <%= option.price %>;
+            addNewOptionField(title, price);
+        <% }); %>
 
-      //   <% item['modifiers'] && item['modifiers']['values'].forEach(modifier => { %>
-      //       var title = "<%= modifier.title.trim() %>";
-      //       var price = <%= modifier.price %>;
-      //       addNewModifierField(title, price);
-      //   <% }); %>
+        <% item['modifiers'] && item['modifiers']['values'].forEach(modifier => { %>
+            var title = "<%= modifier.title.trim() %>";
+            var price = <%= modifier.price %>;
+            addNewModifierField(title, price);
+        <% }); %>
 
-      //   <% if (item['tags'] && item['tags'].length > 0) { %>
-      //       <% item['tags'].forEach(tag => { %>
-      //           var title = "<%= tag.title %>";
-      //           var color = "<%= tag.color %>";
-      //           console.log(title, color);
-      //           addNewTagField(title, color);
-      //       <% }); %>
-      //   <% } %>
+        <% if (item['tags'] && item['tags'].length > 0) { %>
+            <% item['tags'].forEach(tag => { %>
+                var title = "<%= tag.title %>";
+                var color = "<%= tag.color %>";
+                console.log(title, color);
+                addNewTagField(title, color);
+            <% }); %>
+        <% } %>
     </script>
   </body>
 </html>
