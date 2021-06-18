@@ -1,189 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
     <title>New Item | Namaste Savannah</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <!--icon font css-->
-    <link rel="stylesheet" href="/vendors/themify-icon/themify-icons.css">
-    <link rel="stylesheet" href="/vendors/flaticon/flaticon.css">
-    <link rel="stylesheet" href="/vendors/animation/animate.css">
-    <link rel="stylesheet" href="/vendors/owl-carousel/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="/vendors/magnify-pop/magnific-popup.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/vendors/themify-icon/themify-icons.css" />
+    <link rel="stylesheet" href="/vendors/flaticon/flaticon.css" />
+    <link rel="stylesheet" href="/vendors/animation/animate.css" />
+    <link
+      rel="stylesheet"
+      href="/vendors/owl-carousel/assets/owl.carousel.min.css"
+    />
+    <link rel="stylesheet" href="/vendors/magnify-pop/magnific-popup.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <% include ../partials/google-analytics.ejs %>
     <style>
-        #image_preview {
-            width: 200px;
-        }
+      #image_preview {
+        width: 200px;
+      }
 
-        #image_preview>img {
-            width: 100%;
-            border-radius: 10px;
-        }
+      #image_preview > img {
+        width: 100%;
+        border-radius: 10px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <% include ../partials/preloader.ejs %>
-
-    <% include ../partials/navbar.ejs %>
+  <body>
+    <% include ../partials/preloader.ejs %> <% include ../partials/navbar.ejs %>
 
     <!-- Jumbotron -->
     <section class="breadcrumb_area">
-        <img class="breadcrumb_shap" src="/img/home/banner_bg.png" alt="">
-        <div class="container">
-            <div class="breadcrumb_content text-center">
-                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Add New Menu Item</h1>
-                <p class="f_300 w_color f_size_16 l_height26">
-                    <!-- TODO - Add something -->
-                </p>
-            </div>
+      <img class="breadcrumb_shap" src="/img/home/banner_bg.png" alt="" />
+      <div class="container">
+        <div class="breadcrumb_content text-center">
+          <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">
+            Add New Menu Item
+          </h1>
+          <p class="f_300 w_color f_size_16 l_height26">
+            <!-- TODO - Add something -->
+          </p>
         </div>
-    </section>   
+      </div>
+    </section>
 
     <section class="contact_info_area sec_pad bg_color">
-        <div class="container">
-            <% include ../partials/flashMessages.ejs %>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="contact_form">
-                        <form action="/menu" class="contact_form_box" method="POST" enctype="multipart/form-data">
-                            <div class="row">
+      <div class="container">
+        <% include ../partials/flashMessages.ejs %>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="contact_form">
+              <form
+                action="/menu"
+                class="contact_form_box"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <p>Name *</p>
+                    <div class="form-group text_box">
+                      <input
+                        type="text"
+                        id="name"
+                        name="menu[itemName]"
+                        placeholder="Item Name"
+                        required
+                      />
+                    </div>
+                  </div>
 
-                                <div class="col-lg-12">
-                                    <p>Name *</p>
-                                    <div class="form-group text_box">
-                                        <input type="text" id="name" name="menu[itemName]" placeholder="Item Name"
-                                            required>
-                                    </div>
-                                </div>
+                  <div class="col-lg-12">
+                    <p>Category *</p>
+                    <div class="form-group text_box">
+                      <select name="menu[category]" id="categories" required>
+                        <option value="">Select a category</option>
+                        <% categories.forEach(item => { %>
+                        <option value="<%= item %>"><%= item %></option>
+                        <% }); %>
+                        <option value="new">Add New Category</option>
+                      </select>
+                    </div>
+                  </div>
 
-                                <div class="col-lg-12">
-                                    <p>Category *</p>
-                                    <div class="form-group text_box">
-                                        <select name="menu[category]" id="categories" required>
-                                            <option value="">Select a category</option>
-                                            <% categories.forEach(item => { %>
-                                            <option value="<%= item %>"><%= item %></option>
-                                            <% }); %>
-                                            <option value="new">Add New Category</option>
-                                        </select>
-                                    </div>
-                                </div>
+                  <div class="col-lg-12">
+                    <div class="form-group text_box">
+                      <input
+                        type="text"
+                        id="newCategory"
+                        name="newCategory"
+                        placeholder="New Category Name"
+                        class="d-none"
+                      />
+                    </div>
+                  </div>
 
-                                <div class="col-lg-12">
-                                    <div class="form-group text_box">
-                                        <input type="text" id="newCategory" name="newCategory"
-                                            placeholder="New Category Name" class="d-none">
-                                    </div>
-                                </div>
+                  <div class="col-lg-12">
+                    <p>Description</p>
+                    <div class="form-group text_box">
+                      <textarea
+                        name="menu[description]"
+                        id="description"
+                        cols="30"
+                        rows="2"
+                        placeholder="Item Description"
+                      ></textarea>
+                    </div>
+                  </div>
 
-                                <div class="col-lg-12">
-                                    <p>Description</p>
-                                    <div class="form-group text_box">
-                                        <textarea name="menu[description]" id="description" cols="30" rows="2"
-                                            placeholder="Item Description"></textarea>
-                                    </div>
-                                </div>
+                  <div class="col-lg-12">
+                    <p>Image</p>
+                    <div id="image_preview">
+                      <img src="" alt="Image Preview for File Upload" />
+                    </div>
+                    <div class="form-group text_box">
+                      <input
+                        type="file"
+                        id="image_upload"
+                        name="image_upload"
+                        accept="image/*"
+                      />
+                    </div>
+                  </div>
 
-                                <div class="col-lg-12">
-                                    <p>Image</p>
-                                    <div id="image_preview">
-                                        <img src="" alt="Image Preview for File Upload"/>
-                                    </div>
-                                    <div class="form-group text_box">
-                                        <input type="file" id="image_upload" name="image_upload" accept="image/*">
-                                    </div>
-                                </div>
+                  <!-- Menu Item Option Pricing -->
 
+                  <div class="row col-lg-12">
+                    <div class="col-12">
+                      <p>Options *</p>
+                    </div>
 
-                                <!-- Menu Item Option Pricing -->
+                    <ul id="options" class="pl-0 mb-0">
+                      <li class="row col-12">
+                        <div class="col-7">
+                          <div class="form-group text_box">
+                            <input
+                              type="text"
+                              id="option1"
+                              name="pricing[title]"
+                              placeholder="Option [Eg: Bison]"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-5">
+                          <div class="form-group text_box">
+                            <input
+                              type="number"
+                              id="price1"
+                              name="pricing[price]"
+                              placeholder="Price"
+                              step="0.01"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
 
-                                <div class="row col-lg-12">
-                                    <div class="col-12">
-                                        <p>Options *</p>
-                                    </div>
+                    <div class="col-12 mb-3">
+                      <button type="button" class="btn_four" id="add_option">
+                        Add Option
+                      </button>
+                    </div>
+                  </div>
 
-                                    <ul id="options" class="pl-0 mb-0">
+                  <!-- Menu Item Modifiers -->
 
-                                        <li class="row col-12">
-                                            <div class="col-7">
-                                                <div class="form-group text_box">
-                                                    <input type="text" id="option1" name="pricing[title]"
-                                                        placeholder="Option [Eg: Bison]" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="form-group text_box">
-                                                    <input type="number" id="price1" name="pricing[price]"
-                                                        placeholder="Price" step="0.01" required>
-                                                </div>
-                                            </div>
-                                        </li>
+                  <div class="row col-lg-12 mt-3">
+                    <div class="col-12">
+                      <p>Modifiers</p>
+                    </div>
 
-                                    </ul>
+                    <div class="col-12">
+                      <p>
+                        <input
+                          type="checkbox"
+                          name="modifiers[multiSelect]"
+                          class="mr-1"
+                        />
+                        User can select multiple modifiers
+                      </p>
+                    </div>
 
-                                    <div class="col-12 mb-3">
-                                        <button type="button" class="btn_four" id="add_option">Add Option</button>
-                                    </div>
+                    <ul id="modifiers" class="pl-0">
+                      <li class="row col-12">
+                        <div class="col-7">
+                          <div class="form-group text_box">
+                            <input
+                              type="text"
+                              id="option1"
+                              name="modifiers[values][title]"
+                              placeholder="Modifier [Eg: Add Chicken]"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-5">
+                          <div class="form-group text_box">
+                            <input
+                              type="number"
+                              id="price1"
+                              name="modifiers[values][price]"
+                              placeholder="Price"
+                              step="0.01"
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
 
-                                </div>
+                    <div class="col-12">
+                      <button type="button" class="btn_four" id="add_modifier">
+                        Add Modifier
+                      </button>
+                    </div>
+                  </div>
 
-                                
-                                <!-- Menu Item Modifiers -->
+                  <!-- Tags -->
 
-                                <div class="row col-lg-12 mt-3">
-                                    <div class="col-12">
-                                        <p>Modifiers</p>
-                                    </div>
+                  <div class="row col-lg-12 mt-4">
+                    <div class="col-12">
+                      <p>Tags</p>
+                    </div>
 
-                                    <div class="col-12">
-                                        <p> 
-                                            <input type="checkbox" name="modifiers[multiSelect]" class="mr-1">
-                                            User can select multiple modifiers
-                                        </p>
-                                    </div>
-
-                                    <ul id="modifiers" class="pl-0">
-
-                                        <li class="row col-12">
-                                            <div class="col-7">
-                                                <div class="form-group text_box">
-                                                    <input type="text" id="option1" name="modifiers[values][title]"
-                                                        placeholder="Modifier [Eg: Add Chicken]">
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="form-group text_box">
-                                                    <input type="number" id="price1" name="modifiers[values][price]"
-                                                        placeholder="Price" step="0.01">
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-
-                                    <div class="col-12">
-                                        <button type="button" class="btn_four" id="add_modifier">Add Modifier</button>
-                                    </div>
-
-                                </div>
-
-                                <!-- Tags -->
-
-                                <div class="row col-lg-12 mt-4">
-                                    <div class="col-12">
-                                        <p>Tags</p>
-                                    </div>
-
-                                    <ul id="tags" class="pl-0 mb-0">
-                                        <!-- <li class="row col-12">
+                    <ul id="tags" class="pl-0 mb-0">
+                      <!-- <li class="row col-12">
                                             <div class="col-7">
                                                 <div class="form-group text_box">
                                                     <input type="text" name="tags[text]"
@@ -204,24 +254,23 @@
                                                 </div>
                                             </div>
                                         </li> -->
-                                    </ul>
+                    </ul>
 
-                                    <div class="col-12 mb-3">
-                                        <button type="button" class="btn_four" id="add_tag">Add Tag</button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <button type="submit" class="btn_three mt-5">Add Item</button>
-                        </form>
+                    <div class="col-12 mb-3">
+                      <button type="button" class="btn_four" id="add_tag">
+                        Add Tag
+                      </button>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
+                <button type="submit" class="btn_three mt-5">Add Item</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <% include ../partials/footer.ejs %>
 
@@ -237,8 +286,5 @@
     <script src="/js/plugins.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/menuUtil.js"></script>
-
-   
-</body>
-
+  </body>
 </html>

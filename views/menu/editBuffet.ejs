@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/vendors/autocomplete/auto-complete.css" />
+    <% include ../partials/google-analytics.ejs %>
   </head>
 
   <body>
@@ -233,7 +234,7 @@
                 "(" + search.split(" ").join("|") + ")",
                 "gi"
               );
-              
+
               return (
                 '<div class="autocomplete-suggestion" data-val="' +
                 item[0] +
