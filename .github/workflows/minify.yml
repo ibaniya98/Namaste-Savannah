@@ -20,8 +20,11 @@ jobs:
       - name: Minify files
         run: ./cicd/scripts/minify.sh "${{ matrix.files }}"
 
-      - name: Verify minified files
-        run: ls -l ${{ matrix.files }}
+      - name: Save minified files to cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.files }}
+          key: ${{ github.sha }}
 
   verify-files:
     needs: minify-files
@@ -30,5 +33,16 @@ jobs:
       matrix:
         files: ["public/css/*.css", "public/js/*.js"]
     steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore minified files
+        uses: actions/cache@v2
+         with:
+          path: ${{ matrix.files }}
+          key: ${{ github.sha }}
+
       - name: Verify minified files
         run: ls -l ${{ matrix.files }}
+
+      - name: Check for other files
+        run: ls .
