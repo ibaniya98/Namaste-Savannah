@@ -11,14 +11,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Get initial files
-        run: |
-          ls -l ${{ env.STYLESHEET_DIRECTORY }}
+        run: ls -l ${{ env.STYLESHEET_DIRECTORY }}
+
+      - name: Install yui-compressor
+        run: apt-get install yui-compressor
 
       - name: Minify CSS styles
-        uses: nizarmah/auto-minify@master
-        with:
-          directory: "${{ env.STYLESHEET_DIRECTORY }}"
+        run: ./cicd/scripts/minify.sh "{{ env.STYLESHEET_DIRECTORY }}/*.css"
 
       - name: Verify minified files
-        run: |
-          ls -l ${{ env.STYLESHEET_DIRECTORY }}
+        run: ls -l ${{ env.STYLESHEET_DIRECTORY }}
