@@ -11,8 +11,10 @@ jobs:
       - name: Minify CSS styles
         uses: nizarmah/auto-minify@master
         with:
-          directory: "${{ github.workspace }}/public/css"
+          directory: "public/css"
+        run: |
+          cat public/css/main.css
 
       - name: Verify minified files
         run: |
-          cat ${{ github.workspace }}/public/css/*
+          cat public/css/main.css
