@@ -3,21 +3,18 @@ name: Deploy Website
 on: push
 
 jobs:
-  minify-stylesheets:
+  minify-files:
     runs-on: ubuntu-latest
-    env:
-      STYLESHEET_DIRECTORY: public/css
+    strategy:
+      files: ["public/css/*.css", "public/js/*.js"]
     steps:
       - uses: actions/checkout@v2
-
-      - name: Get initial files
-        run: ls -l ${{ env.STYLESHEET_DIRECTORY }}
 
       - name: Install yui-compressor
         run: sudo apt-get install yui-compressor
 
       - name: Minify CSS styles
-        run: ./cicd/scripts/minify.sh "${{ env.STYLESHEET_DIRECTORY }}/*.css"
+        run: ./cicd/scripts/minify.sh "${{ matrix.files }}"
 
       - name: Verify minified files
-        run: ls -l ${{ env.STYLESHEET_DIRECTORY }}
+        run: ls -l ${{ matrix.files }}
