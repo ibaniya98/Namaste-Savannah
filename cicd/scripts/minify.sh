@@ -16,5 +16,7 @@ fi
 file=$1
 
 for filename in ${file}; do
+    echo "$filename"
+    cat "$filename"
     yui-compressor "$filename"
 done
