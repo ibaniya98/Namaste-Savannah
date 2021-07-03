@@ -7,17 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       STYLESHEET_DIRECTORY: public/css
-      STYLESHEET_OUTPUT_DIRECTORY: build/css
     steps:
       - uses: actions/checkout@v2
+
+      - name: Get initial files
+        run: |
+          ls -l ${{ env.STYLESHEET_DIRECTORY }}
 
       - name: Minify CSS styles
         uses: nizarmah/auto-minify@master
         with:
           directory: "${{ env.STYLESHEET_DIRECTORY }}"
-          output: "${{ env.STYLESHEET_OUTPUT_DIRECTORY }}"
 
       - name: Verify minified files
         run: |
           ls -l ${{ env.STYLESHEET_DIRECTORY }}
-          ls -l ${{ env.STYLESHEET_OUTPUT_DIRECTORY }}
