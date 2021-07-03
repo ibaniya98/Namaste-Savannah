@@ -22,3 +22,13 @@ jobs:
 
       - name: Verify minified files
         run: ls -l ${{ matrix.files }}
+
+  verify-files:
+    needs: minify-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        files: ["public/css/*.css", "public/js/*.js"]
+    steps:
+      - name: Verify minified files
+        run: ls -l ${{ matrix.files }}
