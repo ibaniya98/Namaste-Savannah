@@ -14,7 +14,10 @@ jobs:
       - name: Install yui-compressor
         run: sudo apt-get install yui-compressor
 
-      - name: Minify CSS styles
+      - name: List original files
+        run: ls -l ${{ matrix.files }}
+
+      - name: Minify files
         run: ./cicd/scripts/minify.sh "${{ matrix.files }}"
 
       - name: Verify minified files

@@ -18,5 +18,4 @@ file=$1
 for filename in ${file}; do
     echo "$filename"
     yui-compressor "$filename" -o "${filename}"  --preserve-semi
-    cat "$filename"
 done
