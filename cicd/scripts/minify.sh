@@ -3,7 +3,7 @@
 function usage() {
     echo "Usage: $0 path/to/file
     Example:
-        $0 ./public/css/main.css -> Minify main.css file
+        $0 ./public/js/main.js -> Minify main.js file
         $0 ./public/css/*.css -> Minify all css files under public/css
         "
     exit 1
@@ -17,6 +17,6 @@ file=$1
 
 for filename in ${file}; do
     echo "$filename"
+    yui-compressor "$filename" -o "${filename}"  --preserve-semi
     cat "$filename"
-    yui-compressor "$filename"
 done
