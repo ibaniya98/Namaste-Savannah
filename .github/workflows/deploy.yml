@@ -1,9 +1,8 @@
 name: Deploy Website
 
 on:
-  push:
-    branches:
-      - production
+  release:
+    types: [released]
 
 jobs:
   deploy-website:
