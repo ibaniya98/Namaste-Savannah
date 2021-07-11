@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        files: ["css", "js"]
+        files: ["public/css/*.css", "public/js/*.js"]
     steps:
       - uses: actions/checkout@v2
 
@@ -15,18 +15,21 @@ jobs:
         run: sudo apt-get install yui-compressor
 
       - name: List original files
-        env:
-          TARGET_PATH: public/${{ matrix.files }}/*.${{ matrix.files }}
-        run: ls -l ${TARGET_PATH}
+        run: ls -l ${{ matrix.files }}
 
       - name: Minify files
-        run: ./cicd/scripts/minify.sh "${TARGET_PATH}"
+        run: ./cicd/scripts/minify.sh "${{ matrix.files }}"
 
       - name: Save minified files to cache
+        id: cache-minified-files
         uses: actions/cache@v2
         with:
-          path: $TARGET_PATH
-          key: ${{ github.sha }}-${{ matrix.files }}
+          path: ${{ matrix.files }}
+          key: ${{ github.sha }}
+
+      - name: Check for cache hit
+        run: |
+          echo "Cache hit: ${{ steps.cache-minified-files.outputs }}"
 
   verify-files:
     needs: minify-files
@@ -35,12 +38,17 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Restore minified files
+        id: cache-minified-files
         uses: actions/cache@v2
         with:
           key: ${{ github.sha }}
           path: |
             public/css/*.css
             public/js/*.js
+
+      - name: Check for cache hit
+        run: |
+          echo "Cache hit: ${{ steps.cache-minified-files.outputs }}"
 
       - name: Verify minified files
         run: |
