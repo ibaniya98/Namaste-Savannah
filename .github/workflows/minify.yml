@@ -35,10 +35,10 @@ jobs:
       - name: Restore minified files
         uses: actions/cache@v2
         with:
+          key: ${{ github.sha }}
           path: |
             public/css/*.css
             public/js/*.js
-          key: ${{ github.sha }}
 
       - name: Verify minified files
         run: |
