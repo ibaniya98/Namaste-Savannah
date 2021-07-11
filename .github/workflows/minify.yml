@@ -17,10 +17,10 @@ jobs:
       - name: List original files
         env:
           TARGET_PATH: public/${{ matrix.files }}/*.${{ matrix.files }}
-        run: ls -l $TARGET_PATH
+        run: ls -l ${TARGET_PATH}
 
       - name: Minify files
-        run: ./cicd/scripts/minify.sh "$TARGET_PATH"
+        run: ./cicd/scripts/minify.sh "${TARGET_PATH}"
 
       - name: Save minified files to cache
         uses: actions/cache@v2
