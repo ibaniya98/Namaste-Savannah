@@ -29,7 +29,7 @@ jobs:
 
       - name: Check for cache hit
         run: |
-          echo "Cache hit: ${{ steps.cache-minified-files.outputs }}"
+          echo "Cache hit: ${{ steps.cache-minified-files.outputs.cache-hit }}"
 
   verify-files:
     needs: minify-files
@@ -48,7 +48,7 @@ jobs:
 
       - name: Check for cache hit
         run: |
-          echo "Cache hit: ${{ steps.cache-minified-files.outputs }}"
+          echo "Cache hit: ${{ steps.cache-minified-files.outputs.cache-hit }}"
 
       - name: Verify minified files
         run: |
