@@ -1,6 +1,12 @@
 const Menu = require("../db/models/menuItem"),
   S3 = require("../aws/imageHelpers");
 
+const {
+  saveNewMenuItem,
+  updateExistingMenuItem,
+  removeMenuItemById,
+} = require("../db/actions/menuItem");
+
 /**
  * This method shuffles the array that is passed.
  *
@@ -148,41 +154,6 @@ function parseRawModifiers(rawModifiers) {
   return parsedModifiers;
 }
 
-//------------ Database Operations -------------------
-
-/**
- * This method retrieves all distinct categories in our database
- * used by the menu items
- * The caller must handle any exception
- *
- * @returns {Promise<Array<string>>} distinct categories in the database
- * @public
- */
-async function getDistinctCategories() {
-  return Menu.find()
-    .distinct("category")
-    .exec()
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to find distinct categories";
-    });
-}
-
-/**
- * This method retrieves all available menu items from the database
- *
- * @returns {Promise<Array<obj>>} array of Menu documents
- * @public
- */
-async function getMenuItems() {
-  return Menu.find()
-    .exec()
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to find menu items";
-    });
-}
-
 /**
  * This method adds a new menu object to the database
  * It validates the object to be inserted and throws exception if not valid.
@@ -198,39 +169,7 @@ async function addNewMenuItem(menuItem) {
     throw "All prices must be atleast $ 0.01";
   }
 
-  const newMenuItem = new Menu(menuItem);
-  return newMenuItem
-    .save()
-    .then((item) => {
-      console.log(`Added new item '${item.itemName}' [${item._id}]`);
-      return item;
-    })
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to add the menu item";
-    });
-}
-
-/**
- * This method retrives the document based on the provided id
- *
- * @param {string | mongoose.ObjectId} menuId
- * @returns {Promise<obj>} Menu document based on the id
- * @public
- */
-async function getMenuItemById(menuId) {
-  return Menu.findById(menuId)
-    .exec()
-    .then((item) => {
-      if (!item) {
-        throw `No item found for ${menuId}`;
-      }
-      return item;
-    })
-    .catch((error) => {
-      console.log(error);
-      throw `Failed to retrieve item for item id: ${menuId}`;
-    });
+  return saveNewMenuItem(menuItem);
 }
 
 /**
@@ -248,21 +187,7 @@ async function updateMenuItem(menuId, newMenuItem) {
     throw "All prices must be atleast $ 0.01";
   }
 
-  return Menu.findByIdAndUpdate(
-    menuId,
-    newMenuItem,
-    { new: true },
-    (err, item) => {
-      if (err) {
-        console.log(err);
-        throw "Error updating menu item";
-      } else if (!item) {
-        throw "No item found after updating the menu item";
-      } else {
-        return item;
-      }
-    }
-  );
+  return updateExistingMenuItem(menuId, newMenuItems);
 }
 
 /**
@@ -272,11 +197,7 @@ async function updateMenuItem(menuId, newMenuItem) {
  * @public
  */
 async function deleteMenuItem(menuId) {
-  return Menu.findByIdAndDelete(menuId, (err, item) => {
-    if (err) {
-      console.log(err);
-      throw `Failed to delete menu item`;
-    }
+  await removeMenuItemById(menuId).then((item) => {
     if (item && item.image && item.image.key) {
       S3.deleteImage(item.image.key).catch((err) => console.log(err));
     }
@@ -297,10 +218,7 @@ function hasValidPrices(options) {
 module.exports = {
   shuffleMenu,
   parseMenuForm,
-  getDistinctCategories,
-  getMenuItems,
   addNewMenuItem,
-  getMenuItemById,
   updateMenuItem,
   deleteMenuItem,
 };
