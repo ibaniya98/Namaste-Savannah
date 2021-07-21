@@ -11,6 +11,8 @@ const {
   getMenuItemById,
 } = require("../db/actions/menuItem");
 
+const { createBuffet, updateBuffet } = require("../db/actions/buffet");
+
 const router = express.Router();
 
 router.get("/menu", async (req, res) => {
@@ -174,7 +176,7 @@ router.post("/buffet", middleWare.isAuthorized, (req, res) => {
   // If there is an existing buffet, update that buffet
   if (req.body.id && req.body.id.length > 0) {
     newBuffet.updatedAt = Date.now();
-    BuffetHelpers.updateBuffet(req.body.id, newBuffet)
+    updateBuffet(req.body.id, newBuffet)
       .then((buffet) => {
         req.flash("success", "Successfully updated the buffet");
         res.redirect("/buffet");
@@ -184,7 +186,7 @@ router.post("/buffet", middleWare.isAuthorized, (req, res) => {
         res.redirect("back");
       });
   } else {
-    BuffetHelpers.createBuffet(newBuffet)
+    createBuffet(newBuffet)
       .then((buffet) => {
         req.flash("success", "Successfully created the buffet");
         res.redirect("/buffet");

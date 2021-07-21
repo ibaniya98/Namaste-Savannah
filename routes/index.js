@@ -1,15 +1,21 @@
 let express = require("express");
 let router = express.Router();
 
-let Partner = require("../db/models/partner");
+const { getPartners } = require("../db/actions/partner");
 
-router.get("/", (req, res) => {
-  Partner.find({ showInHomepage: true }, (err, partners) => {
-    if (err) {
-      partners = [];
+router.get("/", async (req, res) => {
+  let homepagePartners = [];
+  try {
+    const partners = await getPartners();
+    if (partners) {
+      homepagePartners = partners.filter((x) => x.showInHomepage);
     }
-    res.render("index", { page: "home", partners: partners });
-  });
+  } catch (err) {
+    console.error("Failed to find partners for homepage");
+    homepagePartners = [];
+  }
+
+  return res.render("index", { page: "home", partners: homepagePartners });
 });
 
 router.get("/gallery", (req, res) => {
