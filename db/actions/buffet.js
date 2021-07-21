@@ -40,7 +40,7 @@ async function getBuffet() {
 async function createBuffet(buffet) {
   Buffet.create(buffet, (err, buffet) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       throw "Failed to create a new buffet";
     } else {
       return buffet;
@@ -61,7 +61,7 @@ async function createBuffet(buffet) {
 async function updateBuffet(buffetId, newBuffet) {
   Buffet.findByIdAndUpdate(buffetId, newBuffet, (err, buffet) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       throw "Failed to update the buffet";
     } else {
       return buffet;

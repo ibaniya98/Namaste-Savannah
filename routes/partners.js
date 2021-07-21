@@ -3,83 +3,64 @@ let express = require("express"),
 let router = express.Router();
 
 let Partner = require("../db/models/partner");
+const {
+  getPartners,
+  createPartner,
+  updatePartner,
+  deletePartner,
+} = require("../db/actions/partner");
 
-// Initial Data Seed
-seed = [
-  {
-    name: "Grubhub",
-    imageUrl: "img/partners/grubhub.png",
-    popularItems: ["Garlic Naan", "Kothe Mo:Mo", "Tikka Masala"],
-    orderLink: "https://www.grubhub.com/delivery/ga-savannah",
-    showInHomepage: true,
-  },
-  {
-    name: "Uber Eats",
-    imageUrl: "img/partners/uber.svg",
-    popularItems: ["Tikka Masala", "Garlic Naan", "Mango Lassi"],
-    orderLink:
-      "https://www.ubereats.com/en-US/savannah/food-delivery/namaste-savannah/20sFR2IMTlaCH3sdYxTbVw/",
-    isPopular: true,
-    showInHomepage: true,
-  },
-  {
-    name: "Waitr",
-    imageUrl: "img/partners/waitr.png",
-    popularItems: ["Tikka Masala", "Kothe Mo:Mo", "Korma"],
-    orderLink:
-      "https://waitrapp.com/restaurants/ga/pooler/namaste-savannah/14312",
-    showInHomepage: true,
-  },
-];
-
-router.get("/order", (req, res) => {
-  Partner.find({}, (err, partners) => {
-    if (err || !partners) {
-      console.log(err);
-      res.redirect("/error");
-    } else {
-      res.render("order", { partners: partners });
+router.get("/order", async (req, res) => {
+  try {
+    const partners = await getPartners();
+    if (!partners) {
+      throw "No partners found";
     }
-  });
+    return res.render("order", { partners: partners });
+  } catch (err) {
+    return res.redirect("/error");
+  }
 });
 
-router.post("/partner/new", middleware.isAuthorized, (req, res) => {
-  var partner = parsePartner(req);
-  Partner.create(partner, (err, item) => {
-    if (err) {
-      req.flash("error", "Failed to add new partner");
-      res.redirect("back");
-    } else {
-      req.flash("success", "Successfully added a new partner");
-      res.redirect("/order");
-    }
-  });
+router.post("/partner/new", middleware.isAuthorized, async (req, res) => {
+  try {
+    const partner = parsePartner(req);
+    await createPartner(partner);
+    req.flash("success", "Successfully added a new partner");
+    res.redirect("/order");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to add new partner");
+    res.redirect("back");
+  }
 });
 
-router.put("/partner/:id", middleware.isAuthorized, (req, res) => {
-  var partner = parsePartner(req);
+router.put("/partner/:id", middleware.isAuthorized, async (req, res) => {
+  try {
+    const partner = parsePartner(req);
+    const updatedPartner = await updatePartner(req.params.id, partner);
 
-  Partner.findByIdAndUpdate(req.params.id, partner, (err, item) => {
-    if (err || !item) {
-      req.flash("error", "Failed to update the partner");
-      res.redirect("back");
-    } else {
-      req.flash("success", "Successfully updated the partner");
-      res.redirect("/order");
+    if (!updatedPartner) {
+      throw "Partner was not updated";
     }
-  });
+
+    req.flash("success", "Successfully updated the partner");
+    res.redirect("/order");
+  } catch (err) {
+    req.flash("error", "Failed to update the partner");
+    res.redirect("back");
+  }
 });
 
-router.delete("/partner/:id", middleware.isAuthorized, (req, res) => {
-  Partner.findByIdAndDelete(req.params.id, (err) => {
-    if (err) {
-      req.flash("error", "Failed to delete the partner");
-      res.redirect("back");
-    } else {
-      req.flash("success", "Successfully deleted the partner");
-      res.redirect("/order");
-    }
-  });
+router.delete("/partner/:id", middleware.isAuthorized, async (req, res) => {
+  try {
+    await deletePartner(req.params.id);
+    req.flash("success", "Successfully deleted the partner");
+    res.redirect("/order");
+  } catch (err) {
+    req.flash("error", "Failed to delete the partner");
+    res.redirect("back");
+  }
 });
 
 // Parses the request to match it with Partner Schema
