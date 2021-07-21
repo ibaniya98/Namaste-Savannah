@@ -47,10 +47,13 @@
     </section>
 
     <script>
-      //TODO - Retreive images through endpoint. This is for test only
       var images = [];
       for (var i = 1; i <= 16; i++) {
-        images.push("img/food/" + i + ".jpg");
+        images.push(
+          "https://namaste-savannah-photos.s3.us-east-1.amazonaws.com/food/" +
+            i +
+            ".jpg"
+        );
       }
 
       addImagesToGrid(images);
