@@ -5,13 +5,20 @@ const express = require("express"),
   MenuHelpers = require("../util/menuHelpers"),
   BuffetHelpers = require("../util/buffetHelpers");
 
-let router = express.Router();
+const {
+  getDistinctCategories,
+  getMenuItems,
+  getMenuItemById,
+} = require("../db/actions/menuItem");
+
+const { createBuffet, updateBuffet } = require("../db/actions/buffet");
+
+const router = express.Router();
 
 router.get("/menu", async (req, res) => {
   try {
-    const categories = await MenuHelpers.getDistinctCategories();
-    const menuItems = await MenuHelpers.getMenuItems();
-    MenuHelpers.shuffleMenu(menuItems);
+    const categories = await getDistinctCategories();
+    const menuItems = await getMenuItems();
 
     res.render("menu/menu", {
       page: "menu",
@@ -26,7 +33,7 @@ router.get("/menu", async (req, res) => {
 
 // Render page to create new Menu Item
 router.get("/menu/new", middleWare.isLoggedIn, async (req, res) => {
-  MenuHelpers.getDistinctCategories()
+  getDistinctCategories()
     .then((categories) => {
       res.render("menu/newMenu", { categories: categories });
     })
@@ -72,8 +79,8 @@ router.post(
 // Render page to edit a menu item
 router.get("/menu/:id/edit", middleWare.isLoggedIn, async (req, res) => {
   try {
-    const menuItem = await MenuHelpers.getMenuItemById(req.params.id);
-    const categories = await MenuHelpers.getDistinctCategories();
+    const menuItem = await getMenuItemById(req.params.id);
+    const categories = await getDistinctCategories();
 
     res.render("menu/editMenu", { item: menuItem, categories: categories });
   } catch (err) {
@@ -169,7 +176,7 @@ router.post("/buffet", middleWare.isAuthorized, (req, res) => {
   // If there is an existing buffet, update that buffet
   if (req.body.id && req.body.id.length > 0) {
     newBuffet.updatedAt = Date.now();
-    BuffetHelpers.updateBuffet(req.body.id, newBuffet)
+    updateBuffet(req.body.id, newBuffet)
       .then((buffet) => {
         req.flash("success", "Successfully updated the buffet");
         res.redirect("/buffet");
@@ -179,7 +186,7 @@ router.post("/buffet", middleWare.isAuthorized, (req, res) => {
         res.redirect("back");
       });
   } else {
-    BuffetHelpers.createBuffet(newBuffet)
+    createBuffet(newBuffet)
       .then((buffet) => {
         req.flash("success", "Successfully created the buffet");
         res.redirect("/buffet");

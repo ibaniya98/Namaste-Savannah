@@ -1,41 +1,45 @@
-let express = require('express'),
-    passport = require('passport');
+let express = require("express"),
+  passport = require("passport");
 
 let router = express.Router();
-let User = require('../models/user');
+let User = require("../db/models/user");
 
-router.get('/login', (req, res) => {
-    if (req.isAuthenticated()) {
-        req.flash('success', 'You are already logged in');
-        res.redirect('/menu');
-    }
-    else {
-        res.render('admin/login', { redirectUrl: req.query.redirectUrl });
-    }
+router.get("/login", (req, res) => {
+  if (req.isAuthenticated()) {
+    req.flash("success", "You are already logged in");
+    res.redirect("/menu");
+  } else {
+    res.render("admin/login", { redirectUrl: req.query.redirectUrl });
+  }
 });
 
-router.post('/login', (req, res) => {
-    passport.authenticate('local', (err, user, info) => {
+router.post("/login", (req, res) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      req.flash(
+        "error",
+        "Login in temporarily not available, please try again later"
+      );
+      res.redirect("back");
+    } else if (!user) {
+      req.flash("error", "Invalid username or password");
+      let requestedUrl = encodeURIComponent(req.body.redirectUrl || "/menu");
+      res.redirect("/login?redirectUrl=" + requestedUrl);
+    } else {
+      req.login(user, (err) => {
         if (err) {
-            req.flash('error', 'Login in temporarily not available, please try again later');
-            res.redirect('back');
-        } else if (!user) {
-            req.flash('error', 'Invalid username or password');
-            let requestedUrl = encodeURIComponent(req.body.redirectUrl || '/menu');
-            res.redirect('/login?redirectUrl=' + requestedUrl);
+          req.flash(
+            "error",
+            "Login in temporarily not available, please try again later"
+          );
+          res.redirect("back");
         } else {
-            req.login(user, (err) => {
-                if (err) {
-                    req.flash('error', 'Login in temporarily not available, please try again later');
-                    res.redirect('back');
-                } else {
-                    res.redirect(req.body.redirectUrl || '/menu');
-                }
-            });
+          res.redirect(req.body.redirectUrl || "/menu");
         }
-    })(req, res);
+      });
+    }
+  })(req, res);
 });
-
 
 // router.get('/register', (req, res) => {
 //     res.render('admin/register');
@@ -47,7 +51,6 @@ router.post('/login', (req, res) => {
 //         email: req.body.email,
 //         isAdmin: true
 // 	});
-
 
 // 	User.register(newUser, req.body.password, (err, user) => {
 // 		if (err) {
@@ -64,10 +67,10 @@ router.post('/login', (req, res) => {
 // 	});
 // });
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success', 'Logged you out');
-    res.redirect('/login');
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "Logged you out");
+  res.redirect("/login");
 });
 
 module.exports = router;

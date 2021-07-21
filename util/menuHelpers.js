@@ -1,25 +1,11 @@
-const Menu = require("../models/menuItem"),
+const Menu = require("../db/models/menuItem"),
   S3 = require("../aws/imageHelpers");
 
-const { getCacheValue, setCacheValue, deleteCacheKey } = require("./cache");
-
-const MENU_ITEMS_CACHE_KEY = "__menu_items__";
-const CATEGORIES_CACHE_KEY = "__categories__";
-
-/**
- * This method shuffles the array that is passed.
- *
- * @param {Array} items Array of items to be sorted
- * @public
- */
-function shuffleMenu(items) {
-  for (var i = items.length - 1; i > 0; i--) {
-    var index = Math.floor(Math.random() * (i + 1));
-    var temp = items[i];
-    items[i] = items[index];
-    items[index] = temp;
-  }
-}
+const {
+  saveNewMenuItem,
+  updateExistingMenuItem,
+  removeMenuItemById,
+} = require("../db/actions/menuItem");
 
 /**
  * This method parses the request body sent to the express.
@@ -153,58 +139,6 @@ function parseRawModifiers(rawModifiers) {
   return parsedModifiers;
 }
 
-//------------ Database Operations -------------------
-
-/**
- * This method retrieves all distinct categories in our database
- * used by the menu items.
- * The result is retrieved from the cache if it exists.
- * The caller must handle any exception
- *
- * @returns {Promise<Array<string>>} distinct categories in the database
- * @public
- */
-async function getDistinctCategories() {
-  const cachedCategories = getCacheValue(CATEGORIES_CACHE_KEY);
-  if (cachedCategories) {
-    return cachedCategories;
-  }
-
-  const categories = await Menu.find()
-    .distinct("category")
-    .exec()
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to find distinct categories";
-    });
-
-  setCacheValue(CATEGORIES_CACHE_KEY, categories);
-  return categories;
-}
-
-/**
- * This method retrieves all available menu items from the database
- *
- * @returns {Promise<Array<obj>>} array of Menu documents
- * @public
- */
-async function getMenuItems() {
-  const cachedMenuItems = getCacheValue(MENU_ITEMS_CACHE_KEY);
-  if (cachedMenuItems) {
-    return cachedMenuItems;
-  }
-
-  const menuItems = await Menu.find({})
-    .exec()
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to find menu items";
-    });
-
-  setCacheValue(MENU_ITEMS_CACHE_KEY, menuItems);
-  return menuItems;
-}
-
 /**
  * This method adds a new menu object to the database
  * It validates the object to be inserted and throws exception if not valid.
@@ -220,40 +154,7 @@ async function addNewMenuItem(menuItem) {
     throw "All prices must be atleast $ 0.01";
   }
 
-  const newMenuItem = new Menu(menuItem);
-  return newMenuItem
-    .save()
-    .then((item) => {
-      console.log(`Added new item '${item.itemName}' [${item._id}]`);
-      deleteCacheKey(MENU_ITEMS_CACHE_KEY);
-      return item;
-    })
-    .catch((error) => {
-      console.log(error);
-      throw "Failed to add the menu item";
-    });
-}
-
-/**
- * This method retrives the document based on the provided id
- *
- * @param {string | mongoose.ObjectId} menuId
- * @returns {Promise<obj>} Menu document based on the id
- * @public
- */
-async function getMenuItemById(menuId) {
-  return Menu.findById(menuId)
-    .exec()
-    .then((item) => {
-      if (!item) {
-        throw `No item found for ${menuId}`;
-      }
-      return item;
-    })
-    .catch((error) => {
-      console.log(error);
-      throw `Failed to retrieve item for item id: ${menuId}`;
-    });
+  return saveNewMenuItem(menuItem);
 }
 
 /**
@@ -271,21 +172,7 @@ async function updateMenuItem(menuId, newMenuItem) {
     throw "All prices must be atleast $ 0.01";
   }
 
-  return Menu.findByIdAndUpdate(
-    menuId,
-    newMenuItem,
-    { new: true },
-    (err, item) => {
-      if (err) {
-        console.log(err);
-        throw "Error updating menu item";
-      } else if (!item) {
-        throw "No item found after updating the menu item";
-      } else {
-        return item;
-      }
-    }
-  );
+  return updateExistingMenuItem(menuId, newMenuItem);
 }
 
 /**
@@ -295,11 +182,7 @@ async function updateMenuItem(menuId, newMenuItem) {
  * @public
  */
 async function deleteMenuItem(menuId) {
-  return Menu.findByIdAndDelete(menuId, (err, item) => {
-    if (err) {
-      console.log(err);
-      throw `Failed to delete menu item`;
-    }
+  await removeMenuItemById(menuId).then((item) => {
     if (item && item.image && item.image.key) {
       S3.deleteImage(item.image.key).catch((err) => console.log(err));
     }
@@ -318,12 +201,8 @@ function hasValidPrices(options) {
 }
 
 module.exports = {
-  shuffleMenu,
   parseMenuForm,
-  getDistinctCategories,
-  getMenuItems,
   addNewMenuItem,
-  getMenuItemById,
   updateMenuItem,
   deleteMenuItem,
 };
