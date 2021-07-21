@@ -1,4 +1,12 @@
 const Menu = require("../models/menuItem");
+const {
+  getCacheValue,
+  setCacheValue,
+  deleteCacheKey,
+} = require("../../util/cache");
+
+const MENU_ITEMS_CACHE_KEY = "__menu_items__";
+const CATEGORIES_CACHE_KEY = "__categories__";
 
 /**
  * This method shuffles the array that is passed.
@@ -24,9 +32,18 @@ function shuffleMenu(items) {
  * @public
  */
 async function getDistinctCategories() {
+  const cachedCategories = getCacheValue(CATEGORIES_CACHE_KEY);
+  if (cachedCategories) {
+    return cachedCategories;
+  }
+
   return Menu.find({})
     .distinct("category")
     .exec()
+    .then((categories) => {
+      setCacheValue(CATEGORIES_CACHE_KEY, categories);
+      return categories;
+    })
     .catch((error) => {
       console.error(error);
       throw "Failed to find distinct categories";
@@ -40,10 +57,16 @@ async function getDistinctCategories() {
  * @public
  */
 async function getMenuItems() {
+  const cachedMenuItems = getCacheValue(MENU_ITEMS_CACHE_KEY);
+  if (cachedMenuItems) {
+    return cachedMenuItems;
+  }
+
   return Menu.find({})
     .exec()
     .then((menuItems) => {
       shuffleMenu(menuItems);
+      setCacheValue(MENU_ITEMS_CACHE_KEY, menuItems);
       return menuItems;
     })
     .catch((error) => {
@@ -80,6 +103,8 @@ async function saveNewMenuItem(menuItem) {
     .save()
     .then((item) => {
       console.info(`Added new item '${item.itemName}' [${item._id}]`);
+      deleteCacheKey(MENU_ITEMS_CACHE_KEY);
+      deleteCacheKey(CATEGORIES_CACHE_KEY);
       return item;
     })
     .catch((error) => {
@@ -100,6 +125,8 @@ async function updateExistingMenuItem(menuId, newMenuItem) {
       } else if (!item) {
         throw "No item found after updating the menu item";
       } else {
+        deleteCacheKey(MENU_ITEMS_CACHE_KEY);
+        deleteCacheKey(CATEGORIES_CACHE_KEY);
         return item;
       }
     }
@@ -119,6 +146,8 @@ async function removeMenuItemById(menuId) {
       console.error(err);
       throw `Failed to delete menu item`;
     }
+    deleteCacheKey(MENU_ITEMS_CACHE_KEY);
+    deleteCacheKey(CATEGORIES_CACHE_KEY);
     return item;
   });
 }

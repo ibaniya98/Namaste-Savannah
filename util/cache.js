@@ -1,7 +1,7 @@
 const NodeCache = require("node-cache");
 
 const Cache = new NodeCache({
-  stdTTL: 12 * 60 * 60,
+  stdTTL: 0,
 });
 
 console.info("Initialized in-memory cache");
