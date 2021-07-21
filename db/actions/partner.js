@@ -1,5 +1,13 @@
 const Partner = require("../models/partner");
 
+const {
+  getCacheValue,
+  setCacheValue,
+  deleteCacheKey,
+} = require("../../util/cache");
+
+const PARTNERS_CACHE_KEY = "__partners__";
+
 const // Initial Data Seed
   seed = [
     {
@@ -29,8 +37,17 @@ const // Initial Data Seed
   ];
 
 async function getPartners() {
+  const cachedPartners = getCacheValue(PARTNERS_CACHE_KEY);
+  if (cachedPartners) {
+    return cachedPartners;
+  }
+
   return await Partner.find({})
     .exec()
+    .then((partners) => {
+      setCacheValue(PARTNERS_CACHE_KEY, partners);
+      return partners;
+    })
     .catch((error) => {
       console.error(error);
       throw "Failed to find menu partners";
@@ -43,6 +60,7 @@ async function createPartner(partner) {
     .save()
     .then((item) => {
       console.info(`Added new partner '${item.name}' [${item._id}]`);
+      deleteCacheKey(PARTNERS_CACHE_KEY);
       return item;
     })
     .catch((error) => {
@@ -61,6 +79,7 @@ async function updatePartner(partnerId, newPartner) {
         console.error(err);
         throw "Failed to update the partner";
       } else {
+        deleteCacheKey(PARTNERS_CACHE_KEY);
         return partner;
       }
     }
@@ -73,6 +92,7 @@ async function deletePartner(partnerId) {
       if (err) {
         reject(err);
       } else {
+        deleteCacheKey(PARTNERS_CACHE_KEY);
         resolve();
       }
     });
