@@ -1,6 +1,15 @@
 const Buffet = require("../models/buffet");
 
+const { getCacheValue, setCacheValue } = require("../../util/cache");
+
+const BUFFET_CACHE_KEY = "__buffet__";
+
 async function getBuffet() {
+  const cachedBuffet = getCacheValue(BUFFET_CACHE_KEY);
+  if (cachedBuffet) {
+    return cachedBuffet;
+  }
+
   const currentBuffet = await Buffet.findOne({}).sort("-updatedAt");
 
   // Check if a buffet exists
@@ -25,6 +34,8 @@ async function getBuffet() {
     currentBuffet.extraItems = [];
   }
 
+  setCacheValue(BUFFET_CACHE_KEY, currentBuffet);
+
   return currentBuffet;
 }
 
@@ -37,12 +48,13 @@ async function getBuffet() {
  * @returns {obj} newly created buffet menu document
  * @public
  */
-async function createBuffet(buffet) {
-  Buffet.create(buffet, (err, buffet) => {
+async function createBuffet(newBuffet) {
+  Buffet.create(newBuffet, (err, buffet) => {
     if (err) {
       console.error(err);
       throw "Failed to create a new buffet";
     } else {
+      setCacheValue(BUFFET_CACHE_KEY, buffet);
       return buffet;
     }
   });
@@ -64,6 +76,7 @@ async function updateBuffet(buffetId, newBuffet) {
       console.error(err);
       throw "Failed to update the buffet";
     } else {
+      setCacheValue(BUFFET_CACHE_KEY, buffet);
       return buffet;
     }
   });
