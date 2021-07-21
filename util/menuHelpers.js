@@ -8,21 +8,6 @@ const {
 } = require("../db/actions/menuItem");
 
 /**
- * This method shuffles the array that is passed.
- *
- * @param {Array} items Array of items to be sorted
- * @public
- */
-function shuffleMenu(items) {
-  for (var i = items.length - 1; i > 0; i--) {
-    var index = Math.floor(Math.random() * (i + 1));
-    var temp = items[i];
-    items[i] = items[index];
-    items[index] = temp;
-  }
-}
-
-/**
  * This method parses the request body sent to the express.
  * It returns a Menu object that matches Menu Model in the database
  *
@@ -187,7 +172,7 @@ async function updateMenuItem(menuId, newMenuItem) {
     throw "All prices must be atleast $ 0.01";
   }
 
-  return updateExistingMenuItem(menuId, newMenuItems);
+  return updateExistingMenuItem(menuId, newMenuItem);
 }
 
 /**
@@ -216,7 +201,6 @@ function hasValidPrices(options) {
 }
 
 module.exports = {
-  shuffleMenu,
   parseMenuForm,
   addNewMenuItem,
   updateMenuItem,

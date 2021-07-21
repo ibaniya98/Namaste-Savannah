@@ -17,7 +17,6 @@ router.get("/menu", async (req, res) => {
   try {
     const categories = await getDistinctCategories();
     const menuItems = await getMenuItems();
-    MenuHelpers.shuffleMenu(menuItems);
 
     res.render("menu/menu", {
       page: "menu",

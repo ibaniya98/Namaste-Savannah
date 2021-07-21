@@ -1,6 +1,21 @@
 const Menu = require("../models/menuItem");
 
 /**
+ * This method shuffles the array that is passed.
+ *
+ * @param {Array} items Array of items to be sorted
+ * @public
+ */
+function shuffleMenu(items) {
+  for (var i = items.length - 1; i > 0; i--) {
+    var index = Math.floor(Math.random() * (i + 1));
+    var temp = items[i];
+    items[i] = items[index];
+    items[index] = temp;
+  }
+}
+
+/**
  * This method retrieves all distinct categories in our database
  * used by the menu items
  * The caller must handle any exception
@@ -27,6 +42,10 @@ async function getDistinctCategories() {
 async function getMenuItems() {
   return Menu.find({})
     .exec()
+    .then((menuItems) => {
+      shuffleMenu(menuItems);
+      return menuItems;
+    })
     .catch((error) => {
       console.error(error);
       throw "Failed to find menu items";
