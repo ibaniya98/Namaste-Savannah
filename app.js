@@ -5,7 +5,7 @@ let express = require("express"),
   bodyParser = require("body-parser"),
   flash = require("connect-flash"),
   methodOverride = require("method-override"),
-  User = require("./models/user"),
+  User = require("./db/models/user"),
   passport = require("passport"),
   LocalStrategy = require("passport-local");
 
