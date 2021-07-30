@@ -7,7 +7,7 @@ const Users = require("./db/seed/users.seeder");
 
 const mongoURL =
   process.env.MONGODB_URL ||
-  "mongodb://root:password@localhost:27017/namaste-savannah?authSource=admin";
+  "mongodb://localhost:27017/namaste-savannah?authSource=admin";
 
 module.exports = {
   /**

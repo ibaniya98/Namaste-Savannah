@@ -16,8 +16,11 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(console.log("Connected to the database"))
-  .catch((err) => console.log(err));
+  .then(() => console.log("Connected to the database"))
+  .catch((err) => {
+    console.err("Failed to connect to the database");
+    console.err(err);
+  });
 
 // <<<<<<<<<<< Express Setup >>>>>>>>>>>
 let app = express();
