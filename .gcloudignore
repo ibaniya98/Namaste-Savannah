@@ -1,8 +1,17 @@
-.gcloudignore
+.env**
+
+# Git stuffs
 .git
 .github
 
+# Nodejs dependencies
 node_modules/
-.env
 
-order.namaste-savannah/
+
+# Docker stuffs
+Dockerfile*
+docker-compose.yml
+
+# Dev dependencies
+db/seed/*
+md-seed-config.js
