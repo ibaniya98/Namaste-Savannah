@@ -38,16 +38,16 @@ jobs:
           docker build -f Dockerfile.prod . -t "${{ steps.generate_name.outputs.docker_image }}"
           docker image ls
 
-      - name: Set up gcloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ secrets.GCP_PROJECT }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+      # - name: Set up gcloud SDK
+      #   uses: google-github-actions/setup-gcloud@master
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT }}
+      #     service_account_key: ${{ secrets.GCP_SA_KEY }}
+      #     export_default_credentials: true
 
       - name: Publish Docker image
         run: |
-          docker login -u _json_key -p "${{ secrets.GCP_SA_KEY }}"" https://$HOSTNAME
+          docker login -u _json_key -p "${{ secrets.GCP_SA_KEY }}" https://$HOSTNAME
           docker push ${{ steps.generate_name.outputs.docker_image }}
 
   deploy-website-cloud-run:
