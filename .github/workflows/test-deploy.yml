@@ -16,20 +16,17 @@ jobs:
 
       - name: Generate image tag
         id: tag
-        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
-
-      - name: Update environment variables
-        run: echo "SHORT_SHA=${{ steps.tag.outputs.short_sha }}" >> $GITHUB_ENV
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "::set-output name=short_sha::$(echo $SHORT_SHA)"
 
       - name: Build Docker image
         run: |
           echo "Building Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
-          echo "${{ steps.tag.outputs.short_sha }}"
 
       - name: Publish Docker image
         run: |
           echo "Publishing Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
-          echo "${{ join(steps.tag.outputs.*, '\n') }}"
 
   deploy-website-cloud-run:
     needs: publish-images
@@ -40,7 +37,6 @@ jobs:
       - name: Deploy Cloud Run
         run: |
           echo "Deploy service for image gcr.io/$GCP_PROJECT/$IMAGE_NAME:${{ needs.publish-images.outputs.image-tag }} ..."
-          echo ${{ join(needs.publish-images.outputs.*, '\n') }}
       #   id: deploy
       #   uses: google-github-actions/deploy-cloudrun@main
       #   with:
