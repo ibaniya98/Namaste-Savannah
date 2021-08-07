@@ -1,6 +1,8 @@
-name: Deploy Website
+name: Deploy Website to Cloud Run
 
-on: [push]
+on:
+  release:
+    types: [released]
 
 env:
   HOSTNAME: gcr.io
