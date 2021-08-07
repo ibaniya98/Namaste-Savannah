@@ -6,6 +6,7 @@ env:
   HOSTNAME: gcr.io
   PROJECT_NAME: namaste-savannah
   IMAGE_NAME: main-website
+  REGION: us-east1
 
 jobs:
   generate-tag:
@@ -65,6 +66,8 @@ jobs:
           image: ${{ needs.publish-images.outputs.image }}
           credentials: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ env.PROJECT_NAME }}
+          region: ${{ env.REGION }}
+          suffix: ${{ jobs.generate-tag.outputs.image-tag }}
 
       - name: Verify deployment
         run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
