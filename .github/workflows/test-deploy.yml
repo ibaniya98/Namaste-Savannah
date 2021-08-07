@@ -23,6 +23,7 @@ jobs:
       - name: Build Docker image
         run: |
           echo "Building Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
+          echo ${{ steps.tag.outputs.short_sha }}
 
       - name: Publish Docker image
         run: |
