@@ -9,7 +9,8 @@ env:
 jobs:
   publish-images:
     runs-on: ubuntu-latest
-
+    outputs:
+      image-tag: ${{ steps.tag.outputs.short_sha }}
     steps:
       - uses: actions/checkout@v2
 
@@ -27,18 +28,19 @@ jobs:
         run: |
           echo "Publishing Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
 
-    outputs:
-      short_sha: ${{ steps.tag.outputs.short_sha }}
-
   deploy-website-cloud-run:
     needs: publish-images
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ needs.publish-images.outputs.image-tag }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Deploy Cloud Run
         run: |
-          echo "Deploy service for image gcr.io/$GCP_PROJECT/$IMAGE_NAME:${{ needs.publish-images.outputs.short_sha }} ..."
+          echo "Deploy service for image gcr.io/$GCP_PROJECT/$IMAGE_NAME:${{ needs.publish-images.outputs.image-tag }} ..."
+          echo ${{ needs.publish-images.outputs }}
+          echo $IMAGE_TAG
       #   id: deploy
       #   uses: google-github-actions/deploy-cloudrun@main
       #   with:
