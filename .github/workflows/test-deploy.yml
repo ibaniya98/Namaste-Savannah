@@ -28,13 +28,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set Docker image
+      - name: Generate name and tag for Docker image
         id: generate_name
         run: echo "::set-output name=docker_image::gcr.io/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG"
 
       - name: Build Docker image
         run: |
-          echo "${{ steps.generate_name.outputs.docker_image }}"
+          docker build -f Dockerfile.prod . -t "${{ steps.generate_name.outputs.docker_image }}"
+          docker image ls
 
       - name: Publish Docker image
         run: |
