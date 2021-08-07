@@ -3,6 +3,7 @@ name: Deploy Website
 on: [push]
 
 env:
+  HOSTNAME: gcr.io
   GCP_PROJECT: namaste-savannah
   IMAGE_NAME: main-website
 
@@ -30,16 +31,24 @@ jobs:
 
       - name: Generate name and tag for Docker image
         id: generate_name
-        run: echo "::set-output name=docker_image::gcr.io/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG"
+        run: echo "::set-output name=docker_image::$HOSTNAME/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG"
 
       - name: Build Docker image
         run: |
           docker build -f Dockerfile.prod . -t "${{ steps.generate_name.outputs.docker_image }}"
           docker image ls
 
+      - name: Set up gcloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
       - name: Publish Docker image
         run: |
-          echo "Publishing Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG ..."
+          docker login -u _json_key -p "${{ secrets.GCP_SA_KEY }}"" https://$HOSTNAME
+          docker push ${{ steps.generate_name.outputs.docker_image }}
 
   deploy-website-cloud-run:
     needs: publish-images
