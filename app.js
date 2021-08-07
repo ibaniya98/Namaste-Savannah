@@ -27,10 +27,9 @@ let app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public", { maxAge: "1d" }));
 app.use(bodyParser.urlencoded({ extended: true })).use(bodyParser.json());
-app.use(flash());
 app.use(methodOverride("_method"));
 
-// <<<<<<<< Passport Configuration >>>>>>>>>
+// Session Setup
 app.use(
   require("express-session")({
     secret: process.env.SESSION_SECRET,
@@ -38,6 +37,9 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(flash());
+
+// <<<<<<<< Passport Configuration >>>>>>>>>
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
