@@ -34,21 +34,22 @@ jobs:
         run: echo "::set-output name=docker_image::$HOSTNAME/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG"
 
       - name: Build Docker image
-        run: |
-          docker build -f Dockerfile.prod . -t "${{ steps.generate_name.outputs.docker_image }}"
+        run: |-
+          docker build -f Dockerfile.prod . -t ${{ steps.generate_name.outputs.docker_image }}
           docker image ls
 
-      # - name: Set up gcloud SDK
-      #   uses: google-github-actions/setup-gcloud@master
-      #   with:
-      #     project_id: ${{ secrets.GCP_PROJECT }}
-      #     service_account_key: ${{ secrets.GCP_SA_KEY }}
-      #     export_default_credentials: true
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker
 
       - name: Publish Docker image
-        run: |
-          docker login -u _json_key -p "${{ secrets.GCP_SA_KEY }}" https://$HOSTNAME
-          docker push ${{ steps.generate_name.outputs.docker_image }}
+        run: docker push ${{ steps.generate_name.outputs.docker_image }}
 
   deploy-website-cloud-run:
     needs: publish-images
