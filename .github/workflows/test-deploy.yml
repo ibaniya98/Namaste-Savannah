@@ -1,0 +1,47 @@
+name: Deploy Website
+
+on: [push]
+
+env:
+  GCP_PROJECT: namaste-savannah
+  IMAGE_NAME: main-website
+
+jobs:
+  publish-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate image tag
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "Generated tag: $(SHORT_SHA)"
+
+      - name: Build Docker image
+        run: |
+          echo "Building Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
+
+      - name: Publish Docker image
+        run: |
+          echo "Publishing Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
+
+  deploy-website-cloud-run:
+    needs: publish-images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy Cloud Run
+        run: |
+          echo "Deploy service for image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
+      #   id: deploy
+      #   uses: google-github-actions/deploy-cloudrun@main
+      #   with:
+      #     service: home-website
+      #     image: gcr.io/namaste-savannah/main-website
+      #     credentials: ${{ secrets.GCP_SA_KEY }}
+      #     project_id: ${{ secrets.GCP_PROJECT }}
+
+      # - name: Verify deployment
+      #   run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
