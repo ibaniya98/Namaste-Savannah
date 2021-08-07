@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "Publishing Docker image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$SHORT_SHA ..."
 
-    output:
+    outputs:
       short_sha: ${{ steps.tag.outputs.short_sha }}
 
   deploy-website-cloud-run:
