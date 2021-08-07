@@ -16,9 +16,10 @@ jobs:
 
       - name: Generate image tag
         id: tag
-        run: |
-          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "::set-output name=short_sha::$SHORT_SHA"
+        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+
+      - name: Update environment variables
+        run: echo "SHORT_SHA=${{ steps.tag.outputs.short_sha }}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
