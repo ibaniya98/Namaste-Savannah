@@ -4,7 +4,7 @@ on: [push]
 
 env:
   HOSTNAME: gcr.io
-  GCP_PROJECT: namaste-savannah
+  PROJECT_NAME: namaste-savannah
   IMAGE_NAME: main-website
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate name and tag for Docker image
         id: generate_name
-        run: echo "::set-output name=docker_image::$HOSTNAME/$GCP_PROJECT/$IMAGE_NAME:$IMAGE_TAG"
+        run: echo "::set-output name=docker_image::$HOSTNAME/$PROJECT_NAME/$IMAGE_NAME:$IMAGE_TAG"
 
       - name: Build Docker image
         run: |-
@@ -58,15 +58,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Deploy Cloud Run
-        run: |
-          echo "Deploy service for image ${{ needs.publish-images.outputs.image }} ..."
-      #   id: deploy
-      #   uses: google-github-actions/deploy-cloudrun@main
-      #   with:
-      #     service: home-website
-      #     image: gcr.io/namaste-savannah/main-website
-      #     credentials: ${{ secrets.GCP_SA_KEY }}
-      #     project_id: ${{ secrets.GCP_PROJECT }}
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: main-website
+          image: ${{ needs.publish-images.outputs.image }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
 
-      # - name: Verify deployment
-      #   run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
+      - name: Verify deployment
+        run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
