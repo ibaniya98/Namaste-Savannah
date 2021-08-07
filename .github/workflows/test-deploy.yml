@@ -41,7 +41,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${{ secrets.GCP_PROJECT }}
+          project_id: $PROJECT_NAME
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
@@ -64,7 +64,7 @@ jobs:
           service: main-website
           image: ${{ needs.publish-images.outputs.image }}
           credentials: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT }}
+          project_id: $PROJECT_NAME
 
       - name: Verify deployment
         run: curl "${{ steps.deploy.outputs.url }}" --fail --silent --show-error
