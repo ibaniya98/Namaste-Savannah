@@ -2,9 +2,11 @@
 **/.pnp
 **.pnp.js
 **/node_modules
+
+# Secrets
 .env
 app.yaml
-/googleAPI
+google/token.json
 
 # testing
 **/coverage
