@@ -1,6 +1,5 @@
 const { google } = require("googleapis");
 const { getClient } = require("./client");
-const { getContactMessage } = require("./template");
 
 const TARGET_EMAIL_ADDRESS = "ibaniya98@gmail.com";
 /**
@@ -30,10 +29,8 @@ function listLabels(auth) {
   );
 }
 
-async function sendEmail(auth, sender, subject, message) {
+async function sendEmail(auth, content) {
   const gmail = google.gmail({ version: "v1", auth });
-
-  const bodyData = getContactMessage(sender, subject, message);
 
   const emailPayload = [
     'Content-Type: text/html; charset="UTF-8"\n',
@@ -42,7 +39,7 @@ async function sendEmail(auth, sender, subject, message) {
     `to: ibaniya98@gmail.com \n`,
     `from: ibaniya.automation@gmail.com \n`,
     `subject: Message from Namaste Savannah Website \n\n`,
-    bodyData,
+    content,
   ].join("");
 
   const encodedData = Buffer.from(emailPayload)
@@ -60,6 +57,10 @@ async function sendEmail(auth, sender, subject, message) {
 
   return response;
 }
+
+module.exports = {
+  sendEmail,
+};
 
 // getClient()
 //   .then(async (auth) => {
