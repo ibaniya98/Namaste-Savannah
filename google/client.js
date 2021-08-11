@@ -21,8 +21,9 @@ const credentials = {
   redirect_uris: ["http://localhost"],
 };
 
-/** Generate a new token and save it to locally */
-async function getNewToken(oAuth2Client) {
+/** Generate a new token from CLI and save it to database */
+async function getNewTokenCLI() {
+  const oAuth2Client = getBaseClient();
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -35,42 +36,79 @@ async function getNewToken(oAuth2Client) {
   });
 
   return new Promise((resolve, reject) => {
-    rl.question("Enter the code from that page here: ", (code) => {
+    rl.question("Enter the code from that page here: ", async (code) => {
       rl.close();
-      oAuth2Client.getToken(code, (err, token) => {
-        if (err) {
-          console.error("Error retrieving access token", err);
-          reject(err);
-          return;
-        }
-
-        rawToken = JSON.stringify(token);
-        resolve(rawToken);
-
-        // Store the token to db for later program executions
-        // Since it runs on serverless, files will be not be available
-        // if the instance dies or for new instances that are created
-        saveToken(rawToken)
-          .then(() => {
-            console.log("Token successfully saved in the database");
-          })
-          .catch((err) => {
-            console.err(err);
-            return;
-          });
-      });
+      try {
+        const token = await getNewToken(code, oAuth2Client);
+        resolve(token);
+      } catch (err) {
+        reject(err);
+      }
     });
   });
 }
 
-/** Get OAuth2Client for Google APIs */
-async function getClient() {
-  const { client_secret, client_id, redirect_uris } = credentials;
+async function getNewToken(authCode, auth) {
+  if (!auth) {
+    auth = getBaseClient();
+  }
+
+  return new Promise((resolve, reject) => {
+    auth.getToken(authCode, (err, token) => {
+      if (err) {
+        console.error("Error retrieving access token", err);
+        reject(err);
+        return;
+      }
+
+      rawToken = JSON.stringify(token);
+      resolve(rawToken);
+
+      // Store the token to db for later program executions
+      // Since it runs on serverless, files will be not be available
+      // if the instance dies or for new instances that are created
+      saveToken(rawToken)
+        .then(() => {
+          console.log("Token successfully saved in the database");
+        })
+        .catch((err) => {
+          console.err(err);
+          return;
+        });
+    });
+  });
+}
+
+function getBaseClient() {
+  const { client_secret, client_id } = credentials;
+  const baseDomain =
+    process.env.NODE_ENV === "production"
+      ? "https://namaste-savannah.com"
+      : "http://localhost:" + (process.env.PORT || 8080);
+
+  const redirectUri = `${baseDomain}/admin/google/token`;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
-    redirect_uris[0]
+    redirectUri
   );
+
+  return oAuth2Client;
+}
+
+async function getAuthUrl() {
+  const oAuth2Client = getBaseClient();
+  const authUrl = oAuth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: SCOPES,
+  });
+
+  return authUrl;
+}
+
+/** Get Authenticated OAuth2Client for Google APIs */
+async function getAuthenticatedClient() {
+  const oAuth2Client = getBaseClient();
 
   let token = "";
   return new Promise(async (resolve, reject) => {
@@ -81,7 +119,7 @@ async function getClient() {
         token = tokenConfig["value"];
       } else {
         // No token was previously stored
-        token = await getNewToken(oAuth2Client);
+        throw "No token set for Gmail API";
       }
     } catch (err) {
       reject(tokenErr);
@@ -94,5 +132,8 @@ async function getClient() {
 }
 
 module.exports = {
-  getClient,
+  getBaseClient,
+  getAuthUrl,
+  getAuthenticatedClient,
+  getNewToken,
 };

@@ -1,9 +1,11 @@
-let express = require("express"),
+const express = require("express"),
   passport = require("passport");
 const Config = require("../db/models/config");
 
-let router = express.Router();
-let User = require("../db/models/user");
+const middleWare = require("../middleware");
+const { getAuthUrl, getNewToken } = require("../google/client");
+
+const router = express.Router();
 
 router.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
@@ -82,6 +84,28 @@ router.get("/token", (req, res) => {
     console.log("No error yet");
     return res.status(200).json(doc);
   });
+});
+
+router.get(
+  "/admin/google/reset-email-token",
+  middleWare.isAuthorized,
+  async (req, res) => {
+    const authUrl = await getAuthUrl();
+    res.redirect(authUrl);
+  }
+);
+
+router.get("/admin/google/token", middleWare.isAuthorized, async (req, res) => {
+  const { code } = req.query;
+  if (code) {
+    try {
+      await getNewToken(code);
+    } catch (err) {
+      console.error(err);
+      return res.redirect("/error");
+    }
+  }
+  return res.redirect("/");
 });
 
 module.exports = router;
