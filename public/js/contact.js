@@ -30,20 +30,18 @@ $(function () {
       },
     },
     submitHandler: async function (form) {
-      console.log("Submitting message frontend");
-
       // Remove any previous errors
       const button = $("button[type='submit']");
       button.text("Sending Message ...");
       button.removeClass("error");
 
+      // Parse form to get contact message
       const formData = $(form).serializeArray();
       const payload = {};
       formData.forEach((x) => {
         payload[x["name"]] = x["value"];
       });
 
-      console.log(payload);
       try {
         const response = await fetch("/contact", {
           headers: {
@@ -53,8 +51,6 @@ $(function () {
           method: "POST",
           body: JSON.stringify(payload),
         });
-
-        console.log(response);
 
         if (response.ok) {
           $("#contact-form-box input, #contact-form-box textarea").fadeTo(
