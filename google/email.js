@@ -1,4 +1,5 @@
 const { google } = require("googleapis");
+const { getClient } = require("./client");
 const { getContactMessage } = require("./template");
 
 const TARGET_EMAIL_ADDRESS = "ibaniya98@gmail.com";
@@ -59,3 +60,21 @@ async function sendEmail(auth, sender, subject, message) {
 
   return response;
 }
+
+// getClient()
+//   .then(async (auth) => {
+//     try {
+//       await sendEmail(
+//         auth,
+//         "test@gmail.com",
+//         "Test Email",
+//         "Awesome that you are seeing this message!"
+//       );
+//     } catch (err) {
+//       console.error("Failed to send email");
+//       throw err;
+//     }
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
