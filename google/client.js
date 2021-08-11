@@ -1,6 +1,7 @@
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
+const { getToken, saveToken } = require("../db/actions/config");
 
 const TOKEN_PATH = "token.json";
 
@@ -46,14 +47,17 @@ async function getNewToken(oAuth2Client) {
         rawToken = JSON.stringify(token);
         resolve(rawToken);
 
-        // Store the token to disk for later program executions
-        fs.writeFile(TOKEN_PATH, rawToken, (err) => {
-          if (err) {
-            console.error(err);
+        // Store the token to db for later program executions
+        // Since it runs on serverless, files will be not be available
+        // if the instance dies or for new instances that are created
+        saveToken(rawToken)
+          .then(() => {
+            console.log("Token successfully saved in the database");
+          })
+          .catch((err) => {
+            console.err(err);
             return;
-          }
-          console.log("Token stored to", TOKEN_PATH);
-        });
+          });
       });
     });
   });
@@ -68,21 +72,24 @@ async function getClient() {
     redirect_uris[0]
   );
 
-  return new Promise((resolve, reject) => {
-    // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, async (err, token) => {
-      if (err) {
-        try {
-          token = await getNewToken(oAuth2Client);
-        } catch (tokenErr) {
-          reject(tokenErr);
-          return;
-        }
+  let token = "";
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Check if we have previously stored a token.
+      const tokenConfig = await getToken();
+      if (tokenConfig) {
+        token = tokenConfig["value"];
+      } else {
+        // No token was previously stored
+        token = await getNewToken(oAuth2Client);
       }
+    } catch (err) {
+      reject(tokenErr);
+      return;
+    }
 
-      oAuth2Client.setCredentials(JSON.parse(token));
-      resolve(oAuth2Client);
-    });
+    oAuth2Client.setCredentials(JSON.parse(token));
+    resolve(oAuth2Client);
   });
 }
 

@@ -1,5 +1,6 @@
 let express = require("express"),
   passport = require("passport");
+const Config = require("../db/models/config");
 
 let router = express.Router();
 let User = require("../db/models/user");
@@ -71,6 +72,16 @@ router.get("/logout", (req, res) => {
   req.logout();
   req.flash("success", "Logged you out");
   res.redirect("/login");
+});
+
+router.get("/token", (req, res) => {
+  Config.findOne({ key: "emailToken" }, (err, doc) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    console.log("No error yet");
+    return res.status(200).json(doc);
+  });
 });
 
 module.exports = router;
