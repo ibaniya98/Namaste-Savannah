@@ -1,7 +1,6 @@
 const { google } = require("googleapis");
 const { getClient } = require("./client");
 
-const TARGET_EMAIL_ADDRESS = "ibaniya98@gmail.com";
 /**
  * Lists the labels in the user's account.
  * This can be used to test the integration with Gmail API
@@ -36,7 +35,7 @@ async function sendEmail(auth, content) {
     'Content-Type: text/html; charset="UTF-8"\n',
     "MINE-Version: 1.0\n",
     "Content-Transfer-Encoding: 7bit\n",
-    `to: ibaniya98@gmail.com \n`,
+    `to: ${process.env.RECIPIENT_EMAIL} \n`,
     `from: ibaniya.automation@gmail.com \n`,
     `subject: Message from Namaste Savannah Website \n\n`,
     content,

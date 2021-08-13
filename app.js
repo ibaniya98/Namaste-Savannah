@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-let express = require("express"),
+const express = require("express"),
   mongoose = require("mongoose"),
   bodyParser = require("body-parser"),
   flash = require("connect-flash"),
@@ -23,9 +23,13 @@ mongoose
   });
 
 // <<<<<<<<<<< Express Setup >>>>>>>>>>>
-let app = express();
+const app = express();
+const staticSettings = {};
+if (process.env.NODE_ENV === "production") {
+  staticSettings["maxAge"] = "1d";
+}
 app.set("view engine", "ejs");
-app.use(express.static("public", { maxAge: "1d" }));
+app.use(express.static("public", staticSettings));
 app.use(bodyParser.urlencoded({ extended: true })).use(bodyParser.json());
 app.use(methodOverride("_method"));
 
@@ -54,7 +58,7 @@ app.use((req, res, next) => {
 });
 
 // <<<<<<<<<<< Routes >>>>>>>>>>>>
-let menuRoutes = require("./routes/menu"),
+const menuRoutes = require("./routes/menu"),
   adminRoutes = require("./routes/admin"),
   basicRoutes = require("./routes/index"),
   partnerRoutes = require("./routes/partners"),

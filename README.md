@@ -13,8 +13,10 @@ Before you run the application, make sure you have the following environment var
 
 - Contact Form
 
-  - `GMAIL_EMAIL`: email address used to send mails
-  - `GMAIL_PASSWORD`: password for the email address provided above
+  - `GOOGLE_CLIENT_ID`: Client ID for OAuth
+  - `GOOGLE_CLIENT_SECRET`: Client Secret for OAuth
+  - `GOOGLE_RECAPTCHA_SECRET`: Secret for ReCaptcha
+  - `RECIPIENT_EMAIL`: Email to which contact message will be sent
 
 - S3 Configuration:
   - `AWS_ACCESS_KEY_ID`
@@ -89,3 +91,15 @@ You can run the application locally without using Docker as well.
   ```
   npm run start
   ```
+
+## Troubleshooting guide
+
+### Contact Form
+
+The project uses Gmail API to send email to the owners when a contact message is submitted. To facilitate this, we need a token for an account that will be used to send the emails.
+
+If setting up for the first time, login to the application as an administrator and send a `GET` request to `/admin/google/reset-email-token`.
+
+Login with an appropriate account that will be used to send emails. The token will be stored in the database and will be refreshed automatically if required.
+
+**TODO:** Use service account for sending emails.
