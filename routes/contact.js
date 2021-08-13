@@ -1,5 +1,5 @@
 const express = require("express");
-const { getClient } = require("../google/client");
+const { getAuthenticatedClient } = require("../google/client");
 const { sendEmail } = require("../google/email");
 const router = express.Router();
 
@@ -26,9 +26,9 @@ router.post("/contact", async (req, res) => {
   );
 
   try {
-    const auth = await getClient();
+    const auth = await getAuthenticatedClient();
     const response = await sendEmail(auth, emailContent);
-    console.log(response.status);
+    
     if (response.status === 200) {
       return res.status(200).json({ status: "success" });
     }
