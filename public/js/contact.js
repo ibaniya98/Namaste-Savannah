@@ -12,6 +12,7 @@ $(function () {
       },
       subject: "required",
       message: "required",
+      recaptcha: "required",
     },
     messages: {
       name: {
@@ -28,6 +29,9 @@ $(function () {
       message: {
         required: "We would love to know what you have to say",
       },
+      recaptcha: {
+        required: "You are not a robot, are you?"
+      }
     },
     submitHandler: async function (form) {
       // Remove any previous errors
@@ -68,6 +72,9 @@ $(function () {
         throw await response.json();
       } catch (err) {
         console.error(err);
+        if (err['message']) {
+          window.alert(err['message']);
+        }
         button.text("Failed to send message");
       }
     },
