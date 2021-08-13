@@ -28,7 +28,7 @@ router.post("/contact", async (req, res) => {
   try {
     const auth = await getAuthenticatedClient();
     const response = await sendEmail(auth, emailContent);
-    console.log(response.status);
+    
     if (response.status === 200) {
       return res.status(200).json({ status: "success" });
     }
