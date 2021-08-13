@@ -16,6 +16,7 @@ Before you run the application, make sure you have the following environment var
   - `GOOGLE_CLIENT_ID`: Client ID for OAuth
   - `GOOGLE_CLIENT_SECRET`: Client Secret for OAuth
   - `GOOGLE_RECAPTCHA_SECRET`: Secret for ReCaptcha
+  - `RECIPIENT_EMAIL`: Email to which contact message will be sent
 
 - S3 Configuration:
   - `AWS_ACCESS_KEY_ID`
