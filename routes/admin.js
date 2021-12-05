@@ -81,7 +81,7 @@ router.get("/token", (req, res) => {
     if (err) {
       return res.status(500).json(err);
     }
-    console.log("No error yet");
+
     return res.status(200).json(doc);
   });
 });

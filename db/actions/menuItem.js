@@ -102,7 +102,7 @@ async function saveNewMenuItem(menuItem) {
   return newMenuItem
     .save()
     .then((item) => {
-      console.info(`Added new item '${item.itemName}' [${item._id}]`);
+      console.info(`Added new item '${item.itemName}' [${item.id}]`);
       deleteCacheKey(MENU_ITEMS_CACHE_KEY);
       deleteCacheKey(CATEGORIES_CACHE_KEY);
       return item;
@@ -114,23 +114,16 @@ async function saveNewMenuItem(menuItem) {
 }
 
 async function updateExistingMenuItem(menuId, newMenuItem) {
-  return Menu.findByIdAndUpdate(
-    menuId,
-    newMenuItem,
-    { new: true },
-    (err, item) => {
-      if (err) {
-        console.log(err);
-        throw "Error updating menu item";
-      } else if (!item) {
-        throw "No item found after updating the menu item";
-      } else {
-        deleteCacheKey(MENU_ITEMS_CACHE_KEY);
-        deleteCacheKey(CATEGORIES_CACHE_KEY);
-        return item;
-      }
-    }
-  );
+  try {
+    await Menu.updateOne({ _id: menuId }, newMenuItem, {
+      new: true,
+    });
+
+    deleteCacheKey(MENU_ITEMS_CACHE_KEY);
+    deleteCacheKey(CATEGORIES_CACHE_KEY);
+  } catch (err) {
+    throw err;
+  }
 }
 
 /**
@@ -141,15 +134,17 @@ async function updateExistingMenuItem(menuId, newMenuItem) {
  * @public
  */
 async function removeMenuItemById(menuId) {
-  return Menu.findByIdAndDelete(menuId, (err, item) => {
-    if (err) {
-      console.error(err);
-      throw `Failed to delete menu item`;
-    }
-    deleteCacheKey(MENU_ITEMS_CACHE_KEY);
-    deleteCacheKey(CATEGORIES_CACHE_KEY);
-    return item;
-  });
+  const itemToRemove = await Menu.findOne({ _id: menuId });
+
+  if (!itemToRemove) {
+    throw `No menu item found`;
+  }
+
+  itemToRemove.remove();
+  deleteCacheKey(MENU_ITEMS_CACHE_KEY);
+  deleteCacheKey(CATEGORIES_CACHE_KEY);
+
+  return itemToRemove;
 }
 
 module.exports = {

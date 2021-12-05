@@ -10,17 +10,22 @@ const express = require("express"),
   LocalStrategy = require("passport-local");
 
 // <<<<<<<<<<<<<< Database Setup >>>>>>>>>>>>>>>>>
+
 mongoose
-  .connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("Connected to the database"))
   .catch((err) => {
-    console.err("Failed to connect to the database");
-    console.err(err);
+    console.error("Failed to connect to the database");
+    console.error(err);
   });
+
+mongoose.set("toJSON", {
+  virtuals: true,
+});
+
+mongoose.set("toObject", {
+  virtuals: true,
+});
 
 // <<<<<<<<<<< Express Setup >>>>>>>>>>>
 const app = express();

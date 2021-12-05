@@ -122,14 +122,9 @@ router.put(
         }
       }
 
-      let updatedItem = await MenuHelpers.updateMenuItem(
-        req.params.id,
-        newMenu
-      );
-      req.flash(
-        "success",
-        "Successfully updated the menu item: " + updatedItem.itemName
-      );
+      await MenuHelpers.updateMenuItem(req.params.id, newMenu);
+
+      req.flash("success", "Successfully updated the menu item");
       res.redirect("/menu");
     } catch (err) {
       console.log(err);

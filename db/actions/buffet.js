@@ -15,7 +15,9 @@ async function getBuffet() {
   // Check if a buffet exists
   if (currentBuffet) {
     // If the buffet exists, populate the menu for the buffet
-    await currentBuffet.populate("menuItems").execPopulate();
+    if (currentBuffet.menuItems) {
+      await currentBuffet.populate("menuItems").execPopulate();
+    }
 
     // If no menu exists for the buffet, intialize it to empty array.
     if (!currentBuffet.menuItems || !currentBuffet.menuItems instanceof Array) {

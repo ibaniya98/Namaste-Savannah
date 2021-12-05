@@ -59,7 +59,7 @@ async function createPartner(partner) {
   return newPartner
     .save()
     .then((item) => {
-      console.info(`Added new partner '${item.name}' [${item._id}]`);
+      console.info(`Added new partner '${item.name}' [${item.id}]`);
       deleteCacheKey(PARTNERS_CACHE_KEY);
       return item;
     })
