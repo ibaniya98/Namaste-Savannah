@@ -147,67 +147,69 @@ router.delete("/menu/:id", middleWare.isAuthorized, async (req, res) => {
     });
 });
 
-// Render the buffet main page
-router.get("/buffet", async (req, res) => {
-  BuffetHelpers.getLatestBuffet()
-    .then((data) => {
-      res.render("menu/buffet", {
-        page: "menu",
-        unsetBuffet: data.unsetBuffet,
-        buffet: data.currentBuffet,
-      });
-    })
-    .catch((err) => {
-      res.redirect("/error");
-    });
-});
-
-// Send request to create/update buffet menu
-router.post("/buffet", middleWare.isAuthorized, (req, res) => {
-  const newBuffet = req.body.buffet;
-  newBuffet.menuItems = req.body.items;
-  newBuffet.extraItems = req.body.extras;
-
-  // If there is an existing buffet, update that buffet
-  if (req.body.id && req.body.id.length > 0) {
-    newBuffet.updatedAt = Date.now();
-    updateBuffet(req.body.id, newBuffet)
-      .then((buffet) => {
-        req.flash("success", "Successfully updated the buffet");
-        res.redirect("/buffet");
+if (process.env.ENABLE_BUFFET === "true") {
+  // Render the buffet main page
+  router.get("/buffet", async (req, res) => {
+    BuffetHelpers.getLatestBuffet()
+      .then((data) => {
+        res.render("menu/buffet", {
+          page: "menu",
+          unsetBuffet: data.unsetBuffet,
+          buffet: data.currentBuffet,
+        });
       })
       .catch((err) => {
-        req.flash("error", err);
-        res.redirect("back");
+        res.redirect("/error");
       });
-  } else {
-    createBuffet(newBuffet)
-      .then((buffet) => {
-        req.flash("success", "Successfully created the buffet");
-        res.redirect("/buffet");
-      })
-      .catch((err) => {
-        req.flash("error", err);
-        res.redirect("back");
-      });
-  }
-});
-
-// Render page to update buffet menu
-router.get("/buffet/edit", middleWare.isAuthorized, async (req, res) => {
-  let buffet;
-  try {
-    const { currentBuffet } = await BuffetHelpers.getLatestBuffet();
-    buffet = currentBuffet;
-  } catch (err) {
-    req.flash("error", "Failed to find the most recent buffet menu");
-    buffet = BuffetHelpers.getEmptyBuffetItem();
-  }
-
-  res.render("menu/editBuffet", {
-    page: "menu",
-    buffet: buffet,
   });
-});
+
+  // Send request to create/update buffet menu
+  router.post("/buffet", middleWare.isAuthorized, (req, res) => {
+    const newBuffet = req.body.buffet;
+    newBuffet.menuItems = req.body.items;
+    newBuffet.extraItems = req.body.extras;
+
+    // If there is an existing buffet, update that buffet
+    if (req.body.id && req.body.id.length > 0) {
+      newBuffet.updatedAt = Date.now();
+      updateBuffet(req.body.id, newBuffet)
+        .then((buffet) => {
+          req.flash("success", "Successfully updated the buffet");
+          res.redirect("/buffet");
+        })
+        .catch((err) => {
+          req.flash("error", err);
+          res.redirect("back");
+        });
+    } else {
+      createBuffet(newBuffet)
+        .then((buffet) => {
+          req.flash("success", "Successfully created the buffet");
+          res.redirect("/buffet");
+        })
+        .catch((err) => {
+          req.flash("error", err);
+          res.redirect("back");
+        });
+    }
+  });
+
+  // Render page to update buffet menu
+  router.get("/buffet/edit", middleWare.isAuthorized, async (req, res) => {
+    let buffet;
+    try {
+      const { currentBuffet } = await BuffetHelpers.getLatestBuffet();
+      buffet = currentBuffet;
+    } catch (err) {
+      req.flash("error", "Failed to find the most recent buffet menu");
+      buffet = BuffetHelpers.getEmptyBuffetItem();
+    }
+
+    res.render("menu/editBuffet", {
+      page: "menu",
+      buffet: buffet,
+    });
+  });
+}
 
 module.exports = router;
