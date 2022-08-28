@@ -30,23 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav menu pl_120">
           <li
-            class="
-              nav-item
-              <%=
-              typeof
-              page
-              !==
-              'undefined'
-              &&
-              page
-              ===
-              'home'
-              ?
-              'active'
-              :
-              ''
-              %>
-            "
+            class="nav-item <%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>"
           >
             <a
               class="nav-link"
@@ -58,6 +42,8 @@
               Home
             </a>
           </li>
+
+          <% if (currentUser) { %>
           <li class="nav-item dropdown submenu">
             <a
               class="nav-link dropdown-toggle"
@@ -73,38 +59,35 @@
               <li class="nav-item">
                 <a href="/menu" class="nav-link">View Menu</a>
               </li>
-              <li class="nav-item">
-                <a href="/buffet" class="nav-link">View Buffet Menu</a>
-              </li>
-              <% if (currentUser) { %>
+              <!-- <li class="nav-item">
+                  <a href="/buffet" class="nav-link">View Buffet Menu</a>
+                </li> -->
               <li class="nav-item">
                 <a href="/menu/new" class="nav-link">Add New Item</a>
               </li>
               <li class="nav-item">
                 <a href="/buffet/edit" class="nav-link">Update Buffet</a>
               </li>
-              <% } %>
             </ul>
           </li>
+          <% } else { %>
+          <li
+            class="nav-item <%= typeof page !== 'undefined' && page === 'menu' ? 'active' : '' %>"
+          >
+            <a
+              class="nav-link"
+              href="/menu"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Menu
+            </a>
+          </li>
+          <% } %>
 
           <li
-            class="
-              nav-item
-              <%=
-              typeof
-              page
-              !==
-              'undefined'
-              &&
-              page
-              ===
-              'gallery'
-              ?
-              'active'
-              :
-              ''
-              %>
-            "
+            class="nav-item <%= typeof page !== 'undefined' && page === 'gallery' ? 'active' : '' %>"
           >
             <a
               class="nav-link"
@@ -117,23 +100,7 @@
             </a>
           </li>
           <li
-            class="
-              nav-item
-              <%=
-              typeof
-              page
-              !==
-              'undefined'
-              &&
-              page
-              ===
-              'contact'
-              ?
-              'active'
-              :
-              ''
-              %>
-            "
+            class="nav-item <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>"
           >
             <a
               class="nav-link"
