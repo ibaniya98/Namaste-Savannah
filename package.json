@@ -39,7 +39,7 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "mongoose-data-seed": "^1.0.7",
+    "mongoose-data-seed": "^2.1.6",
     "nodemon": "^2.0.12"
   },
   "mdSeed": {
