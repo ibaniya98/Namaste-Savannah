@@ -14,7 +14,7 @@ jobs:
         run: |
           mkdir deploy
           cat << EOF > ${{ github.workspace }}/app.yaml
-          runtime: nodejs14
+          runtime: nodejs18
           env: standard
           instance_class: F1
           handlers:
