@@ -6,7 +6,7 @@ const data = [
     popularItems: ["Garlic Naan", "Kothe Mo:Mo", "Tikka Masala"],
     isPopular: true,
     name: "Grubhub",
-    imageUrl: "/img/partners/grubhub.png",
+    imageUrl: "https://d5qqlksrf0i9x.cloudfront.net/partners/grubhub.png",
     orderLink: "https://www.grubhub.com/delivery/ga-savannah",
     showInHomepage: true,
   },
