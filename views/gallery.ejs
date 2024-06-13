@@ -5,8 +5,14 @@
     <title>Gallery | Namaste Savannah</title>
     <% include partials/common-styles.ejs %>
     <!--icon font css-->
-    <link rel="stylesheet" href="vendors/themify-icon/themify-icons.css" />
-    <link rel="stylesheet" href="vendors/flaticon/flaticon.css" />
+    <link
+      rel="stylesheet"
+      href="https://d5qqlksrf0i9x.cloudfront.net/vendors/themify-icon/themify-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://d5qqlksrf0i9x.cloudfront.net/vendors/flaticon/flaticon.css"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"
@@ -21,7 +27,11 @@
 
     <!-- Jumbotron -->
     <section class="breadcrumb_area">
-      <img class="breadcrumb_shap" src="img/home/banner_bg.png" alt="" />
+      <img
+        class="breadcrumb_shap"
+        src="https://d5qqlksrf0i9x.cloudfront.net/home/banner_bg.png"
+        alt=""
+      />
       <div class="container wow fadeInUp" data-wow-delay="0.4s">
         <div class="breadcrumb_content text-center">
           <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Gallery</h1>
@@ -43,11 +53,7 @@
     <script>
       var images = [];
       for (var i = 1; i <= 16; i++) {
-        images.push(
-          "https://namaste-savannah-photos.s3.us-east-1.amazonaws.com/food/" +
-            i +
-            ".jpg"
-        );
+        images.push("https://d5qqlksrf0i9x.cloudfront.net/food/" + i + ".jpg");
       }
 
       addImagesToGrid(images);
@@ -90,7 +96,7 @@
     </script>
 
     <% include partials/footer.ejs %> <% include partials/common-scripts.ejs %>
-    <script src="vendors/sckroller/jquery.parallax-scroll.js"></script>
+    <script src="https://d5qqlksrf0i9x.cloudfront.net/vendors/sckroller/jquery.parallax-scroll.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>

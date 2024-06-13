@@ -1,5 +1,5 @@
 const IMAGE_PLACEHOLDER =
-  "https://namaste-savannah-photos.s3.amazonaws.com/menu/placeholder.png";
+  "https://d5qqlksrf0i9x.cloudfront.net/menu/placeholder.png";
 
 const tagOptions = {
   Blue: "badge-primary",
